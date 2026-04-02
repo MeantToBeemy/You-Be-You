@@ -1,0 +1,2410 @@
+<html lang="en"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My PC</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  font-family: Tahoma, sans-serif;
+  font-size: 11px;
+  background: #000;
+  overflow: hidden;
+  height: 100vh; width: 100vw;
+  cursor: default;
+  user-select: none;
+  color: #000;
+}
+
+body::after {
+  content:'';
+  position:fixed; inset:0;
+  background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.04) 2px, rgba(0,0,0,0.04) 4px);
+  pointer-events:none;
+  z-index:9999;
+}
+
+.screen { position:fixed; inset:0; display:none; }
+.screen.active { display:flex; }
+
+/* ══ BIOS ══ */
+#bios-screen {
+  background:#000;
+  flex-direction:column;
+  padding:20px 30px;
+  font-family:'VT323',monospace;
+  font-size:18px;
+  color:#aaa;
+  line-height:1.5;
+}
+.bios-hi { color:#fff; }
+.bios-bar { display:inline-block; background:#aaa; color:#000; padding:0 4px; }
+.bios-cursor { display:inline-block; width:10px; height:18px; background:#aaa; vertical-align:middle; animation:blink .7s step-end infinite; }
+@keyframes blink { 50%{opacity:0} }
+
+/* ══ BOOT ══ */
+#boot-screen {
+  background:#000;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:20px;
+}
+.xp-logo-wrap { display:flex; align-items:center; gap:14px; opacity:0; animation:fadeIn .6s .5s forwards; }
+.xp-flag { display:grid; grid-template-columns:1fr 1fr; gap:3px; width:54px; height:54px; }
+.xp-flag div { border-radius:3px; }
+.xp-flag div:nth-child(1){background:#f35325;}
+.xp-flag div:nth-child(2){background:#81bc06;}
+.xp-flag div:nth-child(3){background:#05a6f0;}
+.xp-flag div:nth-child(4){background:#ffba08;}
+.xp-wordmark { display:flex; flex-direction:column; }
+.xp-word1 { color:#fff; font-size:30px; font-weight:300; letter-spacing:1px; line-height:1; }
+.xp-word2 { color:#f90; font-size:13px; letter-spacing:6px; line-height:1; margin-top:2px; }
+.xp-tagline { color:#777; font-size:11px; letter-spacing:2px; opacity:0; animation:fadeIn .5s .9s forwards; }
+.xp-bar-wrap { width:180px; height:8px; background:#333; border-radius:4px; overflow:hidden; opacity:0; animation:fadeIn .3s 1.1s forwards; }
+#boot-bar { height:100%; width:0%; background:linear-gradient(90deg,#1660c8,#4fa3f7); border-radius:4px; transition:width .1s; }
+@keyframes fadeIn { to{opacity:1} }
+
+/* ══ WELCOME SCREEN ══ */
+#welcome-screen {
+  background: linear-gradient(180deg, #1b5dab 0%, #2b7ad4 40%, #1b5dab 100%);
+  flex-direction:column;
+  align-items:center;
+}
+.welcome-top {
+  width:100%;
+  background:rgba(0,0,0,0.25);
+  padding:14px 40px;
+  border-bottom:1px solid rgba(255,255,255,0.15);
+  flex-shrink:0;
+}
+.welcome-top-title { color:#fff; font-size:20px; font-weight:300; letter-spacing:1px; }
+.welcome-top-sub { color:rgba(255,255,255,0.65); font-size:11px; margin-top:2px; }
+.welcome-mid {
+  flex:1;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:60px;
+  padding:30px;
+}
+.user-card {
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:8px;
+  cursor:pointer;
+  padding:14px 18px;
+  border-radius:8px;
+  transition:background .2s;
+  min-width:160px;
+}
+.user-card:hover { background:rgba(255,255,255,0.12); }
+.user-avatar {
+  width:72px; height:72px;
+  border-radius:4px;
+  border:2px solid rgba(255,255,255,0.5);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:38px;
+  background:rgba(255,255,255,0.12);
+}
+.user-name { color:#fff; font-size:13px; font-weight:bold; }
+.user-hint { color:rgba(255,255,255,0.55); font-size:10px; }
+.pw-prompt { display:none; flex-direction:column; align-items:center; gap:5px; margin-top:2px; width:155px; }
+.pw-prompt.show { display:flex; }
+.pw-row { display:flex; gap:3px; width:100%; }
+.pw-input-xp {
+  flex:1; height:22px;
+  background:rgba(255,255,255,0.9);
+  border:1px solid rgba(255,255,255,0.3);
+  border-radius:3px;
+  padding:0 6px;
+  font-size:11px;
+  font-family:Tahoma,sans-serif;
+  outline:none; color:#000;
+}
+.pw-go {
+  width:22px; height:22px;
+  background:rgba(255,255,255,0.2);
+  border:1px solid rgba(255,255,255,0.4);
+  border-radius:3px;
+  color:#fff; font-size:13px; cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+  flex-shrink:0;
+}
+.pw-go:hover { background:rgba(255,255,255,0.35); }
+.pw-error { color:#ffcc00; font-size:10px; min-height:12px; text-align:center; }
+.welcome-bottom {
+  width:100%;
+  background:rgba(0,0,0,0.25);
+  padding:10px 40px;
+  border-top:1px solid rgba(255,255,255,0.15);
+  display:flex; justify-content:flex-end;
+  flex-shrink:0;
+}
+.welcome-power { color:rgba(255,255,255,0.65); font-size:11px; cursor:pointer; display:flex; align-items:center; gap:5px; }
+.welcome-power:hover { color:#fff; }
+
+/* ══ WINDOW CHROME ══ */
+.title-bar {
+  height:26px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 4px 0 8px;
+  cursor:move;
+  flex-shrink:0;
+}
+.title-bar-left { display:flex; align-items:center; gap:5px; font-size:12px; font-weight:bold; color:#fff; white-space:nowrap; overflow:hidden; }
+.title-icon { font-size:14px; flex-shrink:0; }
+.tb-btns { display:flex; gap:2px; flex-shrink:0; }
+.tb-btn {
+  width:21px; height:21px;
+  border-radius:3px;
+  border:1px solid rgba(0,0,0,0.25);
+  font-size:11px;
+  display:flex; align-items:center; justify-content:center;
+  cursor:pointer; font-weight:bold;
+}
+.tb-btn:hover { filter:brightness(1.15); }
+.tb-min { background:linear-gradient(180deg,#f0c060,#c08010); color:#000; }
+.tb-max { background:linear-gradient(180deg,#80c840,#409010); color:#000; }
+.tb-cls { background:linear-gradient(180deg,#f06040,#c02010); color:#fff; }
+
+.win-window {
+  position:absolute;
+  display:none;
+  flex-direction:column;
+  min-width:240px;
+  min-height:140px;
+  border-radius:6px 6px 0 0;
+  overflow:hidden;
+  box-shadow:3px 3px 10px rgba(0,0,0,0.6);
+}
+.win-window.open { display:flex; }
+.win-content {
+  flex:1;
+  background:#fff;
+  padding:12px;
+  overflow-y:auto;
+  font-size:12px;
+  line-height:1.6;
+  color:#000;
+}
+
+/* ══ DESKTOPS ══ */
+#guest-desktop, #personal-desktop {
+  flex-direction:column;
+  opacity:0;
+  transition:opacity .5s;
+}
+#guest-desktop.fade-in, #personal-desktop.fade-in { opacity:1; }
+
+.desktop-area {
+  flex:1;
+  position:relative;
+  overflow:hidden;
+}
+
+#guest-desktop .desktop-area {
+  background: url('https://tjkelly.com/blog/windows-xp-desktop-backgrounds/') center/cover no-repeat;
+}
+#personal-desktop .desktop-area {
+  background: radial-gradient(ellipse at 25% 35%, rgba(160,80,255,0.22) 0%, transparent 60%), #1a0a30;
+}
+
+.desktop-icons {
+  display:flex; flex-direction:column; flex-wrap:wrap;
+  align-content:flex-start;
+  gap:4px; padding:10px 8px;
+  height:100%;
+}
+.icon {
+  display:flex; flex-direction:column; align-items:center;
+  width:72px; padding:4px;
+  cursor:pointer;
+  border:1px solid transparent; border-radius:3px; gap:3px;
+}
+.icon:hover { background:rgba(255,255,255,0.1); border-color:rgba(255,255,255,0.3); }
+.icon.selected { background:rgba(49,106,197,0.45); border-color:rgba(255,255,255,0.5); }
+.icon-img { font-size:30px; line-height:1; }
+.icon-label { color:#fff; font-size:10px; text-align:center; text-shadow:1px 1px 2px #000,-1px -1px 2px #000; line-height:1.2; word-break:break-word; max-width:68px; }
+
+/* ══ TASKBAR ══ */
+.taskbar {
+  height:30px; display:flex; align-items:center;
+  padding:0 2px; gap:3px; flex-shrink:0; position:relative; z-index:500;
+}
+.taskbar-guest { background:linear-gradient(180deg,#3a82c4 0%,#1a58a0 8%,#1450a0 92%,#2060b0 100%); border-top:1px solid #5aa4e8; }
+.taskbar-personal { background:linear-gradient(180deg,#6030a8 0%,#3a1880 8%,#2a1070 92%,#401888 100%); border-top:1px solid #8858d0; }
+
+.start-btn {
+  height:24px; border-radius:12px; border:1px solid rgba(0,0,0,0.3);
+  font-size:12px; font-weight:bold; font-family:Tahoma,sans-serif;
+  cursor:pointer; padding:0 12px 0 8px;
+  display:flex; align-items:center; gap:5px; color:#fff;
+  text-shadow:1px 1px 1px rgba(0,0,0,0.5); flex-shrink:0;
+}
+.start-btn-guest { background:linear-gradient(180deg,#5ec040,#359010); }
+.start-btn-personal { background:linear-gradient(180deg,#8858c8,#4820a0); }
+.start-btn:hover { filter:brightness(1.1); }
+
+.tb-divider { width:1px; height:20px; background:rgba(255,255,255,0.2); }
+.tb-space { flex:1; }
+.system-tray {
+  height:22px; background:rgba(0,0,0,0.2);
+  border:1px solid rgba(0,0,0,0.25); border-radius:3px;
+  padding:0 8px; display:flex; align-items:center; gap:6px;
+  font-size:11px; color:#fff;
+}
+.tray-user { font-size:10px; color:rgba(255,255,255,0.65); font-style:italic; }
+.tb-window-btn {
+  height:22px; background:rgba(255,255,255,0.14); border:1px solid rgba(255,255,255,0.22); border-radius:3px;
+  color:#fff; font-family:Tahoma,sans-serif; font-size:10px; padding:0 8px; cursor:pointer;
+  display:flex; align-items:center; gap:4px; max-width:130px; overflow:hidden; white-space:nowrap;
+}
+.tb-window-btn:hover { background:rgba(255,255,255,0.25); }
+#guest-tb-wins, #personal-tb-wins { display:flex; gap:3px; align-items:center; }
+
+/* ══ START MENU ══ */
+.start-menu {
+  position:absolute; bottom:30px; left:0; width:230px;
+  border-radius:6px 6px 0 0; overflow:hidden;
+  box-shadow:4px 0 12px rgba(0,0,0,0.6); display:none; z-index:600;
+}
+.start-menu.open { display:block; }
+.sm-head { padding:10px 12px; display:flex; align-items:center; gap:10px; }
+.sm-head-guest { background:linear-gradient(90deg,#1450a0,#3a82c4); }
+.sm-head-personal { background:linear-gradient(90deg,#2a1070,#6030a8); }
+.sm-avatar { font-size:26px; }
+.sm-username { color:#fff; font-size:14px; font-weight:bold; text-shadow:1px 1px 2px rgba(0,0,0,0.5); }
+.sm-body { background:#fff; display:flex; }
+.sm-left { flex:1; padding:4px 0; border-right:1px solid #ddd; }
+.sm-right { width:88px; padding:4px 0; background:#f0e8ff; }
+.sm-item { display:flex; align-items:center; gap:8px; padding:5px 10px; font-size:11px; cursor:pointer; color:#000; }
+.sm-item:hover { background:#316ac5; color:#fff; }
+.sm-item span:first-child { font-size:16px; flex-shrink:0; }
+.sm-divider { border:none; border-top:1px solid #ddd; margin:4px 0; }
+.sm-footer { display:flex; justify-content:flex-end; gap:2px; padding:5px 8px; border-top:1px solid #bbb; }
+.sm-fbtn { display:flex; align-items:center; gap:4px; padding:3px 9px; border:1px solid #999; border-radius:3px; font-size:11px; cursor:pointer; background:#e8e8e8; color:#000; }
+.sm-fbtn:hover { background:#d8d8f0; }
+
+/* ══ BALLOON ══ */
+.balloon {
+  position:absolute; bottom:36px; right:4px;
+  background:#ffffcc; border:1px solid #888;
+  box-shadow:2px 2px 4px rgba(0,0,0,0.3);
+  padding:7px 12px; font-size:11px; color:#000;
+  max-width:200px; display:none; z-index:700; border-radius:4px;
+}
+.balloon.show { display:block; }
+.balloon-title { font-weight:bold; margin-bottom:2px; }
+
+/* ══ TITLE BAR COLORS ══ */
+.tb-guest-color { background:linear-gradient(180deg,#4a9de0,#1a60c0); }
+.tb-personal-color { background:linear-gradient(180deg,#7a40c8,#3a10a0); }
+
+/* ══ MEDIA PLAYER ══ */
+.mp-shell { background:#0d0d1a; display:flex; flex-direction:column; height:100%; font-family:'Courier New',monospace; }
+.mp-vis { height:80px; background:#000; flex-shrink:0; overflow:hidden; position:relative; }
+.mp-vis canvas { width:100%; height:100%; display:block; }
+.mp-display { background:#060612; padding:8px 12px 6px; flex-shrink:0; }
+.mp-track { font-size:13px; color:#00bfff; overflow:hidden; white-space:nowrap; text-overflow:ellipsis; margin-bottom:4px; font-family:'VT323',monospace; letter-spacing:1px; }
+.mp-scrub-track { width:100%; height:3px; background:#1a1a30; border-radius:2px; cursor:pointer; margin-bottom:3px; position:relative; }
+.mp-scrub-fill { height:100%; background:#00bfff; border-radius:2px; width:0%; position:relative; }
+.mp-scrub-fill::after { content:''; position:absolute; right:-4px; top:-3.5px; width:8px; height:8px; border-radius:50%; background:#00bfff; }
+.mp-times { display:flex; justify-content:space-between; font-size:9px; color:#334; }
+.mp-controls { display:flex; align-items:center; gap:5px; padding:7px 12px; background:#0a0a16; flex-shrink:0; }
+.mp-btn { background:#141428; border:1px solid #222244; color:#507090; width:28px; height:28px; border-radius:5px; font-size:12px; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all .12s; flex-shrink:0; }
+.mp-btn:hover { color:#00bfff; border-color:#00bfff; }
+.mp-btn.active { color:#00bfff; border-color:#00bfff; }
+.mp-play { width:34px; height:34px; border-radius:50%; background:#00bfff; color:#000; border:none; font-size:14px; }
+.mp-play:hover { filter:brightness(1.15); }
+.mp-vol { flex:1; display:flex; align-items:center; gap:5px; }
+.mp-vol-icon { color:#334; font-size:11px; }
+.mp-vol-slider { flex:1; -webkit-appearance:none; height:3px; background:#1a1a30; border-radius:2px; outline:none; cursor:pointer; }
+.mp-vol-slider::-webkit-slider-thumb { -webkit-appearance:none; width:10px; height:10px; border-radius:50%; background:#00bfff; cursor:pointer; }
+.mp-pl { background:#080810; flex:1; overflow-y:auto; min-height:50px; max-height:130px; scrollbar-width:thin; scrollbar-color:#1a1a30 transparent; }
+.mp-pl::-webkit-scrollbar { width:4px; }
+.mp-pl::-webkit-scrollbar-thumb { background:#1a1a30; }
+.mp-pl-head { display:flex; justify-content:space-between; align-items:center; padding:4px 12px; border-bottom:1px solid #111122; position:sticky; top:0; background:#080810; }
+.mp-pl-title { font-size:9px; letter-spacing:2px; color:#334; }
+.mp-pl-add { background:transparent; border:1px solid #1a1a30; color:#334; font-family:inherit; font-size:9px; padding:2px 7px; border-radius:3px; cursor:pointer; letter-spacing:1px; }
+.mp-pl-add:hover { color:#00bfff; border-color:#00bfff; }
+.mp-pl-item { display:flex; align-items:center; padding:4px 12px; cursor:pointer; gap:8px; border-bottom:1px solid rgba(255,255,255,0.02); }
+.mp-pl-item:hover { background:#0d0d20; }
+.mp-pl-item.active .mp-pl-name { color:#00bfff; }
+.mp-pl-num { color:#334; font-size:9px; min-width:16px; }
+.mp-pl-name { flex:1; color:#507090; font-size:10px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.mp-pl-dur { color:#334; font-size:9px; }
+.mp-pl-rem { color:transparent; font-size:10px; cursor:pointer; padding:0 2px; }
+.mp-pl-item:hover .mp-pl-rem { color:#334; }
+.mp-pl-rem:hover { color:#f44 !important; }
+.mp-empty { padding:14px 12px; color:#334; font-size:10px; text-align:center; letter-spacing:1px; }
+
+/* ══ AIM ══ */
+.aim-shell { background:#d4d0c8; display:flex; flex-direction:column; height:100%; font-family:Tahoma,sans-serif; font-size:11px; }
+.aim-buddy-list { background:#fff; flex:1; overflow-y:auto; border:2px inset #808080; margin:4px; }
+.aim-group { background:#d4d0c8; padding:2px 6px; font-weight:bold; font-size:11px; border-bottom:1px solid #808080; }
+.aim-buddy { padding:2px 14px; cursor:pointer; display:flex; align-items:center; gap:6px; }
+.aim-buddy:hover { background:#316ac5; color:#fff; }
+.aim-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+.aim-dot.on { background:#00cc00; }
+.aim-dot.away { background:#ffaa00; }
+.aim-dot.off { background:#aaa; }
+.aim-controls { display:flex; gap:4px; padding:4px; border-top:1px solid #808080; }
+.aim-cbtn { flex:1; height:22px; background:#d4d0c8; border-top:1px solid #fff; border-left:1px solid #fff; border-right:1px solid #404040; border-bottom:1px solid #404040; font-size:10px; cursor:pointer; font-family:Tahoma,sans-serif; color:#000; }
+.aim-cbtn:active { border-top:1px solid #404040; border-left:1px solid #404040; border-right:1px solid #fff; border-bottom:1px solid #fff; }
+
+.aim-chat-shell { display:flex; flex-direction:column; height:100%; background:#d4d0c8; font-family:Tahoma,sans-serif; font-size:11px; }
+.aim-log { flex:1; background:#fff; border:2px inset #808080; margin:4px 4px 2px; padding:6px; overflow-y:auto; font-size:11px; line-height:1.7; }
+.aim-msg-them { color:#0000cc; }
+.aim-msg-me { color:#cc0000; }
+.aim-msg-sys { color:#888; font-style:italic; }
+.aim-input-row { display:flex; gap:4px; padding:4px; }
+.aim-input { flex:1; height:22px; background:#fff; border-top:1px solid #404040; border-left:1px solid #404040; border-right:1px solid #fff; border-bottom:1px solid #fff; padding:0 4px; font-size:11px; font-family:Tahoma,sans-serif; outline:none; color:#000; }
+.aim-send { height:22px; background:#d4d0c8; border-top:1px solid #fff; border-left:1px solid #fff; border-right:1px solid #404040; border-bottom:1px solid #404040; font-size:11px; cursor:pointer; padding:0 10px; font-family:Tahoma,sans-serif; color:#000; }
+
+/* ══ XANGA ══ */
+.xanga-shell { background:#f5f0ff; display:flex; flex-direction:column; height:100%; font-family:Verdana,sans-serif; font-size:11px; overflow-y:auto; }
+.xanga-header { padding:12px 16px; color:#fff; flex-shrink:0; }
+.xanga-hd-guest { background:linear-gradient(90deg,#7a3ab0,#4a1880); }
+.xanga-hd-personal { background:linear-gradient(90deg,#3a1060,#1a0840); }
+.xanga-title { font-size:17px; font-weight:bold; margin-bottom:2px; }
+.xanga-sub { font-size:10px; opacity:0.75; }
+.xanga-entry { border-bottom:1px solid #e0d8f0; padding:12px 16px; }
+.xanga-entry-title { font-weight:bold; color:#6c3483; margin-bottom:3px; }
+.xanga-entry-date { font-size:9px; color:#999; margin-bottom:6px; }
+.xanga-entry-body { font-size:11px; line-height:1.75; color:#333; }
+.xanga-comments { padding:5px 16px; background:#ede8f5; font-size:10px; color:#666; cursor:pointer; }
+.xanga-comments:hover { color:#6c3483; }
+
+/* ══ YELLOW PAGES ══ */
+.yp-shell { background:#fff9e6; display:flex; flex-direction:column; height:100%; font-family:Tahoma,sans-serif; }
+.yp-header { background:linear-gradient(90deg,#f5a623,#d88010); padding:10px 14px; color:#fff; flex-shrink:0; }
+.yp-title { font-size:15px; font-weight:bold; }
+.yp-sub { font-size:10px; opacity:0.85; }
+.yp-body { flex:1; overflow-y:auto; padding:10px; }
+.yp-entry { background:#fff; border:1px solid #f0d090; border-radius:4px; padding:8px 10px; margin-bottom:7px; }
+.yp-entry-name { font-weight:bold; color:#8b6914; font-size:12px; }
+.yp-entry-info { font-size:10px; color:#666; margin-top:2px; line-height:1.6; }
+.yp-add-form { background:#fff8e0; border:1px solid #f0d090; border-radius:4px; padding:10px; margin-top:6px; }
+.yp-add-title { font-weight:bold; color:#8b6914; margin-bottom:7px; font-size:11px; }
+.yp-field { display:flex; flex-direction:column; gap:2px; margin-bottom:5px; }
+.yp-label { font-size:10px; color:#666; }
+.yp-input { height:20px; border:1px solid #ccc; padding:0 4px; font-size:11px; font-family:Tahoma,sans-serif; outline:none; border-radius:2px; color:#000; background:#fff; }
+.yp-submit { height:22px; background:linear-gradient(180deg,#f5c842,#d09010); border:1px solid #a06800; border-radius:3px; font-size:11px; cursor:pointer; padding:0 12px; color:#000; font-weight:bold; font-family:Tahoma,sans-serif; margin-top:4px; }
+.yp-submit:hover { filter:brightness(1.05); }
+
+/* ══ PAINT ══ */
+.paint-shell { background:#d4d0c8; display:flex; flex-direction:column; height:100%; font-family:Tahoma,sans-serif; }
+.paint-toolbar { display:flex; gap:3px; padding:3px 6px; border-bottom:1px solid #808080; background:#d4d0c8; flex-wrap:wrap; align-items:center; }
+.paint-tool { width:26px; height:26px; background:#d4d0c8; border-top:1px solid #fff; border-left:1px solid #fff; border-right:1px solid #404040; border-bottom:1px solid #404040; cursor:pointer; font-size:14px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.paint-tool:hover,.paint-tool.active { border-top:1px solid #404040; border-left:1px solid #404040; border-right:1px solid #fff; border-bottom:1px solid #fff; }
+.paint-color-bar { display:flex; gap:2px; padding:2px 6px; border-top:1px solid #808080; flex-wrap:wrap; background:#d4d0c8; flex-shrink:0; }
+.paint-color { width:16px; height:16px; cursor:pointer; border:1px solid #404040; flex-shrink:0; }
+.paint-color:hover { outline:2px solid #000; }
+.paint-canvas-wrap { flex:1; background:#777; padding:4px; overflow:hidden; display:flex; }
+#paint-canvas { background:#fff; cursor:crosshair; }
+
+/* ══ MY SPACE (personal about) ══ */
+.myspace-shell { background:#1a0830; display:flex; flex-direction:column; height:100%; color:#c0a0e0; padding:12px; gap:8px; overflow-y:auto; font-family:Tahoma,sans-serif; font-size:11px; }
+.myspace-section { background:rgba(255,255,255,0.05); border:1px solid rgba(180,100,255,0.2); border-radius:4px; padding:10px; }
+.myspace-section-title { color:#b080ff; font-size:11px; font-weight:bold; margin-bottom:6px; letter-spacing:1px; text-transform:uppercase; }
+.myspace-text { font-size:11px; line-height:1.75; color:#9a78c0; }
+
+#mp-file-input { display:none; }
+
+/* ══ OWNER PANEL ══ */
+#owner-panel {
+  position:fixed; inset:0; z-index:99999;
+  background:rgba(0,0,0,0.85);
+  display:none; align-items:center; justify-content:center;
+  font-family:Tahoma,sans-serif;
+}
+#owner-panel.open { display:flex; }
+.op-shell {
+  background:#1a1a2e;
+  border:1px solid #3a3a6a;
+  border-radius:8px;
+  width:680px; max-width:96vw;
+  max-height:90vh;
+  display:flex; flex-direction:column;
+  box-shadow:0 0 40px rgba(0,100,255,0.2);
+  overflow:hidden;
+}
+.op-titlebar {
+  background:linear-gradient(90deg,#1a3a8a,#2a60c8);
+  padding:10px 16px;
+  display:flex; align-items:center; justify-content:space-between;
+  flex-shrink:0;
+}
+.op-title { color:#fff; font-size:14px; font-weight:bold; display:flex; align-items:center; gap:8px; }
+.op-close {
+  background:rgba(255,255,255,0.15); border:1px solid rgba(255,255,255,0.3);
+  color:#fff; width:24px; height:24px; border-radius:4px;
+  cursor:pointer; font-size:13px; display:flex; align-items:center; justify-content:center;
+}
+.op-close:hover { background:rgba(255,80,80,0.5); }
+.op-hint { color:rgba(255,255,255,0.5); font-size:10px; padding:6px 16px; background:#111122; flex-shrink:0; border-bottom:1px solid #2a2a4a; }
+.op-tabs {
+  display:flex; background:#111122; border-bottom:1px solid #2a2a4a; flex-shrink:0; overflow-x:auto;
+}
+.op-tab {
+  padding:8px 16px; font-size:11px; color:#6a7aaa; cursor:pointer;
+  border-bottom:2px solid transparent; white-space:nowrap; font-family:Tahoma,sans-serif;
+}
+.op-tab:hover { color:#aab; }
+.op-tab.active { color:#7aadff; border-bottom-color:#7aadff; }
+.op-body { flex:1; overflow-y:auto; padding:16px; scrollbar-width:thin; scrollbar-color:#2a2a4a transparent; }
+.op-section { margin-bottom:20px; }
+.op-section-title { color:#7aadff; font-size:11px; font-weight:bold; letter-spacing:1px; text-transform:uppercase; margin-bottom:10px; padding-bottom:4px; border-bottom:1px solid #2a2a4a; }
+.op-row { display:flex; flex-direction:column; gap:4px; margin-bottom:10px; }
+.op-label { color:#8898bb; font-size:10px; letter-spacing:0.5px; }
+.op-input {
+  background:#0d0d1e; border:1px solid #2a2a4a; border-radius:4px;
+  color:#c8d8ff; font-size:11px; font-family:Tahoma,sans-serif;
+  padding:6px 8px; outline:none; width:100%;
+}
+.op-input:focus { border-color:#4a6aaa; }
+.op-textarea {
+  background:#0d0d1e; border:1px solid #2a2a4a; border-radius:4px;
+  color:#c8d8ff; font-size:11px; font-family:Tahoma,sans-serif;
+  padding:6px 8px; outline:none; width:100%; resize:vertical; min-height:70px; line-height:1.5;
+}
+.op-textarea:focus { border-color:#4a6aaa; }
+.op-btn {
+  background:linear-gradient(180deg,#2a5aaa,#1a3a8a);
+  border:1px solid #3a5aaa; border-radius:4px; color:#fff;
+  font-size:11px; font-family:Tahoma,sans-serif; cursor:pointer;
+  padding:6px 14px; transition:filter .15s;
+}
+.op-btn:hover { filter:brightness(1.15); }
+.op-btn.danger { background:linear-gradient(180deg,#aa2a2a,#8a1a1a); border-color:#aa3a3a; }
+.op-btn.success { background:linear-gradient(180deg,#2aaa4a,#1a8a3a); border-color:#3aaa5a; }
+.op-row-h { display:flex; gap:8px; align-items:flex-end; }
+.op-row-h .op-input { flex:1; }
+.op-entry-card {
+  background:#0d0d1e; border:1px solid #2a2a4a; border-radius:4px;
+  padding:8px 10px; margin-bottom:6px; display:flex; flex-direction:column; gap:4px;
+}
+.op-entry-card-top { display:flex; align-items:center; justify-content:space-between; }
+.op-entry-title { color:#c8d8ff; font-size:11px; font-weight:bold; }
+.op-entry-date { color:#4a5a7a; font-size:10px; }
+.op-entry-body { color:#8898bb; font-size:10px; line-height:1.5; white-space:pre-wrap; }
+.op-entry-actions { display:flex; gap:4px; }
+.op-tag {
+  display:inline-flex; align-items:center; gap:4px;
+  background:#1a2a4a; border:1px solid #2a3a6a; border-radius:3px;
+  color:#8898bb; font-size:10px; padding:2px 6px; cursor:pointer;
+}
+.op-tag:hover { border-color:#7aadff; color:#7aadff; }
+.op-tag.on { background:#1a3a6a; border-color:#7aadff; color:#7aadff; }
+.op-tags-row { display:flex; flex-wrap:wrap; gap:4px; margin-bottom:10px; }
+.op-color-row { display:flex; gap:8px; flex-wrap:wrap; }
+.op-color-chip {
+  width:32px; height:32px; border-radius:4px; cursor:pointer;
+  border:2px solid transparent; transition:border-color .15s;
+}
+.op-color-chip:hover, .op-color-chip.selected { border-color:#7aadff; }
+.op-export-bar {
+  background:#0a0a18; border-top:1px solid #2a2a4a;
+  padding:12px 16px; display:flex; align-items:center; justify-content:space-between;
+  flex-shrink:0;
+}
+.op-export-hint { color:#4a5a7a; font-size:10px; line-height:1.5; }
+.op-export-btn {
+  background:linear-gradient(180deg,#2aaa5a,#1a8a3a);
+  border:1px solid #3aaa5a; border-radius:6px; color:#fff;
+  font-size:13px; font-weight:bold; font-family:Tahoma,sans-serif;
+  cursor:pointer; padding:8px 20px; white-space:nowrap;
+}
+.op-export-btn:hover { filter:brightness(1.1); }
+.op-divider { border:none; border-top:1px solid #2a2a4a; margin:12px 0; }
+.op-two-col { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+@media(max-width:500px){ .op-two-col { grid-template-columns:1fr; } }
+</style>
+</head>
+<body>
+
+<!-- ══════════ BIOS ══════════ -->
+<div id="bios-screen" class="screen">
+  <div id="bios-content"><div><span class="bios-hi">Award Modular BIOS v6.00PG</span></div><div>Copyright (C) 1984-2003, Award Software, Inc.</div><div>&nbsp;</div><div><span class="bios-bar"> MY-PC </span>  BIOS Date: 10/25/01  Ver: 08.00.10</div><div>&nbsp;</div><div>CPU : Intel Pentium 4  1800MHz</div><div>Memory Test : <span class="bios-hi">524288K</span> OK</div><div>&nbsp;</div><div>Detecting Primary Master ... WDC WD400BB  40GB</div><div>Detecting Primary Slave  ... None</div><div>&nbsp;</div><div>USB Device(s): 1 Keyboard, 1 Mouse</div><div>PnP Init Completed.</div><div>Verifying DMI Pool Data .......</div><div><span class="bios-hi">Press DEL to enter SETUP, F8 for Boot Menu</span></div><div>&nbsp;</div><div>Loading Windows XP <span class="bios-cursor"></span></div></div>
+</div>
+
+<!-- ══════════ BOOT ══════════ -->
+<div id="boot-screen" class="screen">
+  <div class="xp-logo-wrap">
+    <div class="xp-flag"><div></div><div></div><div></div><div></div></div>
+    <div class="xp-wordmark">
+      <div class="xp-word1">Windows</div>
+      <div class="xp-word2">XP</div>
+    </div>
+  </div>
+  <div class="xp-tagline">Personal Edition</div>
+  <div class="xp-bar-wrap"><div id="boot-bar" style="width: 100%;"></div></div>
+</div>
+
+<!-- ══════════ WELCOME ══════════ -->
+<div id="welcome-screen" class="screen">
+  <div class="welcome-top">
+    <div class="welcome-top-title">Windows XP</div>
+    <div class="welcome-top-sub">To begin, click your user name</div>
+  </div>
+  <div class="welcome-mid">
+    <!-- GUEST -->
+    <div class="user-card" onclick="selectUser('guest')">
+      <div class="user-avatar">🌐</div>
+      <div class="user-name">Guest</div>
+      <div class="user-hint">click to explore</div>
+      <div class="pw-prompt show" id="guest-pw">
+        <div class="pw-row">
+          <input type="password" class="pw-input-xp" id="guest-pw-input" placeholder="no password needed" onkeydown="if(event.key==='Enter')loginUser('guest')">
+          <div class="pw-go" onclick="loginUser('guest')">→</div>
+        </div>
+        <div class="pw-error" id="guest-err"></div>
+      </div>
+    </div>
+    <!-- PERSONAL -->
+    <div class="user-card" onclick="selectUser('personal')">
+      <div class="user-avatar">🔮</div>
+      <div class="user-name">[ your name ]</div>
+      <div class="user-hint">friends only</div>
+      <div class="pw-prompt" id="personal-pw">
+        <div class="pw-row">
+          <input type="password" class="pw-input-xp" id="personal-pw-input" placeholder="password" onkeydown="if(event.key==='Enter')loginUser('personal')">
+          <div class="pw-go" onclick="loginUser('personal')">→</div>
+        </div>
+        <div class="pw-error" id="personal-err"></div>
+      </div>
+    </div>
+  </div>
+  <div class="welcome-bottom">
+    <div class="welcome-power" onclick="location.reload()">⏻ Turn off computer</div>
+  </div>
+</div>
+
+<!-- ══════════ GUEST DESKTOP ══════════ -->
+<div id="guest-desktop" class="screen fade-in active">
+  <div class="desktop-area" onclick="deselectAll('guest')" style="background: url(&quot;https://tjkelly.com/blog/windows-xp-desktop-backgrounds/&quot;) center center / cover no-repeat;">
+    <div class="desktop-icons">
+      <div class="icon" ondblclick="openWin('g-about','guest')" style="display: flex;"><div class="icon-img">🖥️</div><div class="icon-label">My Computer</div></div>
+      <div class="icon" ondblclick="openWin('g-ie','guest')" style="display: flex;"><div class="icon-img">🌐</div><div class="icon-label">Internet Explorer</div></div>
+      <div class="icon" ondblclick="openWin('g-aim','guest')" style="display: flex;"><div class="icon-img">🏃🏻‍♀️</div><div class="icon-label">AIM</div></div>
+      <div class="icon" ondblclick="openWin('g-discord','guest')" style="display: flex;"><div class="icon-img">💬</div><div class="icon-label">Discord</div></div>
+      <div class="icon" ondblclick="openWin('g-vent','guest')" style="display: flex;"><div class="icon-img">🎙️</div><div class="icon-label">Ventrilo</div></div>
+      <div class="icon" ondblclick="openWin('g-yp','guest')" style="display: flex;"><div class="icon-img">📒</div><div class="icon-label">Yellow Pages</div></div>
+      <div class="icon" ondblclick="openWin('g-mp','guest')" style="display: flex;"><div class="icon-img">🎵</div><div class="icon-label">Media Player</div></div>
+      <div class="icon" ondblclick="openWin('g-trash','guest')" style="display: flex;"><div class="icon-img">🗑️</div><div class="icon-label">Recycle Bin</div></div>
+    </div>
+
+    <!-- GUEST WINDOWS -->
+    <div class="win-window" id="g-about" style="top:60px;left:100px;width:380px;height:270px;">
+      <div class="title-bar tb-guest-color" onmousedown="startDrag(event,'g-about')">
+        <div class="title-bar-left"><span class="title-icon">🖥️</span><span>My Computer</span></div>
+        <div class="tb-btns"><div class="tb-btn tb-min">─</div><div class="tb-btn tb-max">□</div><div class="tb-btn tb-cls" onclick="closeWin('g-about')">✕</div></div>
+      </div>
+      <div class="win-content">
+        <strong>Welcome 👋</strong><br><br>
+        You've booted into my corner of the internet — a sovereign space. No ads, no algorithm, no performance.<br><br>
+        Look around. Click the icons. Open things. There's more here than it looks at first.<br><br>
+        <em style="color:#888;">The deeper you go, the more you find.</em>
+      </div>
+    </div>
+
+    <div class="win-window" id="g-ie" style="top:70px;left:120px;width:450px;height:360px;">
+      <div class="title-bar tb-guest-color" onmousedown="startDrag(event,'g-ie')">
+        <div class="title-bar-left"><span class="title-icon">🌐</span><span>Internet Explorer — Xanga</span></div>
+        <div class="tb-btns"><div class="tb-btn tb-min">─</div><div class="tb-btn tb-max">□</div><div class="tb-btn tb-cls" onclick="closeWin('g-ie')">✕</div></div>
+      </div>
+      <div class="win-content" style="padding:0;">
+        <div class="xanga-shell"><div class="xanga-header xanga-hd-guest">
+            <div class="xanga-title">[ your xanga title ]</div>
+            <div class="xanga-sub">thoughts &amp; things — est. 2026</div>
+          </div><div class="xanga-entry"><div class="xanga-entry-title">first entry.</div><div class="xanga-entry-date">Tuesday, March 31, 2026</div><div class="xanga-entry-body">this is where i write. no algorithm, no likes, no performance. just words.<br><br>check back whenever — i'll be here.<br><br>— me</div></div><div class="xanga-entry"><div class="xanga-entry-title">more coming.</div><div class="xanga-entry-date">soon</div><div class="xanga-entry-body">this page grows as i do. you'll find your way back if it's for you.</div></div><div class="xanga-comments">💬 0 comments — leave one</div></div>
+      </div>
+    </div>
+
+    <div class="win-window" id="g-aim" style="top: 80px; left: 140px; width: 270px; height: 320px; z-index: 22;">
+      <div class="title-bar tb-guest-color" onmousedown="startDrag(event,'g-aim')">
+        <div class="title-bar-left"><span class="title-icon">🟡</span><span>AIM — Buddy List</span></div>
+        <div class="tb-btns"><div class="tb-btn tb-min">─</div><div class="tb-btn tb-cls" onclick="closeWin('g-aim')">✕</div></div>
+      </div>
+      <div class="win-content" style="padding:0;">
+        <div class="aim-shell">
+          <div class="aim-buddy-list">
+            <div class="aim-group">Online (1)</div>
+            <div class="aim-buddy" ondblclick="openWin('g-aim-chat','guest')"><div class="aim-dot on"></div>wannabgangstafoo 🟡</div>
+            <div class="aim-group">Away (1)</div>
+            <div class="aim-buddy"><div class="aim-dot away"></div>brb_getting_snacks</div>
+            <div class="aim-group">Offline (1)</div>
+            <div class="aim-buddy"><div class="aim-dot off"></div>xXx_away_xXx</div>
+          </div>
+          <div class="aim-controls">
+            <button class="aim-cbtn" ondblclick="openWin('g-aim-chat','guest')">IM</button>
+            <button class="aim-cbtn">Away</button>
+            <button class="aim-cbtn">Prefs</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="win-window" id="g-aim-chat" style="top:100px;left:160px;width:360px;height:300px;">
+      <div class="title-bar tb-guest-color" onmousedown="startDrag(event,'g-aim-chat')">
+        <div class="title-bar-left"><span class="title-icon">🟡</span><span>IM with wannabgangstafoo</span></div>
+        <div class="tb-btns"><div class="tb-btn tb-cls" onclick="closeWin('g-aim-chat')">✕</div></div>
+      </div>
+      <div class="win-content" style="padding:0;">
+        <div class="aim-chat-shell">
+          <div class="aim-log" id="aim-log">
+            <div class="aim-msg-sys">wannabgangstafoo has entered the chat.</div>
+            <div class="aim-msg-sys">— a door opens —</div><br>
+            <div class="aim-msg-them"><strong>wannabgangstafoo:</strong> hey! welcome 👋 ask me anything. my perspective changes daily — treat every answer as a snapshot, not a fact.</div>
+          </div>
+          <div class="aim-input-row">
+            <input type="text" class="aim-input" id="aim-input" placeholder="say something..." onkeydown="if(event.key==='Enter')sendAIM()">
+            <button class="aim-send" onclick="sendAIM()">Send</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="win-window" id="g-discord" style="top:90px;left:150px;width:320px;height:240px;">
+      <div class="title-bar tb-guest-color" onmousedown="startDrag(event,'g-discord')">
+        <div class="title-bar-left"><span class="title-icon">💬</span><span>Discord</span></div>
+        <div class="tb-btns"><div class="tb-btn tb-cls" onclick="closeWin('g-discord')">✕</div></div>
+      </div>
+      <div class="win-content">
+        <strong>💬 Discord</strong><br><br>
+        Community server coming soon. Word of mouth only.<br><br>
+        When it's ready, the link will be here.<br><br>
+        <em style="color:#888;">No invite spam. You'll hear about it if you're supposed to.</em>
+      </div>
+    </div>
+
+    <div class="win-window" id="g-vent" style="top:90px;left:155px;width:300px;height:220px;">
+      <div class="title-bar tb-guest-color" onmousedown="startDrag(event,'g-vent')">
+        <div class="title-bar-left"><span class="title-icon">🎙️</span><span>Ventrilo</span></div>
+        <div class="tb-btns"><div class="tb-btn tb-cls" onclick="closeWin('g-vent')">✕</div></div>
+      </div>
+      <div class="win-content">
+        <strong>🎙️ Ventrilo</strong><br><br>
+        For those who remember when voice chat felt like magic.<br><br>
+        <em style="color:#888;">Server details shared with network members only.</em>
+      </div>
+    </div>
+
+    <div class="win-window" id="g-yp" style="top:80px;left:130px;width:390px;height:400px;">
+      <div class="title-bar tb-guest-color" onmousedown="startDrag(event,'g-yp')">
+        <div class="title-bar-left"><span class="title-icon">📒</span><span>Yellow Pages — The Network Directory</span></div>
+        <div class="tb-btns"><div class="tb-btn tb-min">─</div><div class="tb-btn tb-cls" onclick="closeWin('g-yp')">✕</div></div>
+      </div>
+      <div class="win-content" style="padding:0;">
+        <div class="yp-shell">
+          <div class="yp-header">
+            <div class="yp-title">📒 The Network Directory</div>
+            <div class="yp-sub">word of mouth. self-entered. community owned.</div>
+          </div>
+          <div class="yp-body" id="yp-body">
+            <div class="yp-entry">
+              <div class="yp-entry-name">[ Your Name / Business ]</div>
+              <div class="yp-entry-info">💼 what you do · 🔗 yourlink.com · ✉️ <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="c1b8aeb4b381a4aca0a8adefa2aeac">[email&nbsp;protected]</a><br>A short line about who you are and what you offer.</div>
+            </div>
+            <div class="yp-add-form">
+              <div class="yp-add-title">➕ Add yourself to the directory</div>
+              <div class="yp-field"><span class="yp-label">Name / Business</span><input class="yp-input" id="yp-name" placeholder="your name or business"></div>
+              <div class="yp-field"><span class="yp-label">What you do</span><input class="yp-input" id="yp-what" placeholder="artist, coder, chef..."></div>
+              <div class="yp-field"><span class="yp-label">Contact / Link</span><input class="yp-input" id="yp-contact" placeholder="email, site, @handle"></div>
+              <button class="yp-submit" onclick="addYP()">Add to Directory</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="win-window" id="g-mp" style="top:80px;left:130px;width:360px;height:410px;">
+      <div class="title-bar tb-guest-color" onmousedown="startDrag(event,'g-mp')">
+        <div class="title-bar-left"><span class="title-icon">🎵</span><span>Media Player</span></div>
+        <div class="tb-btns"><div class="tb-btn tb-min">─</div><div class="tb-btn tb-max">□</div><div class="tb-btn tb-cls" onclick="closeWin('g-mp')">✕</div></div>
+      </div>
+      <div class="win-content" style="padding:0;" id="gmp-wrap">
+<div class="mp-shell">
+  <div class="mp-vis"><canvas id="vc-gmpwrap" width="0" height="80"></canvas></div>
+  <div class="mp-display">
+    <div class="mp-track" id="mt-gmpwrap">— NO TRACK LOADED —</div>
+    <div class="mp-scrub-track" id="ms-gmpwrap"><div class="mp-scrub-fill" id="mf-gmpwrap"></div></div>
+    <div class="mp-times"><span id="mc-gmpwrap">0:00</span><span id="md-gmpwrap">0:00</span></div>
+  </div>
+  <div class="mp-controls">
+    <button class="mp-btn" id="mshuf-gmpwrap">⇄</button>
+    <button class="mp-btn" id="mprev-gmpwrap">⏮</button>
+    <button class="mp-btn mp-play" id="mplay-gmpwrap">▶</button>
+    <button class="mp-btn" id="mnext-gmpwrap">⏭</button>
+    <button class="mp-btn" id="mrep-gmpwrap">↺</button>
+    <div class="mp-vol"><span class="mp-vol-icon">♪</span><input type="range" class="mp-vol-slider" id="mvol-gmpwrap" min="0" max="100" value="80" step="1"></div>
+  </div>
+  <div class="mp-pl">
+    <div class="mp-pl-head"><span class="mp-pl-title">PLAYLIST</span><button class="mp-pl-add" id="mpadd-gmpwrap">+ ADD MIXES</button></div>
+    <div id="mpl-gmpwrap"><div class="mp-empty">click + add mixes to load your tracks</div></div>
+  </div>
+</div></div>
+    </div>
+
+    <div class="win-window" id="g-trash" style="top:80px;left:130px;width:360px;height:280px;">
+      <div class="title-bar tb-guest-color" onmousedown="startDrag(event,'g-trash')">
+        <div class="title-bar-left"><span class="title-icon">🗑️</span><span>Recycle Bin</span></div>
+        <div class="tb-btns"><div class="tb-btn tb-cls" onclick="closeWin('g-trash')">✕</div></div>
+      </div>
+      <div class="win-content">
+        <strong>🗑️ What I've thrown away</strong><br><br>
+        <em>Old beliefs. Comfortable lies. Fear dressed up as caution.</em><br><br>
+        — "I'm not good enough to put this out there."<br>
+        — "People won't get it."<br>
+        — "I should wait until it's perfect."<br>
+        — "Facts don't change."<br><br>
+        <span style="color:#aaa;font-size:10px;">Deleted. Not forgotten. Just no longer running the show.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- GUEST START MENU -->
+  <div class="start-menu" id="guest-sm">
+    <div class="sm-head sm-head-guest"><div class="sm-avatar">🌐</div><div class="sm-username">Guest</div></div>
+    <div class="sm-body">
+      <div class="sm-left">
+        <div class="sm-item" onclick="openWin('g-ie','guest');closeStart('guest')"><span>🌐</span><span>Xanga Blog</span></div>
+        <div class="sm-item" onclick="openWin('g-aim','guest');closeStart('guest')"><span>🟡</span><span>AIM</span></div>
+        <div class="sm-item" onclick="openWin('g-yp','guest');closeStart('guest')"><span>📒</span><span>Yellow Pages</span></div>
+        <div class="sm-item" onclick="openWin('g-mp','guest');closeStart('guest')"><span>🎵</span><span>Media Player</span></div>
+        <hr class="sm-divider">
+        <div class="sm-item" onclick="openWin('g-trash','guest');closeStart('guest')"><span>🗑️</span><span>Recycle Bin</span></div>
+      </div>
+      <div class="sm-right">
+        <div class="sm-item" onclick="openWin('g-about','guest');closeStart('guest')"><span>🖥️</span><span>My PC</span></div>
+        <div class="sm-item" onclick="openWin('g-discord','guest');closeStart('guest')"><span>💬</span><span>Discord</span></div>
+        <div class="sm-item" onclick="openWin('g-vent','guest');closeStart('guest')"><span>🎙️</span><span>Ventrilo</span></div>
+      </div>
+    </div>
+    <div class="sm-footer">
+      <div class="sm-fbtn" onclick="goWelcome()">🔄 Switch User</div>
+      <div class="sm-fbtn" onclick="doShutdown()">⏻ Shut Down</div>
+    </div>
+  </div>
+
+  <!-- GUEST TASKBAR -->
+  <div class="taskbar taskbar-guest">
+    <button class="start-btn start-btn-guest" onclick="toggleStart('guest');event.stopPropagation()">🪟 Start</button>
+    <div class="tb-divider"></div>
+    <div id="guest-tb-wins"></div>
+    <div class="tb-space"></div>
+    <div class="system-tray">
+      <span class="tray-user">Guest</span>
+      <span>🔊</span><span>🌐</span>
+      <span id="guest-clock">5:54 PM</span>
+    </div>
+  </div>
+  <div class="balloon" id="guest-balloon"><div class="balloon-title">Welcome 👋</div>Look around. Click the icons to explore.</div>
+</div>
+
+<!-- ══════════ PERSONAL DESKTOP ══════════ -->
+<div id="personal-desktop" class="screen fade-in">
+  <div class="desktop-area" onclick="deselectAll('personal')">
+    <div class="desktop-icons">
+      <div class="icon" ondblclick="openWin('p-about','personal')" style="display: flex;"><div class="icon-img">👩🏻‍💻</div><div class="icon-label">Myspace</div></div>
+      <div class="icon" ondblclick="openWin('p-ie','personal')" style="display: flex;"><div class="icon-img">🌐</div><div class="icon-label">My Xanga</div></div>
+      <div class="icon" ondblclick="openWin('p-aim','personal')" style="display: flex;"><div class="icon-img">🟡</div><div class="icon-label">AIM</div></div>
+      <div class="icon" ondblclick="openWin('p-paint','personal')" style="display: flex;"><div class="icon-img">🎨</div><div class="icon-label">Paint — My Art</div></div>
+      <div class="icon" ondblclick="openWin('p-mp','personal')" style="display: flex;"><div class="icon-img">🎵</div><div class="icon-label">Media Player</div></div>
+      <div class="icon" ondblclick="openWin('p-discord','personal')" style="display: flex;"><div class="icon-img">💬</div><div class="icon-label">Discord</div></div>
+      <div class="icon" ondblclick="openWin('p-vent','personal')" style="display: flex;"><div class="icon-img">🎙️</div><div class="icon-label">Ventrilo</div></div>
+      <div class="icon" ondblclick="openWin('p-trash','personal')" style="display: flex;"><div class="icon-img">🗑️</div><div class="icon-label">Recycle Bin</div></div>
+    </div>
+
+    <!-- PERSONAL WINDOWS -->
+    <div class="win-window" id="p-about" style="top: 60px; left: 100px; width: 400px; height: 310px; z-index: 12;">
+      <div class="title-bar tb-personal-color" onmousedown="startDrag(event,'p-about')">
+        <div class="title-bar-left"><span class="title-icon">🔮</span><span>My Space — the real one</span></div>
+        <div class="tb-btns"><div class="tb-btn tb-min">─</div><div class="tb-btn tb-max">□</div><div class="tb-btn tb-cls" onclick="closeWin('p-about')">✕</div></div>
+      </div>
+      <div class="win-content" style="padding:0;">
+        <div class="myspace-shell">
+          <div class="myspace-section">
+            <div class="myspace-section-title">Who I am</div>
+            <div class="myspace-text">You found the password. That says something about you.<br><br>This is the unfiltered version — no performance, no algorithm. I'm always learning. I don't commit to facts. I commit to growth. My truth today might not be my truth tomorrow and that's exactly the point.</div>
+          </div>
+          <div class="myspace-section">
+            <div class="myspace-section-title">Core values</div>
+            <div class="myspace-text">— always learning, always evolving<br>— fact and truth are not the same thing<br>— online relationships are real relationships<br>— word of mouth is the only algorithm I trust<br>— sovereign from tech giants, on my own terms</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="win-window" id="p-ie" style="top: 70px; left: 120px; width: 460px; height: 380px; z-index: 14;">
+      <div class="title-bar tb-personal-color" onmousedown="startDrag(event,'p-ie')">
+        <div class="title-bar-left"><span class="title-icon">🌐</span><span>My Xanga — private entries</span></div>
+        <div class="tb-btns"><div class="tb-btn tb-min">─</div><div class="tb-btn tb-cls" onclick="closeWin('p-ie')">✕</div></div>
+      </div>
+      <div class="win-content" style="padding:0;">
+        <div class="xanga-shell"><div class="xanga-header xanga-hd-personal">
+            <div class="xanga-title">[ private xanga ]</div>
+            <div class="xanga-sub">the unfiltered version — for people who get it</div>
+          </div><div class="xanga-entry"><div class="xanga-entry-title">unsure</div><div class="xanga-entry-date">Tuesday, March 31, 2026</div><div class="xanga-entry-body">unsure what this all means. what this website is for, what I'm hoping would come out of "this". creating this website has been a year in the making and while busy trying to figure out what it is that I'm trying to do. the cool thing about learning is, once you do something, well you've already done it for the first time. isn't that the hardest part? I held on to the thought that someone, somewhere will tell me where/what I was meant to do. So I held onto job after job, thinking, "This is it", make the best of it, hoping to find the thing that makes everyone seasoned employee stay and do the job, and why maybe being grateful for it will get me through it. Suddenly those practice interview questions become the story I live by, a creed. "Where do I see myself in 5 years?" "Here" I say enthusiastically. Here's me investing in myself and working for myself. In five years, I see myself being more confident in making my dreams a reality and make even bigger dreams. I actually call ideas I want to try on experiments. Here's one of them. Thank you for being in my life and continue to encourage me. Whether or not you know, you're my support circle and I'm so lucky you're here. Welcome to the beginning of something new!</div></div><div class="xanga-entry"><div class="xanga-entry-title">the password thing.</div><div class="xanga-entry-date">if you're here, you found it.</div><div class="xanga-entry-body">this page is for the curious ones. the ones who went deeper. that means something.<br><br>more real entries coming. this is where i think out loud — no audience, just truth.</div></div><div class="xanga-entry"><div class="xanga-entry-title">on facts vs truth</div><div class="xanga-entry-date">a thought i keep returning to</div><div class="xanga-entry-body">a fact is a fact until it isn't. truth is something you live. i don't commit to facts — i commit to learning.</div></div><div class="xanga-comments" style="background:#2a1040;color:#9b59b6;">💬 leave a thought — i actually read these</div></div>
+      </div>
+    </div>
+
+    <div class="win-window" id="p-aim" style="top: 80px; left: 140px; width: 280px; height: 320px; z-index: 16;">
+      <div class="title-bar tb-personal-color" onmousedown="startDrag(event,'p-aim')">
+        <div class="title-bar-left"><span class="title-icon">🟡</span><span>AIM — personal list</span></div>
+        <div class="tb-btns"><div class="tb-btn tb-cls" onclick="closeWin('p-aim')">✕</div></div>
+      </div>
+      <div class="win-content" style="padding:0;">
+        <div class="aim-shell">
+          <div class="aim-buddy-list">
+            <div class="aim-group">my people</div>
+            <div class="aim-buddy"><div class="aim-dot on"></div>wannabgangstafoo 🟡</div>
+            <div class="aim-buddy"><div class="aim-dot on"></div>the_network</div>
+            <div class="aim-buddy"><div class="aim-dot away"></div>real_ones_only</div>
+          </div>
+          <div class="aim-controls">
+            <button class="aim-cbtn">Chat</button>
+            <button class="aim-cbtn">Profiles</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="win-window" id="p-paint" style="top:60px;left:100px;width:500px;height:420px;">
+      <div class="title-bar tb-personal-color" onmousedown="startDrag(event,'p-paint')">
+        <div class="title-bar-left"><span class="title-icon">🎨</span><span>Paint — My Visual Art (1 of 1)</span></div>
+        <div class="tb-btns"><div class="tb-btn tb-min">─</div><div class="tb-btn tb-max">□</div><div class="tb-btn tb-cls" onclick="closeWin('p-paint')">✕</div></div>
+      </div>
+      <div class="win-content" style="padding:0;">
+        <div class="paint-shell">
+          <div class="paint-toolbar">
+            <div class="paint-tool active" id="pt-pencil" onclick="setTool('pencil')" title="Pencil">✏️</div>
+            <div class="paint-tool" id="pt-eraser" onclick="setTool('eraser')" title="Eraser">🧹</div>
+            <div class="paint-tool" id="pt-clear" onclick="clearCanvas()" title="Clear All">🗑️</div>
+            <span style="font-size:10px;color:#000;margin-left:6px;align-self:center;">Size:</span>
+            <input type="range" id="brush-size" min="1" max="24" value="3" style="width:60px;height:14px;align-self:center;margin-left:3px;">
+          </div>
+          <div class="paint-color-bar">
+            <div class="paint-color" style="background:#000" onclick="setPaintColor('#000')"></div>
+            <div class="paint-color" style="background:#fff;border:1px solid #999" onclick="setPaintColor('#fff')"></div>
+            <div class="paint-color" style="background:#f00" onclick="setPaintColor('#f00')"></div>
+            <div class="paint-color" style="background:#0a0" onclick="setPaintColor('#0a0')"></div>
+            <div class="paint-color" style="background:#00c" onclick="setPaintColor('#00c')"></div>
+            <div class="paint-color" style="background:#ff0" onclick="setPaintColor('#ff0')"></div>
+            <div class="paint-color" style="background:#f0f" onclick="setPaintColor('#f0f')"></div>
+            <div class="paint-color" style="background:#0ff" onclick="setPaintColor('#0ff')"></div>
+            <div class="paint-color" style="background:#f80" onclick="setPaintColor('#f80')"></div>
+            <div class="paint-color" style="background:#80f" onclick="setPaintColor('#80f')"></div>
+            <div class="paint-color" style="background:#084" onclick="setPaintColor('#084')"></div>
+            <div class="paint-color" style="background:#840" onclick="setPaintColor('#840')"></div>
+            <div class="paint-color" style="background:#048" onclick="setPaintColor('#048')"></div>
+            <div class="paint-color" style="background:#888" onclick="setPaintColor('#888')"></div>
+            <div class="paint-color" style="background:#ccc;border:1px solid #999" onclick="setPaintColor('#ccc')"></div>
+          </div>
+          <div class="paint-canvas-wrap">
+            <canvas id="paint-canvas" width="460" height="280"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="win-window" id="p-mp" style="top: 79px; left: 130px; width: 360px; height: 410px; z-index: 18;">
+      <div class="title-bar tb-personal-color" onmousedown="startDrag(event,'p-mp')">
+        <div class="title-bar-left"><span class="title-icon">🎵</span><span>Media Player — My Mixes</span></div>
+        <div class="tb-btns"><div class="tb-btn tb-min">─</div><div class="tb-btn tb-max">□</div><div class="tb-btn tb-cls" onclick="closeWin('p-mp')">✕</div></div>
+      </div>
+      <div class="win-content" style="padding:0;" id="pmp-wrap">
+<div class="mp-shell">
+  <div class="mp-vis"><canvas id="vc-pmpwrap" width="0" height="80"></canvas></div>
+  <div class="mp-display">
+    <div class="mp-track" id="mt-pmpwrap">— NO TRACK LOADED —</div>
+    <div class="mp-scrub-track" id="ms-pmpwrap"><div class="mp-scrub-fill" id="mf-pmpwrap"></div></div>
+    <div class="mp-times"><span id="mc-pmpwrap">0:00</span><span id="md-pmpwrap">0:00</span></div>
+  </div>
+  <div class="mp-controls">
+    <button class="mp-btn" id="mshuf-pmpwrap">⇄</button>
+    <button class="mp-btn" id="mprev-pmpwrap">⏮</button>
+    <button class="mp-btn mp-play" id="mplay-pmpwrap">▶</button>
+    <button class="mp-btn" id="mnext-pmpwrap">⏭</button>
+    <button class="mp-btn" id="mrep-pmpwrap">↺</button>
+    <div class="mp-vol"><span class="mp-vol-icon">♪</span><input type="range" class="mp-vol-slider" id="mvol-pmpwrap" min="0" max="100" value="80" step="1"></div>
+  </div>
+  <div class="mp-pl">
+    <div class="mp-pl-head"><span class="mp-pl-title">PLAYLIST</span><button class="mp-pl-add" id="mpadd-pmpwrap">+ ADD MIXES</button></div>
+    <div id="mpl-pmpwrap"><div class="mp-empty">click + add mixes to load your tracks</div></div>
+  </div>
+</div></div>
+    </div>
+
+    <div class="win-window" id="p-discord" style="top:90px;left:150px;width:320px;height:230px;">
+      <div class="title-bar tb-personal-color" onmousedown="startDrag(event,'p-discord')">
+        <div class="title-bar-left"><span class="title-icon">💬</span><span>Discord — private server</span></div>
+        <div class="tb-btns"><div class="tb-btn tb-cls" onclick="closeWin('p-discord')">✕</div></div>
+      </div>
+      <div class="win-content" style="background:#1a0830;color:#9a78c0;">
+        <strong style="color:#b080ff;">💬 Private Discord</strong><br><br>
+        You have the password to this desktop, so you have the vibe.<br><br>
+        Server link coming soon — shared directly with the real ones.
+      </div>
+    </div>
+
+    <div class="win-window" id="p-vent" style="top:90px;left:155px;width:300px;height:220px;">
+      <div class="title-bar tb-personal-color" onmousedown="startDrag(event,'p-vent')">
+        <div class="title-bar-left"><span class="title-icon">🎙️</span><span>Ventrilo — voice</span></div>
+        <div class="tb-btns"><div class="tb-btn tb-cls" onclick="closeWin('p-vent')">✕</div></div>
+      </div>
+      <div class="win-content" style="background:#1a0830;color:#9a78c0;">
+        <strong style="color:#b080ff;">🎙️ Voice server</strong><br><br>
+        Private server info shared directly.<br><br>
+        <em>You know how to reach me.</em>
+      </div>
+    </div>
+
+    <div class="win-window" id="p-trash" style="top: 80px; left: 130px; width: 380px; height: 300px; z-index: 20;">
+      <div class="title-bar tb-personal-color" onmousedown="startDrag(event,'p-trash')">
+        <div class="title-bar-left"><span class="title-icon">🗑️</span><span>Recycle Bin — doubts &amp; old truths</span></div>
+        <div class="tb-btns"><div class="tb-btn tb-cls" onclick="closeWin('p-trash')">✕</div></div>
+      </div>
+      <div class="win-content" style="background:#1a0830;color:#9a78c0;">
+        <strong style="color:#b080ff;">🗑️ Things I've released</strong><br><br>
+        <em style="color:#7058a0;">These lived in me. Now they don't run me.</em><br><br>
+        — the idea that I need to be consistent to be valid<br>
+        — that changing my mind means I was wrong<br>
+        — that online relationships aren't real<br>
+        — that I have to explain myself to be understood<br>
+        — that facts are permanent<br>
+        — that growth has to look a certain way<br><br>
+        <span style="color:#50346a;font-size:10px;">deleted. composted. turned into something new.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- PERSONAL START MENU -->
+  <div class="start-menu open" id="personal-sm">
+    <div class="sm-head sm-head-personal"><div class="sm-avatar">🔮</div><div class="sm-username" id="p-sm-name">deeper</div></div>
+    <div class="sm-body">
+      <div class="sm-left">
+        <div class="sm-item" onclick="openWin('p-ie','personal');closeStart('personal')"><span>🌐</span><span>Private Xanga</span></div>
+        <div class="sm-item" onclick="openWin('p-aim','personal');closeStart('personal')"><span>🟡</span><span>AIM</span></div>
+        <div class="sm-item" onclick="openWin('p-paint','personal');closeStart('personal')"><span>🎨</span><span>My Art</span></div>
+        <div class="sm-item" onclick="openWin('p-mp','personal');closeStart('personal')"><span>🎵</span><span>My Mixes</span></div>
+        <hr class="sm-divider">
+        <div class="sm-item" onclick="openWin('p-trash','personal');closeStart('personal')"><span>🗑️</span><span>Recycle Bin</span></div>
+      </div>
+      <div class="sm-right">
+        <div class="sm-item" onclick="openWin('p-about','personal');closeStart('personal')"><span>🔮</span><span>My Space</span></div>
+        <div class="sm-item" onclick="openWin('p-discord','personal');closeStart('personal')"><span>💬</span><span>Discord</span></div>
+        <div class="sm-item" onclick="openWin('p-vent','personal');closeStart('personal')"><span>🎙️</span><span>Ventrilo</span></div>
+      </div>
+    </div>
+    <div class="sm-footer">
+      <div class="sm-fbtn" onclick="goWelcome()">🔄 Switch User</div>
+      <div class="sm-fbtn" onclick="doShutdown()">⏻ Shut Down</div>
+    </div>
+  </div>
+
+  <!-- PERSONAL TASKBAR -->
+  <div class="taskbar taskbar-personal">
+    <button class="start-btn start-btn-personal" onclick="toggleStart('personal');event.stopPropagation()">🪟 Start</button>
+    <div class="tb-divider"></div>
+    <div id="personal-tb-wins"></div>
+    <div class="tb-space"></div>
+    <div class="system-tray">
+      <span class="tray-user" id="p-tray-name">deeper</span>
+      <span>🔊</span><span>🌐</span>
+      <span id="personal-clock">5:54 PM</span>
+    </div>
+  </div>
+  <div class="balloon" id="personal-balloon"><div class="balloon-title">Welcome back 🔮</div>You found the real one.</div>
+</div>
+
+<!-- ══════════ OWNER PANEL ══════════ -->
+<div id="owner-panel" class="open">
+  <div class="op-shell">
+    <div class="op-titlebar">
+      <div class="op-title">⚙️ Owner Panel — My PC Settings</div>
+      <div class="op-close" onclick="closeOwnerPanel()">✕</div>
+    </div>
+    <div class="op-hint">🔑 Secret access — Press <strong>Ctrl + Shift + O</strong> anytime to open this panel. Changes export as a new index.html — drag it to Netlify to go live.</div>
+
+    <!-- TABS -->
+    <div class="op-tabs">
+      <div class="op-tab active" onclick="opTab(this,'op-content')">✏️ Content</div>
+      <div class="op-tab" onclick="opTab(this,'op-appearance')">🎨 Appearance</div>
+      <div class="op-tab" onclick="opTab(this,'op-accounts')">👤 Accounts</div>
+      <div class="op-tab" onclick="opTab(this,'op-icons')">🗂️ Icons</div>
+    </div>
+
+    <div class="op-body">
+
+      <!-- ── CONTENT TAB ── -->
+      <div id="op-content" style="display: block;">
+
+        <!-- XANGA ENTRIES -->
+        <div class="op-section">
+          <div class="op-section-title">📝 Xanga Blog Entries</div>
+          <div class="op-two-col">
+            <div class="op-row"><span class="op-label">Post title</span><input class="op-input" id="op-xanga-title" placeholder="entry title..."></div>
+            <div class="op-row"><span class="op-label">Which page</span>
+              <select class="op-input" id="op-xanga-page" style="cursor:pointer;">
+                <option value="guest">Guest (public)</option>
+                <option value="personal">Personal (private)</option>
+              </select>
+            </div>
+          </div>
+          <div class="op-row"><span class="op-label">Entry body</span><textarea class="op-textarea" id="op-xanga-body" rows="4" placeholder="write your entry here..."></textarea></div>
+          <button class="op-btn" onclick="opAddXanga()">+ Add Entry</button>
+          <hr class="op-divider">
+          <div id="op-xanga-list"><div class="op-entry-card">
+        <div class="op-entry-card-top">
+          <span class="op-entry-title">first entry. <span style="color:#4a5a7a;font-weight:normal;font-size:9px;">[guest]</span></span>
+          <div class="op-entry-actions">
+            <button class="op-btn danger" style="padding:2px 8px;font-size:10px;" onclick="opDeleteXanga('guest',0)">Delete</button>
+          </div>
+        </div>
+        <div class="op-entry-date" style="color:#4a5a7a;font-size:9px;">Tuesday, March 31, 2026</div>
+        <div class="op-entry-body">this is where i write. no algorithm, no likes, no performance. just words.
+
+check back whenever — i'll be here.
+
+— me</div></div><div class="op-entry-card">
+        <div class="op-entry-card-top">
+          <span class="op-entry-title">more coming. <span style="color:#4a5a7a;font-weight:normal;font-size:9px;">[guest]</span></span>
+          <div class="op-entry-actions">
+            <button class="op-btn danger" style="padding:2px 8px;font-size:10px;" onclick="opDeleteXanga('guest',1)">Delete</button>
+          </div>
+        </div>
+        <div class="op-entry-date" style="color:#4a5a7a;font-size:9px;">soon</div>
+        <div class="op-entry-body">this page grows as i do. you'll find your way back if it's for you.</div></div><div class="op-entry-card">
+        <div class="op-entry-card-top">
+          <span class="op-entry-title">unsure <span style="color:#4a5a7a;font-weight:normal;font-size:9px;">[personal]</span></span>
+          <div class="op-entry-actions">
+            <button class="op-btn danger" style="padding:2px 8px;font-size:10px;" onclick="opDeleteXanga('personal',0)">Delete</button>
+          </div>
+        </div>
+        <div class="op-entry-date" style="color:#4a5a7a;font-size:9px;">Tuesday, March 31, 2026</div>
+        <div class="op-entry-body">unsure what this all means. what this website is for, what I'm hoping would come out of "this". creating this website ha...</div></div><div class="op-entry-card">
+        <div class="op-entry-card-top">
+          <span class="op-entry-title">the password thing. <span style="color:#4a5a7a;font-weight:normal;font-size:9px;">[personal]</span></span>
+          <div class="op-entry-actions">
+            <button class="op-btn danger" style="padding:2px 8px;font-size:10px;" onclick="opDeleteXanga('personal',1)">Delete</button>
+          </div>
+        </div>
+        <div class="op-entry-date" style="color:#4a5a7a;font-size:9px;">if you're here, you found it.</div>
+        <div class="op-entry-body">this page is for the curious ones. the ones who went deeper. that means something.
+
+more real entries coming. this is wh...</div></div><div class="op-entry-card">
+        <div class="op-entry-card-top">
+          <span class="op-entry-title">on facts vs truth <span style="color:#4a5a7a;font-weight:normal;font-size:9px;">[personal]</span></span>
+          <div class="op-entry-actions">
+            <button class="op-btn danger" style="padding:2px 8px;font-size:10px;" onclick="opDeleteXanga('personal',2)">Delete</button>
+          </div>
+        </div>
+        <div class="op-entry-date" style="color:#4a5a7a;font-size:9px;">a thought i keep returning to</div>
+        <div class="op-entry-body">a fact is a fact until it isn't. truth is something you live. i don't commit to facts — i commit to learning.</div></div></div>
+        </div>
+
+        <!-- AIM BOT REPLIES -->
+        <div class="op-section">
+          <div class="op-section-title">🟡 AIM Bot — What the virtual you says</div>
+          <div class="op-hint" style="background:transparent;padding:0;color:#4a5a7a;font-size:10px;margin-bottom:8px;">These are the replies your AIM bot sends when someone messages you. Add your real thoughts, perspectives, FAQs — anything you'd actually say.</div>
+          <div id="op-aim-list"><div style="display: flex; gap: 6px; align-items: flex-start; margin-bottom: 5px;">
+      <div style="flex:1;background:#0d0d1e;border:1px solid #2a2a4a;border-radius:4px;padding:5px 8px;color:#8898bb;font-size:10px;line-height:1.5;">that's a real question. today my answer is yes — but ask me again next week.</div>
+      <button class="op-btn danger" style="padding:2px 8px;font-size:10px;flex-shrink:0;" onclick="opDeleteAIM(0)">✕</button></div><div style="display: flex; gap: 6px; align-items: flex-start; margin-bottom: 5px;">
+      <div style="flex:1;background:#0d0d1e;border:1px solid #2a2a4a;border-radius:4px;padding:5px 8px;color:#8898bb;font-size:10px;line-height:1.5;">facts are just waiting to be disproved. so take whatever i say as a snapshot, not a conclusion.</div>
+      <button class="op-btn danger" style="padding:2px 8px;font-size:10px;flex-shrink:0;" onclick="opDeleteAIM(1)">✕</button></div><div style="display: flex; gap: 6px; align-items: flex-start; margin-bottom: 5px;">
+      <div style="flex:1;background:#0d0d1e;border:1px solid #2a2a4a;border-radius:4px;padding:5px 8px;color:#8898bb;font-size:10px;line-height:1.5;">i've thought about this a lot. the short answer: i don't know yet. and i'm good with that.</div>
+      <button class="op-btn danger" style="padding:2px 8px;font-size:10px;flex-shrink:0;" onclick="opDeleteAIM(2)">✕</button></div><div style="display: flex; gap: 6px; align-items: flex-start; margin-bottom: 5px;">
+      <div style="flex:1;background:#0d0d1e;border:1px solid #2a2a4a;border-radius:4px;padding:5px 8px;color:#8898bb;font-size:10px;line-height:1.5;">yes and no. both are true at the same time. that used to bother me. now it doesn't.</div>
+      <button class="op-btn danger" style="padding:2px 8px;font-size:10px;flex-shrink:0;" onclick="opDeleteAIM(3)">✕</button></div><div style="display: flex; gap: 6px; align-items: flex-start; margin-bottom: 5px;">
+      <div style="flex:1;background:#0d0d1e;border:1px solid #2a2a4a;border-radius:4px;padding:5px 8px;color:#8898bb;font-size:10px;line-height:1.5;">i used to have a firm answer on this. threw it in the recycle bin. working on a new one.</div>
+      <button class="op-btn danger" style="padding:2px 8px;font-size:10px;flex-shrink:0;" onclick="opDeleteAIM(4)">✕</button></div><div style="display: flex; gap: 6px; align-items: flex-start; margin-bottom: 5px;">
+      <div style="flex:1;background:#0d0d1e;border:1px solid #2a2a4a;border-radius:4px;padding:5px 8px;color:#8898bb;font-size:10px;line-height:1.5;">honestly? context changes everything. ask me what context you're thinking about.</div>
+      <button class="op-btn danger" style="padding:2px 8px;font-size:10px;flex-shrink:0;" onclick="opDeleteAIM(5)">✕</button></div><div style="display: flex; gap: 6px; align-items: flex-start; margin-bottom: 5px;">
+      <div style="flex:1;background:#0d0d1e;border:1px solid #2a2a4a;border-radius:4px;padding:5px 8px;color:#8898bb;font-size:10px;line-height:1.5;">i'm always learning — so my truth here shifts as i grow. today i'd say: trust the process.</div>
+      <button class="op-btn danger" style="padding:2px 8px;font-size:10px;flex-shrink:0;" onclick="opDeleteAIM(6)">✕</button></div><div style="display: flex; gap: 6px; align-items: flex-start; margin-bottom: 5px;">
+      <div style="flex:1;background:#0d0d1e;border:1px solid #2a2a4a;border-radius:4px;padding:5px 8px;color:#8898bb;font-size:10px;line-height:1.5;">the version of me from a year ago would answer this totally differently.</div>
+      <button class="op-btn danger" style="padding:2px 8px;font-size:10px;flex-shrink:0;" onclick="opDeleteAIM(7)">✕</button></div><div style="display: flex; gap: 6px; align-items: flex-start; margin-bottom: 5px;">
+      <div style="flex:1;background:#0d0d1e;border:1px solid #2a2a4a;border-radius:4px;padding:5px 8px;color:#8898bb;font-size:10px;line-height:1.5;">lol okay. let me think... i think it's more complicated than it looks on the surface.</div>
+      <button class="op-btn danger" style="padding:2px 8px;font-size:10px;flex-shrink:0;" onclick="opDeleteAIM(8)">✕</button></div><div style="display: flex; gap: 6px; align-items: flex-start; margin-bottom: 5px;">
+      <div style="flex:1;background:#0d0d1e;border:1px solid #2a2a4a;border-radius:4px;padding:5px 8px;color:#8898bb;font-size:10px;line-height:1.5;">my core value is always learning. so i don't commit to facts — just to growth.</div>
+      <button class="op-btn danger" style="padding:2px 8px;font-size:10px;flex-shrink:0;" onclick="opDeleteAIM(9)">✕</button></div><div style="display: flex; gap: 6px; align-items: flex-start; margin-bottom: 5px;">
+      <div style="flex:1;background:#0d0d1e;border:1px solid #2a2a4a;border-radius:4px;padding:5px 8px;color:#8898bb;font-size:10px;line-height:1.5;">the belief that I'm alone</div>
+      <button class="op-btn danger" style="padding:2px 8px;font-size:10px;flex-shrink:0;" onclick="opDeleteAIM(10)">✕</button></div></div>
+          <div class="op-row-h" style="margin-top:8px;">
+            <input class="op-input" id="op-aim-new" placeholder="add a new reply...">
+            <button class="op-btn" onclick="opAddAIM()">Add</button>
+          </div>
+        </div>
+
+        <!-- RECYCLE BIN -->
+        <div class="op-section">
+          <div class="op-section-title">🗑️ Recycle Bin — Doubts &amp; old truths</div>
+          <div class="op-hint" style="background:transparent;padding:0;color:#4a5a7a;font-size:10px;margin-bottom:8px;">Things you've released. One per line.</div>
+          <textarea class="op-textarea" id="op-trash" rows="6" placeholder="— old belief one
+— old belief two
+— fear you've let go"></textarea>
+        </div>
+
+        <!-- YELLOW PAGES -->
+        <div class="op-section">
+          <div class="op-section-title">📒 Yellow Pages — Directory entries</div>
+          <div id="op-yp-list"></div>
+          <div class="op-row" style="margin-top:8px;"><span class="op-label">Name / Business</span><input class="op-input" id="op-yp-name" placeholder="name or business"></div>
+          <div class="op-two-col">
+            <div class="op-row"><span class="op-label">What they do</span><input class="op-input" id="op-yp-what" placeholder="artist, coder..."></div>
+            <div class="op-row"><span class="op-label">Contact / Link</span><input class="op-input" id="op-yp-contact" placeholder="email, site, @handle"></div>
+          </div>
+          <button class="op-btn" onclick="opAddYP()">+ Add to Directory</button>
+        </div>
+
+        <!-- MEDIA / PHOTOS -->
+        <div class="op-section">
+          <div class="op-section-title">🖼️ Photos &amp; Media Links</div>
+          <div class="op-hint" style="background:transparent;padding:0;color:#4a5a7a;font-size:10px;margin-bottom:8px;">Upload your photo to Google Drive, Imgur, or Cloudinary (all free), then paste the link here. It shows in your My Computer / My Space window.</div>
+          <div id="op-media-list"></div>
+          <div class="op-row-h" style="margin-top:8px;">
+            <input class="op-input" id="op-media-label" placeholder="label (e.g. Summer 2025)" style="width:140px;flex:none;">
+            <input class="op-input" id="op-media-url" placeholder="paste image URL here...">
+            <button class="op-btn" onclick="opAddMedia()">Add</button>
+          </div>
+        </div>
+
+      </div><!-- /op-content -->
+
+      <!-- ── APPEARANCE TAB ── -->
+      <div id="op-appearance" style="display: none;">
+
+        <div class="op-section">
+          <div class="op-section-title">🎨 Guest Desktop Wallpaper</div>
+          <div class="op-label" style="margin-bottom:6px;">Pick a color theme</div>
+          <div class="op-color-row" id="op-guest-colors">
+            <div class="op-color-chip selected" style="background:#1a3a6e;" data-color="#1a3a6e" onclick="opPickWallpaper('guest','#1a3a6e',this)"></div>
+            <div class="op-color-chip" style="background:#1a4a2a;" data-color="#1a4a2a" onclick="opPickWallpaper('guest','#1a4a2a',this)"></div>
+            <div class="op-color-chip" style="background:#3a1a1a;" data-color="#3a1a1a" onclick="opPickWallpaper('guest','#3a1a1a',this)"></div>
+            <div class="op-color-chip" style="background:#1a1a3a;" data-color="#1a1a3a" onclick="opPickWallpaper('guest','#1a1a3a',this)"></div>
+            <div class="op-color-chip" style="background:#2a2a2a;" data-color="#2a2a2a" onclick="opPickWallpaper('guest','#2a2a2a',this)"></div>
+            <div class="op-color-chip" style="background:#1a3a4a;" data-color="#1a3a4a" onclick="opPickWallpaper('guest','#1a3a4a',this)"></div>
+            <div class="op-color-chip" style="background:#3a2a1a;" data-color="#3a2a1a" onclick="opPickWallpaper('guest','#3a2a1a',this)"></div>
+            <div class="op-color-chip" style="background:#2a1a3a;" data-color="#2a1a3a" onclick="opPickWallpaper('guest','#2a1a3a',this)"></div>
+          </div>
+          <div class="op-row" style="margin-top:10px;">
+            <span class="op-label">Or paste a wallpaper image URL</span>
+            <div class="op-row-h">
+              <input class="op-input" id="op-guest-wallpaper-url" placeholder="https://i.imgur.com/yourimage.jpg">
+              <button class="op-btn" onclick="opSetWallpaperURL('guest')">Set</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="op-section">
+          <div class="op-section-title">🔮 Personal Desktop Wallpaper</div>
+          <div class="op-label" style="margin-bottom:6px;">Pick a color theme</div>
+          <div class="op-color-row" id="op-personal-colors">
+            <div class="op-color-chip selected" style="background:#1a0830;" data-color="#1a0830" onclick="opPickWallpaper('personal','#1a0830',this)"></div>
+            <div class="op-color-chip" style="background:#0a1a30;" data-color="#0a1a30" onclick="opPickWallpaper('personal','#0a1a30',this)"></div>
+            <div class="op-color-chip" style="background:#1a0a20;" data-color="#1a0a20" onclick="opPickWallpaper('personal','#1a0a20',this)"></div>
+            <div class="op-color-chip" style="background:#0a2a1a;" data-color="#0a2a1a" onclick="opPickWallpaper('personal','#0a2a1a',this)"></div>
+            <div class="op-color-chip" style="background:#2a1a0a;" data-color="#2a1a0a" onclick="opPickWallpaper('personal','#2a1a0a',this)"></div>
+            <div class="op-color-chip" style="background:#0a0a1a;" data-color="#0a0a1a" onclick="opPickWallpaper('personal','#0a0a1a',this)"></div>
+            <div class="op-color-chip" style="background:#1a1a0a;" data-color="#1a1a0a" onclick="opPickWallpaper('personal','#1a1a0a',this)"></div>
+            <div class="op-color-chip" style="background:#2a0a1a;" data-color="#2a0a1a" onclick="opPickWallpaper('personal','#2a0a1a',this)"></div>
+          </div>
+          <div class="op-row" style="margin-top:10px;">
+            <span class="op-label">Or paste a wallpaper image URL</span>
+            <div class="op-row-h">
+              <input class="op-input" id="op-personal-wallpaper-url" placeholder="https://i.imgur.com/yourimage.jpg">
+              <button class="op-btn" onclick="opSetWallpaperURL('personal')">Set</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="op-section">
+          <div class="op-section-title">🎨 Taskbar Colors</div>
+          <div class="op-two-col">
+            <div class="op-row">
+              <span class="op-label">Guest taskbar color</span>
+              <input type="color" class="op-input" id="op-guest-taskbar-color" value="#1a58a0" style="height:32px;padding:2px;cursor:pointer;">
+            </div>
+            <div class="op-row">
+              <span class="op-label">Personal taskbar color</span>
+              <input type="color" class="op-input" id="op-personal-taskbar-color" value="#3a1870" style="height:32px;padding:2px;cursor:pointer;">
+            </div>
+          </div>
+          <button class="op-btn" onclick="opApplyTaskbarColors()">Apply Colors</button>
+        </div>
+
+      </div><!-- /op-appearance -->
+
+      <!-- ── ACCOUNTS TAB ── -->
+      <div id="op-accounts" style="display: none;">
+
+        <div class="op-section">
+          <div class="op-section-title">🔑 Change Personal Password</div>
+          <div class="op-hint" style="background:transparent;padding:0;color:#4a5a7a;font-size:10px;margin-bottom:8px;">This is the password friends type on the XP welcome screen to access your personal desktop.</div>
+          <div class="op-row-h">
+            <input class="op-input" id="op-new-password" type="text" placeholder="new password...">
+            <button class="op-btn" onclick="opChangePassword()">Change</button>
+          </div>
+          <div id="op-pw-confirm" style="color:#2aaa5a;font-size:10px;margin-top:4px;min-height:14px;"></div>
+        </div>
+
+        <div class="op-section">
+          <div class="op-section-title">✏️ Your Display Name</div>
+          <div class="op-hint" style="background:transparent;padding:0;color:#4a5a7a;font-size:10px;margin-bottom:8px;">This shows on the welcome screen, taskbar, and start menu for the personal account.</div>
+          <div class="op-row-h">
+            <input class="op-input" id="op-display-name" placeholder="your name...">
+            <button class="op-btn" onclick="opChangeDisplayName()">Save</button>
+          </div>
+        </div>
+
+        <div class="op-section">
+          <div class="op-section-title">🟡 Your AIM Screenname</div>
+          <div class="op-row-h">
+            <input class="op-input" id="op-screenname" placeholder="your screenname...">
+            <button class="op-btn" onclick="opChangeScreenname()">Save</button>
+          </div>
+        </div>
+
+      </div><!-- /op-accounts -->
+
+      <!-- ── ICONS TAB ── -->
+      <div id="op-icons" style="display: none;">
+        <div class="op-section">
+          <div class="op-section-title">🗂️ Desktop Icons — Guest</div>
+          <div class="op-hint" style="background:transparent;padding:0;color:#4a5a7a;font-size:10px;margin-bottom:10px;">Toggle which icons show on the Guest desktop. Emoji = the icon graphic, Label = the text under it.</div>
+          <div id="op-guest-icons-list"><div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+        <input class="op-input" value="🖥️" style="width:44px;text-align:center;font-size:16px;" oninput="opState['guestIcons'][0].emoji=this.value">
+        <input class="op-input" value="My Computer" style="flex:1;" oninput="opState['guestIcons'][0].label=this.value">
+        <label style="display:flex;align-items:center;gap:4px;color:#8898bb;font-size:10px;cursor:pointer;">
+          <input type="checkbox" checked="" onchange="opState['guestIcons'][0].show=this.checked;opApplyIcons('guest')"> show
+        </label></div><div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+        <input class="op-input" value="🌐" style="width:44px;text-align:center;font-size:16px;" oninput="opState['guestIcons'][1].emoji=this.value">
+        <input class="op-input" value="Internet Explorer" style="flex:1;" oninput="opState['guestIcons'][1].label=this.value">
+        <label style="display:flex;align-items:center;gap:4px;color:#8898bb;font-size:10px;cursor:pointer;">
+          <input type="checkbox" checked="" onchange="opState['guestIcons'][1].show=this.checked;opApplyIcons('guest')"> show
+        </label></div><div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+        <input class="op-input" value="https://www.google.com/url?sa=t&amp;source=web&amp;rct=j&amp;url=https%3A%2F%2F1000logos.net%2Faol-logo%2F&amp;ved=0CBYQjRxqFwoTCPDHsouky5MDFQAAAAAdAAAAABAH&amp;opi=89978449" style="width:44px;text-align:center;font-size:16px;" oninput="opState['guestIcons'][2].emoji=this.value">
+        <input class="op-input" value="AIM" style="flex:1;" oninput="opState['guestIcons'][2].label=this.value">
+        <label style="display:flex;align-items:center;gap:4px;color:#8898bb;font-size:10px;cursor:pointer;">
+          <input type="checkbox" checked="" onchange="opState['guestIcons'][2].show=this.checked;opApplyIcons('guest')"> show
+        </label></div><div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+        <input class="op-input" value="💬" style="width:44px;text-align:center;font-size:16px;" oninput="opState['guestIcons'][3].emoji=this.value">
+        <input class="op-input" value="Discord" style="flex:1;" oninput="opState['guestIcons'][3].label=this.value">
+        <label style="display:flex;align-items:center;gap:4px;color:#8898bb;font-size:10px;cursor:pointer;">
+          <input type="checkbox" checked="" onchange="opState['guestIcons'][3].show=this.checked;opApplyIcons('guest')"> show
+        </label></div><div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+        <input class="op-input" value="🎙️" style="width:44px;text-align:center;font-size:16px;" oninput="opState['guestIcons'][4].emoji=this.value">
+        <input class="op-input" value="Ventrilo" style="flex:1;" oninput="opState['guestIcons'][4].label=this.value">
+        <label style="display:flex;align-items:center;gap:4px;color:#8898bb;font-size:10px;cursor:pointer;">
+          <input type="checkbox" checked="" onchange="opState['guestIcons'][4].show=this.checked;opApplyIcons('guest')"> show
+        </label></div><div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+        <input class="op-input" value="📒" style="width:44px;text-align:center;font-size:16px;" oninput="opState['guestIcons'][5].emoji=this.value">
+        <input class="op-input" value="Yellow Pages" style="flex:1;" oninput="opState['guestIcons'][5].label=this.value">
+        <label style="display:flex;align-items:center;gap:4px;color:#8898bb;font-size:10px;cursor:pointer;">
+          <input type="checkbox" checked="" onchange="opState['guestIcons'][5].show=this.checked;opApplyIcons('guest')"> show
+        </label></div><div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+        <input class="op-input" value="🎵" style="width:44px;text-align:center;font-size:16px;" oninput="opState['guestIcons'][6].emoji=this.value">
+        <input class="op-input" value="Media Player" style="flex:1;" oninput="opState['guestIcons'][6].label=this.value">
+        <label style="display:flex;align-items:center;gap:4px;color:#8898bb;font-size:10px;cursor:pointer;">
+          <input type="checkbox" checked="" onchange="opState['guestIcons'][6].show=this.checked;opApplyIcons('guest')"> show
+        </label></div><div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+        <input class="op-input" value="🗑️" style="width:44px;text-align:center;font-size:16px;" oninput="opState['guestIcons'][7].emoji=this.value">
+        <input class="op-input" value="Recycle Bin" style="flex:1;" oninput="opState['guestIcons'][7].label=this.value">
+        <label style="display:flex;align-items:center;gap:4px;color:#8898bb;font-size:10px;cursor:pointer;">
+          <input type="checkbox" checked="" onchange="opState['guestIcons'][7].show=this.checked;opApplyIcons('guest')"> show
+        </label></div><button class="op-btn">Apply Icon Changes</button></div>
+        </div>
+        <div class="op-section">
+          <div class="op-section-title">🗂️ Desktop Icons — Personal</div>
+          <div id="op-personal-icons-list"><div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+        <input class="op-input" value="🔮" style="width:44px;text-align:center;font-size:16px;" oninput="opState['personalIcons'][0].emoji=this.value">
+        <input class="op-input" value="My Space" style="flex:1;" oninput="opState['personalIcons'][0].label=this.value">
+        <label style="display:flex;align-items:center;gap:4px;color:#8898bb;font-size:10px;cursor:pointer;">
+          <input type="checkbox" checked="" onchange="opState['personalIcons'][0].show=this.checked;opApplyIcons('personal')"> show
+        </label></div><div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+        <input class="op-input" value="🌐" style="width:44px;text-align:center;font-size:16px;" oninput="opState['personalIcons'][1].emoji=this.value">
+        <input class="op-input" value="My Xanga" style="flex:1;" oninput="opState['personalIcons'][1].label=this.value">
+        <label style="display:flex;align-items:center;gap:4px;color:#8898bb;font-size:10px;cursor:pointer;">
+          <input type="checkbox" checked="" onchange="opState['personalIcons'][1].show=this.checked;opApplyIcons('personal')"> show
+        </label></div><div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+        <input class="op-input" value="🟡" style="width:44px;text-align:center;font-size:16px;" oninput="opState['personalIcons'][2].emoji=this.value">
+        <input class="op-input" value="AIM" style="flex:1;" oninput="opState['personalIcons'][2].label=this.value">
+        <label style="display:flex;align-items:center;gap:4px;color:#8898bb;font-size:10px;cursor:pointer;">
+          <input type="checkbox" checked="" onchange="opState['personalIcons'][2].show=this.checked;opApplyIcons('personal')"> show
+        </label></div><div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+        <input class="op-input" value="🎨" style="width:44px;text-align:center;font-size:16px;" oninput="opState['personalIcons'][3].emoji=this.value">
+        <input class="op-input" value="Paint — My Art" style="flex:1;" oninput="opState['personalIcons'][3].label=this.value">
+        <label style="display:flex;align-items:center;gap:4px;color:#8898bb;font-size:10px;cursor:pointer;">
+          <input type="checkbox" checked="" onchange="opState['personalIcons'][3].show=this.checked;opApplyIcons('personal')"> show
+        </label></div><div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+        <input class="op-input" value="🎵" style="width:44px;text-align:center;font-size:16px;" oninput="opState['personalIcons'][4].emoji=this.value">
+        <input class="op-input" value="Media Player" style="flex:1;" oninput="opState['personalIcons'][4].label=this.value">
+        <label style="display:flex;align-items:center;gap:4px;color:#8898bb;font-size:10px;cursor:pointer;">
+          <input type="checkbox" checked="" onchange="opState['personalIcons'][4].show=this.checked;opApplyIcons('personal')"> show
+        </label></div><div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+        <input class="op-input" value="💬" style="width:44px;text-align:center;font-size:16px;" oninput="opState['personalIcons'][5].emoji=this.value">
+        <input class="op-input" value="Discord" style="flex:1;" oninput="opState['personalIcons'][5].label=this.value">
+        <label style="display:flex;align-items:center;gap:4px;color:#8898bb;font-size:10px;cursor:pointer;">
+          <input type="checkbox" checked="" onchange="opState['personalIcons'][5].show=this.checked;opApplyIcons('personal')"> show
+        </label></div><div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+        <input class="op-input" value="🎙️" style="width:44px;text-align:center;font-size:16px;" oninput="opState['personalIcons'][6].emoji=this.value">
+        <input class="op-input" value="Ventrilo" style="flex:1;" oninput="opState['personalIcons'][6].label=this.value">
+        <label style="display:flex;align-items:center;gap:4px;color:#8898bb;font-size:10px;cursor:pointer;">
+          <input type="checkbox" checked="" onchange="opState['personalIcons'][6].show=this.checked;opApplyIcons('personal')"> show
+        </label></div><div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+        <input class="op-input" value="🗑️" style="width:44px;text-align:center;font-size:16px;" oninput="opState['personalIcons'][7].emoji=this.value">
+        <input class="op-input" value="Recycle Bin" style="flex:1;" oninput="opState['personalIcons'][7].label=this.value">
+        <label style="display:flex;align-items:center;gap:4px;color:#8898bb;font-size:10px;cursor:pointer;">
+          <input type="checkbox" checked="" onchange="opState['personalIcons'][7].show=this.checked;opApplyIcons('personal')"> show
+        </label></div><button class="op-btn">Apply Icon Changes</button></div>
+        </div>
+      </div><!-- /op-icons -->
+
+    </div><!-- /op-body -->
+
+    <div class="op-export-bar">
+      <div class="op-export-hint">
+        💾 <strong style="color:#c8d8ff;">Export &amp; Save</strong> downloads your updated site.<br>
+        Drag the new file to Netlify to publish your changes.
+      </div>
+      <button class="op-export-btn" onclick="opExport()">⬇️ Export index.html</button>
+    </div>
+  </div>
+</div>
+
+<input type="file" id="mp-file-input" accept="audio/*" multiple="">
+
+<script>
+// ══════════════════════════
+// PASSWORDS — change these!
+// ══════════════════════════
+const PASSWORDS = {
+  guest: '',
+  personal: '4083078889'
+};
+
+// ══════════════════════════
+// SOUND ENGINE
+// ══════════════════════════
+let sndCtx = null;
+function getSndCtx() {
+  if (!sndCtx) sndCtx = new (window.AudioContext || window.webkitAudioContext)();
+  if (sndCtx.state === 'suspended') sndCtx.resume();
+  return sndCtx;
+}
+function playTones(notes) {
+  const ctx = getSndCtx();
+  notes.forEach(n => {
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.connect(gain); gain.connect(ctx.destination);
+    osc.type = n.type || 'sine';
+    osc.frequency.setValueAtTime(n.freq, ctx.currentTime + n.start);
+    gain.gain.setValueAtTime(n.vol || 0.15, ctx.currentTime + n.start);
+    gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + n.start + (n.ramp || n.dur));
+    osc.start(ctx.currentTime + n.start);
+    osc.stop(ctx.currentTime + n.start + n.dur + 0.05);
+  });
+}
+function playNoise(start, dur, vol, freq, q) {
+  const ctx = getSndCtx();
+  const buf = ctx.createBuffer(1, ctx.sampleRate * dur, ctx.sampleRate);
+  const data = buf.getChannelData(0);
+  for (let i = 0; i < data.length; i++) data[i] = Math.random() * 2 - 1;
+  const src = ctx.createBufferSource(); src.buffer = buf;
+  const filt = ctx.createBiquadFilter(); filt.type = 'bandpass';
+  filt.frequency.value = freq || 800; filt.Q.value = q || 1;
+  const gain = ctx.createGain();
+  gain.gain.setValueAtTime(vol || 0.1, ctx.currentTime + start);
+  gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + start + dur);
+  src.connect(filt); filt.connect(gain); gain.connect(ctx.destination);
+  src.start(ctx.currentTime + start);
+  src.stop(ctx.currentTime + start + dur + 0.05);
+}
+
+// XP startup chime - warm ascending 4-note melody
+function sndXPStartup() {
+  playTones([
+    { freq: 392.00, type:'sine', start:0,    dur:0.9,  vol:0.07, ramp:0.8 },
+    { freq: 523.25, type:'sine', start:0,    dur:0.9,  vol:0.10, ramp:0.8 },
+    { freq: 659.25, type:'sine', start:0.2,  dur:0.9,  vol:0.09, ramp:0.7 },
+    { freq: 783.99, type:'sine', start:0.38, dur:1.0,  vol:0.09, ramp:0.8 },
+    { freq: 1046.5, type:'sine', start:0.56, dur:1.4,  vol:0.08, ramp:1.2 },
+    { freq: 659.25, type:'sine', start:0.56, dur:1.4,  vol:0.06, ramp:1.2 },
+  ]);
+}
+
+// AIM door creak open
+function sndAIMDoor() {
+  const ctx = getSndCtx();
+  const osc = ctx.createOscillator();
+  const gain = ctx.createGain();
+  osc.connect(gain); gain.connect(ctx.destination);
+  osc.type = 'sawtooth';
+  osc.frequency.setValueAtTime(200, ctx.currentTime);
+  osc.frequency.exponentialRampToValueAtTime(80, ctx.currentTime + 0.4);
+  gain.gain.setValueAtTime(0.07, ctx.currentTime);
+  gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.45);
+  osc.start(ctx.currentTime); osc.stop(ctx.currentTime + 0.5);
+  playNoise(0.32, 0.2, 0.15, 110, 0.6);
+}
+
+// AIM door close
+function sndAIMDoorClose() {
+  const ctx = getSndCtx();
+  const osc = ctx.createOscillator();
+  const gain = ctx.createGain();
+  osc.connect(gain); gain.connect(ctx.destination);
+  osc.type = 'sawtooth';
+  osc.frequency.setValueAtTime(100, ctx.currentTime);
+  osc.frequency.exponentialRampToValueAtTime(55, ctx.currentTime + 0.28);
+  gain.gain.setValueAtTime(0.06, ctx.currentTime);
+  gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.32);
+  osc.start(ctx.currentTime); osc.stop(ctx.currentTime + 0.35);
+  playNoise(0.22, 0.15, 0.13, 90, 0.5);
+}
+
+// AIM send - short ascending blip
+function sndAIMSend() {
+  playTones([
+    { freq: 750,  type:'sine', start:0,    dur:0.10, vol:0.13, ramp:0.08 },
+    { freq: 1000, type:'sine', start:0.07, dur:0.12, vol:0.11, ramp:0.10 },
+  ]);
+}
+
+// AIM receive - classic double blip
+function sndAIMReceive() {
+  playTones([
+    { freq: 1200, type:'sine', start:0,    dur:0.09, vol:0.12, ramp:0.07 },
+    { freq: 980,  type:'sine', start:0.11, dur:0.09, vol:0.12, ramp:0.07 },
+  ]);
+}
+
+// AIM buddy sign on - 3-note ascending
+function sndAIMSignOn() {
+  playTones([
+    { freq: 660,  type:'sine', start:0,    dur:0.16, vol:0.12, ramp:0.13 },
+    { freq: 880,  type:'sine', start:0.14, dur:0.16, vol:0.11, ramp:0.13 },
+    { freq: 1100, type:'sine', start:0.28, dur:0.22, vol:0.10, ramp:0.18 },
+  ]);
+}
+
+// Window open click
+function sndWindowOpen() {
+  playNoise(0, 0.055, 0.09, 1400, 2.5);
+  playTones([{ freq:950, type:'sine', start:0, dur:0.06, vol:0.06, ramp:0.05 }]);
+}
+
+// Window close click
+function sndWindowClose() {
+  playNoise(0, 0.05, 0.07, 1000, 2);
+  playTones([{ freq:700, type:'sine', start:0, dur:0.05, vol:0.05, ramp:0.04 }]);
+}
+
+// Error / wrong password
+function sndError() {
+  playTones([
+    { freq:440, type:'square', start:0,    dur:0.11, vol:0.08, ramp:0.09 },
+    { freq:330, type:'square', start:0.09, dur:0.18, vol:0.08, ramp:0.15 },
+  ]);
+}
+
+// BIOS POST beep
+function sndBIOSBeep() {
+  playTones([{ freq:800, type:'square', start:0, dur:0.18, vol:0.14, ramp:0.16 }]);
+}
+
+// ══════════════════════════
+// BIOS
+// ══════════════════════════
+const biosLines = [
+  { html:'<span class="bios-hi">Award Modular BIOS v6.00PG</span>', t:0 },
+  { html:'Copyright (C) 1984-2003, Award Software, Inc.', t:200 },
+  { html:'', t:300 },
+  { html:'<span class="bios-bar"> MY-PC </span>  BIOS Date: 10/25/01  Ver: 08.00.10', t:420 },
+  { html:'', t:520 },
+  { html:'CPU : Intel Pentium 4  1800MHz', t:650 },
+  { html:'Memory Test : <span class="bios-hi">524288K</span> OK', t:950, beep:true },
+  { html:'', t:1100 },
+  { html:'Detecting Primary Master ... WDC WD400BB  40GB', t:1200 },
+  { html:'Detecting Primary Slave  ... None', t:1450 },
+  { html:'', t:1560 },
+  { html:'USB Device(s): 1 Keyboard, 1 Mouse', t:1700 },
+  { html:'PnP Init Completed.', t:1900 },
+  { html:'Verifying DMI Pool Data .......', t:2100 },
+  { html:'<span class="bios-hi">Press DEL to enter SETUP, F8 for Boot Menu</span>', t:2400 },
+  { html:'', t:2600 },
+  { html:'Loading Windows XP <span class="bios-cursor"></span>', t:2800 },
+];
+
+function runBIOS() {
+  const c = document.getElementById('bios-content');
+  biosLines.forEach(l => {
+    setTimeout(() => {
+      const d = document.createElement('div');
+      d.innerHTML = l.html || '&nbsp;';
+      c.appendChild(d);
+      if (l.beep) sndBIOSBeep();
+    }, l.t);
+  });
+  setTimeout(goBoot, 3800);
+}
+
+function goBoot() {
+  showScreen('boot-screen');
+  let pct = 0;
+  const bar = document.getElementById('boot-bar');
+  const iv = setInterval(() => {
+    pct += Math.random() * 7 + 3;
+    if (pct >= 100) { pct = 100; clearInterval(iv); setTimeout(goWelcome, 600); }
+    bar.style.width = pct + '%';
+  }, 130);
+}
+
+function goWelcome() {
+  showScreen('welcome-screen');
+  document.getElementById('guest-pw').classList.remove('show');
+  document.getElementById('personal-pw').classList.remove('show');
+  document.getElementById('guest-pw-input').value = '';
+  document.getElementById('personal-pw-input').value = '';
+  document.getElementById('guest-err').textContent = '';
+  document.getElementById('personal-err').textContent = '';
+}
+
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+// ══════════════════════════
+// LOGIN
+// ══════════════════════════
+let activeUser = null;
+
+function selectUser(type) {
+  if (activeUser === type) return;
+  document.getElementById('guest-pw').classList.remove('show');
+  document.getElementById('personal-pw').classList.remove('show');
+  activeUser = type;
+  document.getElementById(type + '-pw').classList.add('show');
+  sndWindowOpen();
+  setTimeout(() => document.getElementById(type + '-pw-input').focus(), 60);
+}
+
+function loginUser(type) {
+  const inp = document.getElementById(type + '-pw-input');
+  const err = document.getElementById(type + '-err');
+  const pw = inp.value;
+  if (PASSWORDS[type] === '' || pw === PASSWORDS[type]) {
+    err.textContent = '';
+    goDesktop(type, inp.value || 'Guest');
+  } else {
+    err.textContent = 'Incorrect password. Try again.';
+    sndError();
+    inp.value = ''; inp.focus();
+  }
+}
+
+function goDesktop(type, name) {
+  const id = type === 'guest' ? 'guest-desktop' : 'personal-desktop';
+  showScreen(id);
+  if (type === 'personal') {
+    document.getElementById('p-sm-name').textContent = name;
+    document.getElementById('p-tray-name').textContent = name;
+  }
+  setTimeout(() => {
+    document.getElementById(id).classList.add('fade-in');
+    sndXPStartup();
+    // buddy sign-on sound after startup
+    setTimeout(sndAIMSignOn, 1800);
+    setTimeout(() => {
+      const b = document.getElementById(type + '-balloon');
+      b.classList.add('show');
+      setTimeout(() => b.classList.remove('show'), 4500);
+    }, 1200);
+  }, 50);
+  buildMP(type === 'guest' ? 'gmp-wrap' : 'pmp-wrap');
+}
+
+// ══════════════════════════
+// CLOCK
+// ══════════════════════════
+function updateClock() {
+  const now = new Date();
+  let h = now.getHours(), m = now.getMinutes();
+  const ap = h >= 12 ? 'PM' : 'AM';
+  h = h % 12 || 12;
+  const t = `${h}:${String(m).padStart(2,'0')} ${ap}`;
+  document.getElementById('guest-clock').textContent = t;
+  document.getElementById('personal-clock').textContent = t;
+}
+setInterval(updateClock, 1000); updateClock();
+
+// ══════════════════════════
+// WINDOWS
+// ══════════════════════════
+let zTop = 10;
+
+function openWin(id, desktop) {
+  const w = document.getElementById(id);
+  w.classList.add('open');
+  w.style.zIndex = ++zTop;
+  addTbBtn(id, desktop);
+  sndWindowOpen();
+  // door sound when opening AIM chat
+  if (id === 'g-aim-chat') setTimeout(sndAIMDoor, 120);
+  if (window.event) window.event.stopPropagation();
+}
+function closeWin(id) {
+  document.getElementById(id).classList.remove('open');
+  const b = document.getElementById('tb-' + id);
+  if (b) b.remove();
+  sndWindowClose();
+  if (id === 'g-aim-chat') setTimeout(sndAIMDoorClose, 80);
+}
+function addTbBtn(id, desktop) {
+  const tb = document.getElementById(desktop + '-tb-wins');
+  if (!tb || document.getElementById('tb-' + id)) return;
+  const w = document.getElementById(id);
+  const icon = w.querySelector('.title-icon')?.textContent || '🪟';
+  const label = w.querySelector('.title-bar-left span:last-child')?.textContent.substring(0,14) || id;
+  const btn = document.createElement('button');
+  btn.className = 'tb-window-btn';
+  btn.id = 'tb-' + id;
+  btn.innerHTML = icon + ' ' + label;
+  btn.onclick = () => { document.getElementById(id).style.zIndex = ++zTop; };
+  tb.appendChild(btn);
+}
+function deselectAll(d) {
+  document.querySelectorAll('.icon').forEach(i => i.classList.remove('selected'));
+  closeStart(d);
+}
+
+// ══════════════════════════
+// DRAG
+// ══════════════════════════
+let dragging = null, ddx = 0, ddy = 0;
+function startDrag(e, id) {
+  const w = document.getElementById(id);
+  w.style.zIndex = ++zTop; dragging = w;
+  ddx = e.clientX - w.offsetLeft; ddy = e.clientY - w.offsetTop;
+  e.preventDefault();
+}
+document.addEventListener('mousemove', e => {
+  if (!dragging) return;
+  dragging.style.left = (e.clientX - ddx) + 'px';
+  dragging.style.top = (e.clientY - ddy) + 'px';
+});
+document.addEventListener('mouseup', () => dragging = null);
+
+// ══════════════════════════
+// START MENU
+// ══════════════════════════
+function toggleStart(t) {
+  document.getElementById(t + '-sm').classList.toggle('open');
+  sndWindowOpen();
+}
+function closeStart(t) { const m = document.getElementById(t + '-sm'); if(m) m.classList.remove('open'); }
+
+// ══════════════════════════
+// AIM CHAT BOT
+// ══════════════════════════
+const aimReplies = [
+  "that's a real question. today my answer is yes — but ask me again next week.",
+  "facts are just waiting to be disproved. so take whatever i say as a snapshot, not a conclusion.",
+  "i've thought about this a lot. the short answer: i don't know yet. and i'm good with that.",
+  "yes and no. both are true at the same time. that used to bother me. now it doesn't.",
+  "i used to have a firm answer on this. threw it in the recycle bin. working on a new one.",
+  "honestly? context changes everything. ask me what context you're thinking about.",
+  "i'm always learning — so my truth here shifts as i grow. today i'd say: trust the process.",
+  "the version of me from a year ago would answer this totally differently.",
+  "lol okay. let me think... i think it's more complicated than it looks on the surface.",
+  "my core value is always learning. so i don't commit to facts — just to growth.",
+];
+let aimIdx = 0;
+
+function sendAIM() {
+  const inp = document.getElementById('aim-input');
+  const log = document.getElementById('aim-log');
+  const msg = inp.value.trim();
+  if (!msg) return;
+  const you = document.createElement('div');
+  you.className = 'aim-msg-me';
+  you.innerHTML = `<strong>you:</strong> ${msg}`;
+  log.appendChild(you);
+  sndAIMSend();
+  inp.value = '';
+  setTimeout(() => {
+    const reply = document.createElement('div');
+    reply.className = 'aim-msg-them';
+    reply.innerHTML = `<strong>wannabgangstafoo:</strong> ${aimReplies[aimIdx++ % aimReplies.length]}`;
+    log.appendChild(reply);
+    sndAIMReceive();
+    log.scrollTop = log.scrollHeight;
+  }, 700 + Math.random() * 700);
+  log.scrollTop = log.scrollHeight;
+}
+
+// ══════════════════════════
+// YELLOW PAGES
+// ══════════════════════════
+function addYP() {
+  const name = document.getElementById('yp-name').value.trim();
+  const what = document.getElementById('yp-what').value.trim();
+  const contact = document.getElementById('yp-contact').value.trim();
+  if (!name) return;
+  const body = document.getElementById('yp-body');
+  const entry = document.createElement('div');
+  entry.className = 'yp-entry';
+  entry.innerHTML = `<div class="yp-entry-name">${name}</div><div class="yp-entry-info">${what ? '💼 ' + what + (contact ? '<br>' : '') : ''}${contact ? '🔗 ' + contact : ''}</div>`;
+  body.insertBefore(entry, body.querySelector('.yp-add-form'));
+  sndAIMSignOn();
+  document.getElementById('yp-name').value = '';
+  document.getElementById('yp-what').value = '';
+  document.getElementById('yp-contact').value = '';
+}
+
+// ══════════════════════════
+// PAINT
+// ══════════════════════════
+let paintTool = 'pencil', paintColor = '#000', paintDown = false, paintLX = 0, paintLY = 0;
+
+function setTool(t) {
+  paintTool = t;
+  document.querySelectorAll('.paint-tool').forEach(el => el.classList.remove('active'));
+  const el = document.getElementById('pt-' + t);
+  if (el) el.classList.add('active');
+  sndWindowOpen();
+}
+function setPaintColor(c) { paintColor = c; }
+function clearCanvas() {
+  const c = document.getElementById('paint-canvas');
+  const ctx = c.getContext('2d');
+  ctx.fillStyle = '#fff'; ctx.fillRect(0,0,c.width,c.height);
+  sndError();
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const canvas = document.getElementById('paint-canvas');
+  const ctx = canvas.getContext('2d');
+  ctx.fillStyle = '#fff'; ctx.fillRect(0,0,canvas.width,canvas.height);
+  function pos(e) { const r = canvas.getBoundingClientRect(); return [e.clientX-r.left, e.clientY-r.top]; }
+  canvas.addEventListener('mousedown', e => { paintDown=true; [paintLX,paintLY]=pos(e); });
+  canvas.addEventListener('mousemove', e => {
+    if (!paintDown) return;
+    const [x,y] = pos(e);
+    const sz = parseInt(document.getElementById('brush-size').value);
+    ctx.lineWidth = paintTool === 'eraser' ? sz*3 : sz;
+    ctx.lineCap = 'round';
+    ctx.strokeStyle = paintTool === 'eraser' ? '#fff' : paintColor;
+    ctx.beginPath(); ctx.moveTo(paintLX,paintLY); ctx.lineTo(x,y); ctx.stroke();
+    [paintLX,paintLY] = [x,y];
+  });
+  canvas.addEventListener('mouseup', () => paintDown=false);
+  canvas.addEventListener('mouseleave', () => paintDown=false);
+});
+
+// ══════════════════════════
+// MEDIA PLAYER
+// ══════════════════════════
+const mpBuilt = {};
+
+function buildMP(wrapId) {
+  if (mpBuilt[wrapId]) return;
+  mpBuilt[wrapId] = true;
+  const wrap = document.getElementById(wrapId);
+  const uid = wrapId.replace(/[^a-z]/g,'');
+  wrap.innerHTML = `
+<div class="mp-shell">
+  <div class="mp-vis"><canvas id="vc-${uid}"></canvas></div>
+  <div class="mp-display">
+    <div class="mp-track" id="mt-${uid}">— NO TRACK LOADED —</div>
+    <div class="mp-scrub-track" id="ms-${uid}"><div class="mp-scrub-fill" id="mf-${uid}"></div></div>
+    <div class="mp-times"><span id="mc-${uid}">0:00</span><span id="md-${uid}">0:00</span></div>
+  </div>
+  <div class="mp-controls">
+    <button class="mp-btn" id="mshuf-${uid}">⇄</button>
+    <button class="mp-btn" id="mprev-${uid}">⏮</button>
+    <button class="mp-btn mp-play" id="mplay-${uid}">▶</button>
+    <button class="mp-btn" id="mnext-${uid}">⏭</button>
+    <button class="mp-btn" id="mrep-${uid}">↺</button>
+    <div class="mp-vol"><span class="mp-vol-icon">♪</span><input type="range" class="mp-vol-slider" id="mvol-${uid}" min="0" max="100" value="80" step="1"></div>
+  </div>
+  <div class="mp-pl">
+    <div class="mp-pl-head"><span class="mp-pl-title">PLAYLIST</span><button class="mp-pl-add" id="mpadd-${uid}">+ ADD MIXES</button></div>
+    <div id="mpl-${uid}"><div class="mp-empty">click + add mixes to load your tracks</div></div>
+  </div>
+</div>`;
+
+  const audio = new Audio();
+  let pl = [], ci = -1, rep = false, shuf = false;
+  let actx, anl, asrc, dat, bln;
+  let vizOn = false;
+
+  const canvas = document.getElementById('vc-' + uid);
+  const ctx = canvas.getContext('2d');
+  function rv() { canvas.width = canvas.parentElement.clientWidth; canvas.height = 80; }
+  rv(); window.addEventListener('resize', rv);
+
+  function initA() {
+    if (actx) return;
+    actx = new (window.AudioContext||window.webkitAudioContext)();
+    anl = actx.createAnalyser(); anl.fftSize = 256;
+    bln = anl.frequencyBinCount; dat = new Uint8Array(bln);
+    asrc = actx.createMediaElementSource(audio);
+    asrc.connect(anl); anl.connect(actx.destination);
+  }
+
+  (function drawVis() {
+    requestAnimationFrame(drawVis);
+    const W = canvas.width, H = canvas.height;
+    ctx.fillStyle = '#000'; ctx.fillRect(0,0,W,H);
+    if (!dat) return;
+    if (vizOn && anl) anl.getByteFrequencyData(dat); else dat.fill(0);
+    const bars = Math.min(bln,60);
+    const bw = W/bars - 1;
+    for (let i=0;i<bars;i++) {
+      const v = dat[i]||0, bh = (v/255)*(H-4);
+      const g = ctx.createLinearGradient(0,H-bh,0,H);
+      g.addColorStop(0,'#ff3cac'); g.addColorStop(0.5,'#00bfff'); g.addColorStop(1,'#7b2fff');
+      ctx.fillStyle = g;
+      ctx.fillRect(i*(bw+1), H-bh, bw, bh);
+    }
+  })();
+
+  function fmt(s) { if(!s||isNaN(s)) return '0:00'; return `${Math.floor(s/60)}:${String(Math.floor(s%60)).padStart(2,'0')}`; }
+
+  function renderPL() {
+    const el = document.getElementById('mpl-'+uid);
+    if (!pl.length) { el.innerHTML='<div class="mp-empty">click + add mixes to load your tracks</div>'; return; }
+    el.innerHTML='';
+    pl.forEach((t,i) => {
+      const d = document.createElement('div');
+      d.className='mp-pl-item'+(i===ci?' active':'');
+      d.innerHTML=`<span class="mp-pl-num">${String(i+1).padStart(2,'0')}</span><span class="mp-pl-name">${t.name}</span><span class="mp-pl-dur">${t.dur||'--:--'}</span><span class="mp-pl-rem" onclick="event.stopPropagation();mpRem_${uid}(${i})">✕</span>`;
+      d.addEventListener('dblclick',()=>play(i));
+      el.appendChild(d);
+    });
+  }
+
+  window['mpRem_'+uid] = function(i) {
+    URL.revokeObjectURL(pl[i].url); pl.splice(i,1);
+    if(ci===i){audio.pause();audio.src='';ci=-1;vizOn=false;document.getElementById('mplay-'+uid).textContent='▶';}
+    else if(ci>i) ci--;
+    renderPL();
+  };
+
+  function play(i) {
+    if(i<0||i>=pl.length) return;
+    initA(); if(actx.state==='suspended') actx.resume();
+    ci=i; audio.src=pl[i].url; audio.play(); vizOn=true;
+    document.getElementById('mplay-'+uid).textContent='⏸';
+    document.getElementById('mt-'+uid).textContent=pl[i].name;
+    renderPL();
+  }
+
+  audio.addEventListener('timeupdate',()=>{
+    if(!audio.duration) return;
+    const p=(audio.currentTime/audio.duration)*100;
+    document.getElementById('mf-'+uid).style.width=p+'%';
+    document.getElementById('mc-'+uid).textContent=fmt(audio.currentTime);
+    document.getElementById('md-'+uid).textContent=fmt(audio.duration);
+  });
+
+  audio.addEventListener('ended',()=>{
+    vizOn=false;
+    if(rep){play(ci);return;}
+    if(shuf){let n;do{n=Math.floor(Math.random()*pl.length);}while(pl.length>1&&n===ci);play(n);return;}
+    if(ci+1<pl.length) play(ci+1); else document.getElementById('mplay-'+uid).textContent='▶';
+  });
+
+  document.getElementById('mplay-'+uid).addEventListener('click',()=>{
+    if(!pl.length) return; initA(); if(actx.state==='suspended') actx.resume();
+    if(audio.paused){if(ci===-1)play(0);else{audio.play();vizOn=true;document.getElementById('mplay-'+uid).textContent='⏸';}}
+    else{audio.pause();vizOn=false;document.getElementById('mplay-'+uid).textContent='▶';}
+  });
+  document.getElementById('mprev-'+uid).addEventListener('click',()=>{if(audio.currentTime>3){audio.currentTime=0;return;}play(ci>0?ci-1:pl.length-1);});
+  document.getElementById('mnext-'+uid).addEventListener('click',()=>play(ci<pl.length-1?ci+1:0));
+  document.getElementById('mrep-'+uid).addEventListener('click',function(){rep=!rep;this.classList.toggle('active',rep);});
+  document.getElementById('mshuf-'+uid).addEventListener('click',function(){shuf=!shuf;this.classList.toggle('active',shuf);});
+  document.getElementById('mvol-'+uid).addEventListener('input',function(){audio.volume=this.value/100;});
+  audio.volume=0.8;
+  document.getElementById('ms-'+uid).addEventListener('click',e=>{
+    if(!audio.duration) return;
+    const r=e.currentTarget.getBoundingClientRect();
+    audio.currentTime=((e.clientX-r.left)/r.width)*audio.duration;
+  });
+  document.getElementById('mpadd-'+uid).addEventListener('click',()=>{
+    const fi=document.getElementById('mp-file-input');
+    fi.onchange=e=>{
+      Array.from(e.target.files).forEach(f=>{
+        const url=URL.createObjectURL(f);
+        const name=f.name.replace(/\.[^.]+$/,'').replace(/_/g,' ');
+        const entry={name,url,dur:null}; pl.push(entry);
+        const idx=pl.length-1;
+        const tmp=new Audio(url);
+        tmp.addEventListener('loadedmetadata',()=>{pl[idx].dur=fmt(tmp.duration);renderPL();});
+      });
+      renderPL(); if(ci===-1&&pl.length) play(0); e.target.value='';
+    };
+    fi.click();
+  });
+}
+
+// ══════════════════════════
+// SHUTDOWN
+// ══════════════════════════
+function doShutdown() {
+  const s = document.querySelector('.screen.active');
+  if(s) s.style.opacity='0';
+  setTimeout(()=>{
+    document.body.style.background='#000';
+    document.body.innerHTML=`<div style="font-family:Tahoma,sans-serif;color:#ccc;position:fixed;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px;background:#000;"><div style="color:#fff;font-size:16px;">Windows is shutting down...</div><a href="#" onclick="location.reload()" style="color:#4a9de0;font-size:12px;">restart</a></div>`;
+  }, 500);
+}
+
+// ══════════════════════════════════════
+// OWNER PANEL
+// ══════════════════════════════════════
+
+// --- Live state the panel manages ---
+let opState = {
+  xangaEntries: {
+    guest: [
+      { title:'first entry.', date:'Tuesday, March 31, 2026', body:'this is where i write. no algorithm, no likes, no performance. just words.\n\ncheck back whenever — i\'ll be here.\n\n— me' },
+      { title:'more coming.', date:'soon', body:'this page grows as i do. you\'ll find your way back if it\'s for you.' }
+    ],
+    personal: [
+      { title:'the password thing.', date:'if you\'re here, you found it.', body:'this page is for the curious ones. the ones who went deeper. that means something.\n\nmore real entries coming. this is where i think out loud — no audience, just truth.' },
+      { title:'on facts vs truth', date:'a thought i keep returning to', body:'a fact is a fact until it isn\'t. truth is something you live. i don\'t commit to facts — i commit to learning.' }
+    ]
+  },
+  aimReplies: [...aimReplies],
+  trash: [
+    "the idea that I need to be consistent to be valid",
+    "that changing my mind means I was wrong",
+    "that online relationships aren't real",
+    "that I have to explain myself to be understood",
+    "that facts are permanent",
+    "that growth has to look a certain way"
+  ],
+  ypEntries: [],
+  mediaLinks: [],
+  guestWallpaper: '#1a3a6e',
+  personalWallpaper: '#1a0830',
+  guestWallpaperURL: '',
+  personalWallpaperURL: '',
+  guestTaskbarColor: '#1a58a0',
+  personalTaskbarColor: '#3a1870',
+  displayName: '[ your name ]',
+  screenname: 'wannabgangstafoo',
+  password: 'deeper',
+  guestIcons: [
+    { emoji:'🖥️', label:'My Computer', winId:'g-about', show:true },
+    { emoji:'🌐', label:'Internet Explorer', winId:'g-ie', show:true },
+    { emoji:'🟡', label:'AIM', winId:'g-aim', show:true },
+    { emoji:'💬', label:'Discord', winId:'g-discord', show:true },
+    { emoji:'🎙️', label:'Ventrilo', winId:'g-vent', show:true },
+    { emoji:'📒', label:'Yellow Pages', winId:'g-yp', show:true },
+    { emoji:'🎵', label:'Media Player', winId:'g-mp', show:true },
+    { emoji:'🗑️', label:'Recycle Bin', winId:'g-trash', show:true },
+  ],
+  personalIcons: [
+    { emoji:'🔮', label:'My Space', winId:'p-about', show:true },
+    { emoji:'🌐', label:'My Xanga', winId:'p-ie', show:true },
+    { emoji:'🟡', label:'AIM', winId:'p-aim', show:true },
+    { emoji:'🎨', label:'Paint — My Art', winId:'p-paint', show:true },
+    { emoji:'🎵', label:'Media Player', winId:'p-mp', show:true },
+    { emoji:'💬', label:'Discord', winId:'p-discord', show:true },
+    { emoji:'🎙️', label:'Ventrilo', winId:'p-vent', show:true },
+    { emoji:'🗑️', label:'Recycle Bin', winId:'p-trash', show:true },
+  ]
+};
+
+// --- Open / close ---
+function openOwnerPanel() {
+  document.getElementById('owner-panel').classList.add('open');
+  opRefreshAll();
+}
+function closeOwnerPanel() {
+  document.getElementById('owner-panel').classList.remove('open');
+}
+document.addEventListener('keydown', e => {
+  if (e.ctrlKey && e.shiftKey && e.key === 'O') { e.preventDefault(); openOwnerPanel(); }
+  if (e.key === 'Escape') closeOwnerPanel();
+});
+
+// --- Tab switching ---
+function opTab(el, tabId) {
+  document.querySelectorAll('.op-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  ['op-content','op-appearance','op-accounts','op-icons'].forEach(id => {
+    document.getElementById(id).style.display = id === tabId ? 'block' : 'none';
+  });
+}
+
+// --- Refresh all panel views ---
+function opRefreshAll() {
+  opRenderXanga();
+  opRenderAIM();
+  opRenderTrash();
+  opRenderYP();
+  opRenderMedia();
+  opRenderIcons();
+  document.getElementById('op-new-password').value = '';
+  document.getElementById('op-display-name').value = opState.displayName !== '[ your name ]' ? opState.displayName : '';
+  document.getElementById('op-screenname').value = opState.screenname !== 'wannabgangstafoo' ? opState.screenname : '';
+  document.getElementById('op-guest-taskbar-color').value = opState.guestTaskbarColor;
+  document.getElementById('op-personal-taskbar-color').value = opState.personalTaskbarColor;
+  if (opState.guestWallpaperURL) document.getElementById('op-guest-wallpaper-url').value = opState.guestWallpaperURL;
+  if (opState.personalWallpaperURL) document.getElementById('op-personal-wallpaper-url').value = opState.personalWallpaperURL;
+}
+
+// ── XANGA ──
+function opRenderXanga() {
+  const el = document.getElementById('op-xanga-list');
+  el.innerHTML = '';
+  ['guest','personal'].forEach(page => {
+    opState.xangaEntries[page].forEach((entry, i) => {
+      const card = document.createElement('div');
+      card.className = 'op-entry-card';
+      card.innerHTML = `
+        <div class="op-entry-card-top">
+          <span class="op-entry-title">${entry.title} <span style="color:#4a5a7a;font-weight:normal;font-size:9px;">[${page}]</span></span>
+          <div class="op-entry-actions">
+            <button class="op-btn danger" style="padding:2px 8px;font-size:10px;" onclick="opDeleteXanga('${page}',${i})">Delete</button>
+          </div>
+        </div>
+        <div class="op-entry-date" style="color:#4a5a7a;font-size:9px;">${entry.date}</div>
+        <div class="op-entry-body">${entry.body.substring(0,120)}${entry.body.length>120?'...':''}</div>`;
+      el.appendChild(card);
+    });
+  });
+  if (!opState.xangaEntries.guest.length && !opState.xangaEntries.personal.length) {
+    el.innerHTML = '<div style="color:#4a5a7a;font-size:10px;">No entries yet. Add one above.</div>';
+  }
+}
+function opAddXanga() {
+  const title = document.getElementById('op-xanga-title').value.trim();
+  const body = document.getElementById('op-xanga-body').value.trim();
+  const page = document.getElementById('op-xanga-page').value;
+  if (!title || !body) return;
+  const now = new Date();
+  const date = now.toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+  opState.xangaEntries[page].unshift({ title, date, body });
+  applyXangaToPage();
+  document.getElementById('op-xanga-title').value = '';
+  document.getElementById('op-xanga-body').value = '';
+  opRenderXanga();
+  sndAIMSignOn();
+}
+function opDeleteXanga(page, i) {
+  opState.xangaEntries[page].splice(i, 1);
+  applyXangaToPage();
+  opRenderXanga();
+}
+function applyXangaToPage() {
+  // update live guest xanga
+  ['guest','personal'].forEach(page => {
+    const el = page === 'guest'
+      ? document.querySelector('#g-ie .xanga-shell')
+      : document.querySelector('#p-ie .xanga-shell');
+    if (!el) return;
+    const header = el.querySelector('.xanga-header');
+    const comments = el.querySelector('.xanga-comments');
+    el.innerHTML = '';
+    if (header) el.appendChild(header);
+    opState.xangaEntries[page].forEach(entry => {
+      const div = document.createElement('div');
+      div.className = 'xanga-entry';
+      div.innerHTML = `<div class="xanga-entry-title">${entry.title}</div><div class="xanga-entry-date">${entry.date}</div><div class="xanga-entry-body">${entry.body.replace(/\n/g,'<br>')}</div>`;
+      el.appendChild(div);
+    });
+    if (comments) el.appendChild(comments);
+  });
+}
+
+// ── AIM REPLIES ──
+function opRenderAIM() {
+  const el = document.getElementById('op-aim-list');
+  el.innerHTML = '';
+  opState.aimReplies.forEach((reply, i) => {
+    const row = document.createElement('div');
+    row.style.cssText = 'display:flex;gap:6px;align-items:flex-start;margin-bottom:5px;';
+    row.innerHTML = `
+      <div style="flex:1;background:#0d0d1e;border:1px solid #2a2a4a;border-radius:4px;padding:5px 8px;color:#8898bb;font-size:10px;line-height:1.5;">${reply}</div>
+      <button class="op-btn danger" style="padding:2px 8px;font-size:10px;flex-shrink:0;" onclick="opDeleteAIM(${i})">✕</button>`;
+    el.appendChild(row);
+  });
+}
+function opAddAIM() {
+  const inp = document.getElementById('op-aim-new');
+  const val = inp.value.trim();
+  if (!val) return;
+  opState.aimReplies.push(val);
+  aimReplies.push(val); // also update live array
+  inp.value = '';
+  opRenderAIM();
+  sndAIMSend();
+}
+function opDeleteAIM(i) {
+  opState.aimReplies.splice(i, 1);
+  aimReplies.splice(i, 1);
+  opRenderAIM();
+}
+
+// ── TRASH ──
+function opRenderTrash() {
+  document.getElementById('op-trash').value = opState.trash.map(t => '— ' + t).join('\n');
+}
+function opSaveTrash() {
+  const raw = document.getElementById('op-trash').value;
+  opState.trash = raw.split('\n').map(l => l.replace(/^—\s*/,'')).filter(l => l.trim());
+  applyTrashToPage();
+}
+document.addEventListener('DOMContentLoaded', () => {
+  const trashEl = document.getElementById('op-trash');
+  if (trashEl) trashEl.addEventListener('blur', opSaveTrash);
+});
+function applyTrashToPage() {
+  ['g-trash','p-trash'].forEach(id => {
+    const el = document.querySelector('#' + id + ' .win-content');
+    if (!el) return;
+    const items = opState.trash.map(t => `— ${t}`).join('<br>');
+    el.innerHTML = `<strong>🗑️ What I've thrown away</strong><br><br><em>Old beliefs. Comfortable lies. Fear dressed up as caution.</em><br><br>${items}<br><br><span style="color:#aaa;font-size:10px;">Deleted. Not forgotten. Just no longer running the show.</span>`;
+  });
+}
+
+// ── YELLOW PAGES ──
+function opRenderYP() {
+  const el = document.getElementById('op-yp-list');
+  el.innerHTML = '';
+  opState.ypEntries.forEach((entry, i) => {
+    const card = document.createElement('div');
+    card.className = 'op-entry-card';
+    card.style.flexDirection = 'row';
+    card.style.alignItems = 'center';
+    card.innerHTML = `<div style="flex:1"><div class="op-entry-title">${entry.name}</div><div class="op-entry-body">${entry.what ? '💼 ' + entry.what + ' · ' : ''}${entry.contact || ''}</div></div><button class="op-btn danger" style="padding:2px 8px;font-size:10px;" onclick="opDeleteYP(${i})">✕</button>`;
+    el.appendChild(card);
+  });
+}
+function opAddYP() {
+  const name = document.getElementById('op-yp-name').value.trim();
+  const what = document.getElementById('op-yp-what').value.trim();
+  const contact = document.getElementById('op-yp-contact').value.trim();
+  if (!name) return;
+  opState.ypEntries.push({ name, what, contact });
+  addYP(); // also calls live addYP
+  document.getElementById('op-yp-name').value = '';
+  document.getElementById('op-yp-what').value = '';
+  document.getElementById('op-yp-contact').value = '';
+  // sync inputs
+  document.getElementById('yp-name').value = name;
+  document.getElementById('yp-what').value = what;
+  document.getElementById('yp-contact').value = contact;
+  opRenderYP();
+}
+function opDeleteYP(i) {
+  opState.ypEntries.splice(i, 1);
+  opRenderYP();
+}
+
+// ── MEDIA ──
+function opRenderMedia() {
+  const el = document.getElementById('op-media-list');
+  el.innerHTML = '';
+  opState.mediaLinks.forEach((m, i) => {
+    const card = document.createElement('div');
+    card.className = 'op-entry-card';
+    card.style.flexDirection = 'row';
+    card.style.alignItems = 'center';
+    card.style.gap = '8px';
+    card.innerHTML = `
+      ${m.url.match(/\.(jpg|jpeg|png|gif|webp)/i) ? `<img src="${m.url}" style="width:48px;height:36px;object-fit:cover;border-radius:3px;flex-shrink:0;">` : '<span style="font-size:20px;">🔗</span>'}
+      <div style="flex:1;overflow:hidden;"><div class="op-entry-title">${m.label}</div><div class="op-entry-body" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${m.url}</div></div>
+      <button class="op-btn danger" style="padding:2px 8px;font-size:10px;flex-shrink:0;" onclick="opDeleteMedia(${i})">✕</button>`;
+    el.appendChild(card);
+  });
+}
+function opAddMedia() {
+  const label = document.getElementById('op-media-label').value.trim();
+  const url = document.getElementById('op-media-url').value.trim();
+  if (!url) return;
+  opState.mediaLinks.push({ label: label || 'untitled', url });
+  document.getElementById('op-media-label').value = '';
+  document.getElementById('op-media-url').value = '';
+  opRenderMedia();
+  sndAIMSend();
+}
+function opDeleteMedia(i) {
+  opState.mediaLinks.splice(i, 1);
+  opRenderMedia();
+}
+
+// ── WALLPAPER ──
+function opPickWallpaper(desktop, color, chipEl) {
+  opState[desktop + 'Wallpaper'] = color;
+  opState[desktop + 'WallpaperURL'] = '';
+  document.querySelectorAll('#op-' + desktop + '-colors .op-color-chip').forEach(c => c.classList.remove('selected'));
+  chipEl.classList.add('selected');
+  applyWallpaper(desktop);
+}
+function opSetWallpaperURL(desktop) {
+  const url = document.getElementById('op-' + desktop + '-wallpaper-url').value.trim();
+  if (!url) return;
+  opState[desktop + 'WallpaperURL'] = url;
+  applyWallpaper(desktop);
+  sndAIMSend();
+}
+function applyWallpaper(desktop) {
+  const id = desktop === 'guest' ? 'guest-desktop' : 'personal-desktop';
+  const area = document.querySelector('#' + id + ' .desktop-area');
+  if (!area) return;
+  if (opState[desktop + 'WallpaperURL']) {
+    area.style.background = `url('${opState[desktop+'WallpaperURL']}') center/cover no-repeat`;
+  } else {
+    area.style.background = opState[desktop + 'Wallpaper'];
+  }
+}
+
+// ── TASKBAR COLORS ──
+function opApplyTaskbarColors() {
+  const gc = document.getElementById('op-guest-taskbar-color').value;
+  const pc = document.getElementById('op-personal-taskbar-color').value;
+  opState.guestTaskbarColor = gc;
+  opState.personalTaskbarColor = pc;
+  const gtb = document.querySelector('.taskbar-guest');
+  const ptb = document.querySelector('.taskbar-personal');
+  if (gtb) gtb.style.background = gc;
+  if (ptb) ptb.style.background = pc;
+  sndAIMSend();
+}
+
+// ── ACCOUNTS ──
+function opChangePassword() {
+  const val = document.getElementById('op-new-password').value.trim();
+  if (!val) return;
+  opState.password = val;
+  PASSWORDS.personal = val;
+  document.getElementById('op-pw-confirm').textContent = '✅ Password changed! Will be saved on next export.';
+  setTimeout(() => document.getElementById('op-pw-confirm').textContent = '', 3000);
+  sndAIMSend();
+}
+function opChangeDisplayName() {
+  const val = document.getElementById('op-display-name').value.trim();
+  if (!val) return;
+  opState.displayName = val;
+  // update live elements
+  document.getElementById('p-sm-name').textContent = val;
+  document.getElementById('p-tray-name').textContent = val;
+  document.querySelector('#welcome-screen .user-card:nth-child(2) .user-name').textContent = val;
+  sndAIMSend();
+}
+function opChangeScreenname() {
+  const val = document.getElementById('op-screenname').value.trim();
+  if (!val) return;
+  opState.screenname = val;
+  // update AIM buddy list and chat title
+  document.querySelectorAll('.aim-buddy').forEach(b => {
+    if (b.textContent.includes('wannabgangstafoo')) b.innerHTML = `<div class="aim-dot on"></div>${val} 🟡`;
+  });
+  sndAIMSend();
+}
+
+// ── ICONS ──
+function opRenderIcons() {
+  ['guest','personal'].forEach(desktop => {
+    const el = document.getElementById('op-' + desktop + '-icons-list');
+    el.innerHTML = '';
+    opState[desktop + 'Icons'].forEach((icon, i) => {
+      const row = document.createElement('div');
+      row.style.cssText = 'display:flex;align-items:center;gap:8px;margin-bottom:6px;';
+      row.innerHTML = `
+        <input class="op-input" value="${icon.emoji}" style="width:44px;text-align:center;font-size:16px;" oninput="opState['${desktop}Icons'][${i}].emoji=this.value">
+        <input class="op-input" value="${icon.label}" style="flex:1;" oninput="opState['${desktop}Icons'][${i}].label=this.value">
+        <label style="display:flex;align-items:center;gap:4px;color:#8898bb;font-size:10px;cursor:pointer;">
+          <input type="checkbox" ${icon.show ? 'checked' : ''} onchange="opState['${desktop}Icons'][${i}].show=this.checked;opApplyIcons('${desktop}')"> show
+        </label>`;
+      el.appendChild(row);
+    });
+    const applyBtn = document.createElement('button');
+    applyBtn.className = 'op-btn';
+    applyBtn.textContent = 'Apply Icon Changes';
+    applyBtn.onclick = () => opApplyIcons(desktop);
+    el.appendChild(applyBtn);
+  });
+}
+function opApplyIcons(desktop) {
+  const containerId = desktop === 'guest' ? 'guest-desktop' : 'personal-desktop';
+  const iconsEl = document.querySelector('#' + containerId + ' .desktop-icons');
+  if (!iconsEl) return;
+  const icons = iconsEl.querySelectorAll('.icon');
+  opState[desktop + 'Icons'].forEach((icon, i) => {
+    if (icons[i]) {
+      icons[i].style.display = icon.show ? 'flex' : 'none';
+      const imgEl = icons[i].querySelector('.icon-img');
+      const labelEl = icons[i].querySelector('.icon-label');
+      if (imgEl) imgEl.textContent = icon.emoji;
+      if (labelEl) labelEl.textContent = icon.label;
+    }
+  });
+  sndWindowOpen();
+}
+
+// ══════════════════════════════════════
+// EXPORT — bake all settings into HTML
+// ══════════════════════════════════════
+function opExport() {
+  // Get the current page HTML
+  let html = document.documentElement.outerHTML;
+
+  // Bake in the password
+  html = html.replace(/personal:\s*['"][^'"]*['"]/, `personal: '${opState.password}'`);
+
+  // Bake in display name on welcome screen
+  html = html.replace(/\[ your name \]/g, opState.displayName);
+
+  // Bake in screenname
+  html = html.replace(/\[ your screenname \]/g, opState.screenname);
+
+  // Bake in wallpapers
+  if (opState.guestWallpaperURL) {
+    html = html.replace(
+      /background: radial-gradient\(ellipse at 30%[^;]+;/,
+      `background: url('${opState.guestWallpaperURL}') center/cover no-repeat;`
+    );
+  }
+  if (opState.personalWallpaperURL) {
+    html = html.replace(
+      /background: radial-gradient\(ellipse at 25%[^;]+;/,
+      `background: url('${opState.personalWallpaperURL}') center/cover no-repeat;`
+    );
+  }
+
+  // Download the file
+  const blob = new Blob([html], { type: 'text/html' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'index.html';
+  a.click();
+  URL.revokeObjectURL(a.href);
+  sndXPStartup();
+}
+
+// ══════════════════════════
+// INIT
+// ══════════════════════════
+runBIOS();
+</script>
+
+
+</body></html>
