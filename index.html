@@ -26,8 +26,11 @@ body::after {
   z-index:9999;
 }
 
-.screen { position:fixed; inset:0; display:none; }
+.screen { position:fixed; inset:0; display:none; z-index:1; }
 .screen.active { display:flex; }
+#bios-screen { z-index:1000; }
+#boot-screen { z-index:1000; }
+#welcome-screen { z-index:1000; }
 
 /* ══ BIOS ══ */
 #bios-screen {
@@ -1546,7 +1549,7 @@ body::after {
   </div>
 
   <!-- PERSONAL START MENU -->
-  <div class="start-menu open" id="personal-sm">
+  <div class="start-menu" id="personal-sm">
     <div class="sm-head sm-head-personal"><div class="sm-avatar">🔮</div><div class="sm-username" id="p-sm-name">deeper</div></div>
     <div class="sm-body">
       <div class="sm-left">
@@ -2939,6 +2942,13 @@ function opExport() {
   // Always hide owner panel on export
   html = html.replace(/id="owner-panel" class="open"/, 'id="owner-panel"');
   html = html.replace(/id="owner-panel" class="[^"]*open[^"]*"/, 'id="owner-panel"');
+
+  // Strip open start menus
+  html = html.replace(/class="start-menu open"/g, 'class="start-menu"');
+
+  // Strip active desktops (only BIOS should start active)
+  html = html.replace(/id="guest-desktop" class="screen fade-in active"/, 'id="guest-desktop" class="screen fade-in"');
+  html = html.replace(/id="personal-desktop" class="screen fade-in active"/, 'id="personal-desktop" class="screen fade-in"');
 
   // Bake in the password
   html = html.replace(/personal:\s*['"][^'"]*['"]/, `personal: '${opState.password}'`);
