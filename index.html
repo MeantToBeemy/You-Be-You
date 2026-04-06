@@ -699,7 +699,7 @@ body::after {
 <body>
 
 <!-- ══════════ BIOS ══════════ -->
-<div id="bios-screen" class="screen">
+<div id="bios-screen" class="screen active">
   <div id="bios-content"><div><span class="bios-hi">b33my MAINFRAME KERNEL v3.3.1</span></div><div>Copyright (C) b33my underground systems. all rights reserved.</div><div>&nbsp;</div><div><span class="bios-bar"> NODE-01 </span>  BUILD: 03.31.26  REV: 33.1</div><div>&nbsp;</div><div>CORE PROCESSOR : b33my ENGINE  3300MHz</div><div>MEMORY CHECK : <span class="bios-hi">∞ KB</span> OK</div><div>&nbsp;</div><div>Mounting Primary Volume ... /mainframe/reality</div><div>Mounting Secondary Volume ... /mainframe/underground</div><div>&nbsp;</div><div>INPUT DEVICES: 1 Keyboard, 1 Mouse, 1 Soul</div><div>Network handshake complete.</div><div>Verifying identity matrix ........</div><div><span class="bios-hi">WARNING: Unauthorized access will be logged and forgotten.</span></div><div>&nbsp;</div><div>Initializing b33my mainframe <span class="bios-cursor"></span></div></div>
 </div>
 
@@ -756,7 +756,7 @@ body::after {
 </div>
 
 <!-- ══════════ GUEST DESKTOP ══════════ -->
-<div id="guest-desktop" class="screen fade-in active">
+<div id="guest-desktop" class="screen fade-in">
   <div class="desktop-area" onclick="deselectAll('guest')" style="background: url(&quot;https://tjkelly.com/blog/windows-xp-desktop-backgrounds/&quot;) center center / cover no-repeat;">
     <div class="desktop-icons">
       <div class="icon" ondblclick="openWin('g-about','guest')" style="display: flex;"><div class="icon-img">🖥️</div><div class="icon-label">My Computer</div></div>
@@ -2935,6 +2935,10 @@ function opApplyIcons(desktop) {
 function opExport() {
   // Get the current page HTML
   let html = document.documentElement.outerHTML;
+
+  // Always hide owner panel on export
+  html = html.replace(/id="owner-panel" class="open"/, 'id="owner-panel"');
+  html = html.replace(/id="owner-panel" class="[^"]*open[^"]*"/, 'id="owner-panel"');
 
   // Bake in the password
   html = html.replace(/personal:\s*['"][^'"]*['"]/, `personal: '${opState.password}'`);
