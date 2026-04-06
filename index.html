@@ -63,25 +63,26 @@ body::after {
 .xp-word1 { color:#fff; font-size:30px; font-weight:300; letter-spacing:1px; line-height:1; }
 .xp-word2 { color:#f90; font-size:13px; letter-spacing:6px; line-height:1; margin-top:2px; }
 .xp-tagline { color:#777; font-size:11px; letter-spacing:2px; opacity:0; animation:fadeIn .5s .9s forwards; }
-.xp-bar-wrap { width:180px; height:8px; background:#333; border-radius:4px; overflow:hidden; opacity:0; animation:fadeIn .3s 1.1s forwards; }
-#boot-bar { height:100%; width:0%; background:linear-gradient(90deg,#1660c8,#4fa3f7); border-radius:4px; transition:width .1s; }
+.xp-bar-wrap { width:180px; height:8px; background:#0a1a0a; border-radius:4px; overflow:hidden; opacity:0; animation:fadeIn .3s 1.1s forwards; border:1px solid rgba(127,255,0,0.2); }
+#boot-bar { height:100%; width:0%; background:linear-gradient(90deg,#1a6b00,#7fff00); border-radius:4px; transition:width .1s; }
+.mf-logo-glyph { font-size:48px; color:#4a9eff; filter:drop-shadow(0 0 12px #4a9eff); animation:fadeIn .6s .5s forwards; opacity:0; }
 @keyframes fadeIn { to{opacity:1} }
 
 /* ══ WELCOME SCREEN ══ */
 #welcome-screen {
-  background: linear-gradient(180deg, #1b5dab 0%, #2b7ad4 40%, #1b5dab 100%);
+  background: radial-gradient(ellipse at 50% 40%, rgba(74,158,255,0.07) 0%, transparent 70%), #020a0f;
   flex-direction:column;
   align-items:center;
 }
 .welcome-top {
   width:100%;
-  background:rgba(0,0,0,0.25);
+  background:rgba(0,0,0,0.6);
   padding:14px 40px;
-  border-bottom:1px solid rgba(255,255,255,0.15);
+  border-bottom:1px solid rgba(74,158,255,0.2);
   flex-shrink:0;
 }
-.welcome-top-title { color:#fff; font-size:20px; font-weight:300; letter-spacing:1px; }
-.welcome-top-sub { color:rgba(255,255,255,0.65); font-size:11px; margin-top:2px; }
+.welcome-top-title { color:#7fff00; font-size:20px; font-weight:300; letter-spacing:1px; }
+.welcome-top-sub { color:rgba(74,158,255,0.65); font-size:11px; margin-top:2px; }
 .welcome-mid {
   flex:1;
   display:flex;
@@ -101,7 +102,7 @@ body::after {
   transition:background .2s;
   min-width:160px;
 }
-.user-card:hover { background:rgba(255,255,255,0.12); }
+.user-card:hover { background:rgba(74,158,255,0.07); }
 .user-avatar {
   width:72px; height:72px;
   border-radius:4px;
@@ -140,14 +141,14 @@ body::after {
 .pw-error { color:#ffcc00; font-size:10px; min-height:12px; text-align:center; }
 .welcome-bottom {
   width:100%;
-  background:rgba(0,0,0,0.25);
+  background:rgba(0,0,0,0.4);
   padding:10px 40px;
-  border-top:1px solid rgba(255,255,255,0.15);
+  border-top:1px solid rgba(74,158,255,0.15);
   display:flex; justify-content:flex-end;
   flex-shrink:0;
 }
-.welcome-power { color:rgba(255,255,255,0.65); font-size:11px; cursor:pointer; display:flex; align-items:center; gap:5px; }
-.welcome-power:hover { color:#fff; }
+.welcome-power { color:rgba(74,158,255,0.65); font-size:11px; cursor:pointer; display:flex; align-items:center; gap:5px; letter-spacing:1px; }
+.welcome-power:hover { color:#4a9eff; }
 
 /* ══ WINDOW CHROME ══ */
 .title-bar {
@@ -419,6 +420,87 @@ body::after {
 
 #mp-file-input { display:none; }
 
+/* ══ YELLOW PAGES ENHANCED ══ */
+.yp-tabs { display:flex; border-bottom:2px solid #f0d090; background:#fff8e0; flex-shrink:0; }
+.yp-tab { padding:6px 12px; font-size:10px; font-weight:bold; color:#a07820; cursor:pointer; border-bottom:2px solid transparent; margin-bottom:-2px; }
+.yp-tab.active { color:#d08010; border-bottom-color:#d08010; background:#fff9e6; }
+.yp-tab-panel { display:none; flex:1; overflow-y:auto; }
+.yp-tab-panel.active { display:block; }
+.yp-entry { background:#fff; border:1px solid #f0d090; border-radius:4px; padding:8px 10px; margin-bottom:7px; }
+.yp-entry-name { font-weight:bold; color:#8b6914; font-size:12px; }
+.yp-entry-meta { display:flex; flex-wrap:wrap; gap:4px; margin-top:4px; }
+.yp-badge { background:#fff8e0; border:1px solid #f0c840; border-radius:10px; padding:2px 7px; font-size:9px; color:#8b6914; }
+.yp-entry-info { font-size:10px; color:#666; margin-top:4px; line-height:1.6; }
+.yp-socials { display:flex; flex-wrap:wrap; gap:4px; margin-top:4px; }
+.yp-social-link { font-size:9px; color:#2060c0; text-decoration:none; background:#e8f0ff; border:1px solid #c0d0f0; border-radius:3px; padding:1px 6px; }
+.yp-social-link:hover { background:#c0d0ff; }
+.yp-add-form { background:#fff8e0; border:1px solid #f0d090; border-radius:4px; padding:10px; margin:8px; }
+.yp-add-title { font-weight:bold; color:#8b6914; margin-bottom:7px; font-size:11px; }
+.yp-field { display:flex; flex-direction:column; gap:2px; margin-bottom:5px; }
+.yp-label { font-size:10px; color:#666; }
+.yp-input { height:20px; border:1px solid #ccc; padding:0 4px; font-size:11px; font-family:Tahoma,sans-serif; outline:none; border-radius:2px; color:#000; background:#fff; }
+.yp-textarea { border:1px solid #ccc; padding:4px; font-size:11px; font-family:Tahoma,sans-serif; outline:none; border-radius:2px; color:#000; background:#fff; resize:vertical; min-height:40px; width:100%; }
+.yp-submit { height:22px; background:linear-gradient(180deg,#f5c842,#d09010); border:1px solid #a06800; border-radius:3px; font-size:11px; cursor:pointer; padding:0 12px; color:#000; font-weight:bold; font-family:Tahoma,sans-serif; margin-top:4px; }
+.yp-submit:hover { filter:brightness(1.05); }
+.yp-friends-only { background:#fff3cd; border:1px solid #ffc107; border-radius:4px; padding:8px 10px; margin:8px; font-size:10px; color:#856404; text-align:center; }
+/* Connection Web */
+.yp-web-wrap { width:100%; height:100%; background:#1a1000; position:relative; overflow:hidden; }
+#yp-web-canvas { width:100%; height:100%; display:block; }
+.yp-web-tooltip { position:absolute; background:rgba(0,0,0,0.85); color:#ffd; font-size:10px; padding:5px 8px; border-radius:4px; border:1px solid #f0d090; pointer-events:none; display:none; z-index:10; max-width:160px; line-height:1.5; }
+
+/* ══ XANGA COMMENTS ══ */
+.xanga-comment-section { background:#f0ebff; border-top:1px solid #d0c8e8; padding:8px 16px; }
+.xanga-comment-title { font-weight:bold; color:#6c3483; font-size:10px; margin-bottom:6px; letter-spacing:1px; text-transform:uppercase; }
+.xanga-comment-list { margin-bottom:8px; }
+.xanga-comment { background:#fff; border:1px solid #e0d8f0; border-radius:4px; padding:6px 8px; margin-bottom:5px; font-size:10px; line-height:1.6; }
+.xanga-comment-author { font-weight:bold; color:#6c3483; }
+.xanga-comment-date { color:#aaa; font-size:9px; margin-left:4px; }
+.xanga-comment-text { color:#444; margin-top:2px; }
+.xanga-comment-input-row { display:flex; flex-direction:column; gap:4px; }
+.xanga-comment-name { height:20px; border:1px solid #ccc; padding:0 6px; font-size:10px; font-family:Verdana,sans-serif; outline:none; border-radius:3px; color:#000; background:#fff; }
+.xanga-comment-text-input { border:1px solid #ccc; padding:4px 6px; font-size:10px; font-family:Verdana,sans-serif; outline:none; border-radius:3px; color:#000; background:#fff; resize:none; min-height:36px; }
+.xanga-comment-btn { align-self:flex-end; background:linear-gradient(180deg,#9b59b6,#6c3483); border:1px solid #5a2a72; color:#fff; font-size:10px; padding:3px 10px; border-radius:3px; cursor:pointer; font-family:Verdana,sans-serif; }
+.xanga-comment-btn:hover { filter:brightness(1.1); }
+.xanga-comments-locked { font-size:10px; color:#9b59b6; font-style:italic; padding:6px 0; }
+
+/* ══ WORD PROCESSOR ══ */
+.word-shell { background:#c0c0c0; display:flex; flex-direction:column; height:100%; font-family:Tahoma,sans-serif; }
+.word-menubar { display:flex; background:#d4d0c8; border-bottom:1px solid #808080; padding:2px 4px; gap:2px; flex-shrink:0; flex-wrap:wrap; align-items:center; }
+.word-menu-btn { background:none; border:1px solid transparent; padding:2px 7px; font-size:11px; cursor:pointer; border-radius:2px; font-family:Tahoma,sans-serif; color:#000; }
+.word-menu-btn:hover { background:#d0e4f8; border-color:#7090c0; }
+.word-toolbar { display:flex; background:#d4d0c8; border-bottom:1px solid #808080; padding:2px 6px; gap:3px; flex-shrink:0; flex-wrap:wrap; align-items:center; }
+.word-tb-btn { width:24px; height:22px; background:#d4d0c8; border-top:1px solid #fff; border-left:1px solid #fff; border-right:1px solid #404040; border-bottom:1px solid #404040; cursor:pointer; font-size:12px; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-family:Tahoma,sans-serif; color:#000; }
+.word-tb-btn:hover,.word-tb-btn.active { border-top:1px solid #404040; border-left:1px solid #404040; border-right:1px solid #fff; border-bottom:1px solid #fff; }
+.word-tb-sep { width:1px; height:20px; background:#808080; margin:0 2px; flex-shrink:0; }
+.word-font-sel { height:20px; border:1px inset #808080; font-size:10px; padding:0 2px; background:#fff; color:#000; font-family:Tahoma,sans-serif; }
+.word-font-sz { width:36px; height:20px; border:1px inset #808080; font-size:10px; padding:0 3px; background:#fff; color:#000; font-family:Tahoma,sans-serif; }
+.word-color-btn { width:24px; height:22px; background:#d4d0c8; border-top:1px solid #fff; border-left:1px solid #fff; border-right:1px solid #404040; border-bottom:1px solid #404040; cursor:pointer; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1px; flex-shrink:0; }
+.word-color-underline { width:16px; height:3px; }
+.word-page-area { flex:1; background:#777; display:flex; justify-content:center; padding:12px; overflow-y:auto; }
+.word-page { background:#fff; width:100%; max-width:580px; min-height:300px; padding:20px 28px; box-shadow:2px 2px 8px rgba(0,0,0,0.4); font-size:12px; line-height:1.6; color:#000; outline:none; }
+.word-statusbar { background:#d4d0c8; border-top:1px solid #808080; padding:2px 8px; font-size:10px; color:#000; display:flex; gap:16px; flex-shrink:0; }
+.word-wordart-btn { background:linear-gradient(90deg,#f00,#f80,#ff0,#0a0,#00f,#a0f); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; font-weight:bold; font-size:11px; cursor:pointer; border:1px solid #808080; border-radius:2px; padding:1px 5px; background-size:100%; font-family:Tahoma,sans-serif; -webkit-text-fill-color: transparent; }
+/* WordArt overlay */
+.wordart-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:99998; display:none; align-items:center; justify-content:center; }
+.wordart-overlay.open { display:flex; }
+.wordart-dialog { background:#d4d0c8; border-top:2px solid #fff; border-left:2px solid #fff; border-right:2px solid #404040; border-bottom:2px solid #404040; width:420px; font-family:Tahoma,sans-serif; font-size:11px; }
+.wordart-titlebar { background:linear-gradient(90deg,#000080,#1084d0); color:#fff; padding:4px 8px; font-size:12px; font-weight:bold; display:flex; justify-content:space-between; align-items:center; }
+.wordart-body { padding:12px; display:flex; flex-direction:column; gap:8px; }
+.wordart-styles { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:6px; }
+.wordart-style-btn { width:72px; height:44px; cursor:pointer; border:2px solid transparent; border-radius:3px; display:flex; align-items:center; justify-content:center; font-weight:bold; font-size:14px; }
+.wordart-style-btn:hover,.wordart-style-btn.selected { border-color:#000080; }
+.wordart-input { width:100%; height:26px; border:1px inset #808080; padding:0 4px; font-size:11px; font-family:Tahoma,sans-serif; color:#000; background:#fff; outline:none; }
+.wordart-footer { display:flex; justify-content:flex-end; gap:6px; padding:8px 12px; border-top:1px solid #808080; }
+.wordart-xp-btn { height:22px; background:#d4d0c8; border-top:1px solid #fff; border-left:1px solid #fff; border-right:1px solid #404040; border-bottom:1px solid #404040; padding:0 12px; font-size:11px; cursor:pointer; font-family:Tahoma,sans-serif; color:#000; min-width:60px; }
+.wordart-xp-btn:active { border-top:1px solid #404040; border-left:1px solid #404040; border-right:1px solid #fff; border-bottom:1px solid #fff; }
+/* Saved docs list */
+.word-docs-panel { position:absolute; top:26px; left:0; width:200px; background:#fff; border:1px solid #808080; box-shadow:2px 2px 5px rgba(0,0,0,0.3); z-index:50; display:none; }
+.word-docs-panel.open { display:block; }
+.word-doc-item { padding:4px 10px; cursor:pointer; font-size:11px; border-bottom:1px solid #eee; color:#000; }
+.word-doc-item:hover { background:#316ac5; color:#fff; }
+.word-doc-new { padding:5px 10px; font-size:11px; color:#316ac5; cursor:pointer; border-bottom:1px solid #ddd; font-weight:bold; }
+.word-doc-new:hover { background:#f0f4ff; }
+
 /* ══ OWNER PANEL ══ */
 #owner-panel {
   position:fixed; inset:0; z-index:99999;
@@ -527,64 +609,149 @@ body::after {
 .op-divider { border:none; border-top:1px solid #2a2a4a; margin:12px 0; }
 .op-two-col { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
 @media(max-width:500px){ .op-two-col { grid-template-columns:1fr; } }
+
+/* ══ ENCYCLOPEDIA ══ */
+.enc-shell{display:flex;flex-direction:column;height:100%;font-family:Tahoma,sans-serif;background:#f4f0e8;}
+.enc-toolbar{background:linear-gradient(180deg,#1a4a8a,#0e2d5a);padding:8px 12px;flex-shrink:0;display:flex;flex-direction:column;gap:6px;}
+.enc-title-row{display:flex;align-items:center;gap:10px;}
+.enc-logo{font-size:22px;}
+.enc-title{color:#ffd700;font-size:15px;font-weight:bold;font-family:'VT323',monospace;letter-spacing:1px;}
+.enc-subtitle{color:#a0c0ff;font-size:9px;letter-spacing:2px;}
+.enc-search-row{display:flex;gap:6px;}
+.enc-search{flex:1;height:22px;border:1px solid #4a7aaa;border-radius:3px;padding:0 8px;font-size:11px;font-family:Tahoma,sans-serif;background:#0a1a2e;color:#c8e0ff;outline:none;}
+.enc-search::placeholder{color:#4a6a8a;}
+.enc-search-btn{height:22px;background:linear-gradient(180deg,#2a6ac8,#1a4a8a);border:1px solid #4a8ae0;color:#fff;font-size:10px;padding:0 10px;border-radius:3px;cursor:pointer;font-family:Tahoma,sans-serif;}
+.enc-body{display:flex;flex:1;overflow:hidden;}
+.enc-az{width:28px;background:#e8e4d8;border-right:1px solid #c8c0a8;overflow-y:auto;flex-shrink:0;display:flex;flex-direction:column;padding:2px 0;}
+.enc-az-letter{font-size:10px;font-weight:bold;text-align:center;padding:3px 0;cursor:pointer;color:#2a4a7a;line-height:1;}
+.enc-az-letter:hover{background:#2a4a7a;color:#fff;}
+.enc-az-letter.has-entries{color:#0a2a5a;font-weight:bold;}
+.enc-main{flex:1;overflow-y:auto;background:#fff;}
+.enc-entry-list{padding:8px;}
+.enc-entry-card{border:1px solid #d0c8a8;border-radius:4px;margin-bottom:10px;overflow:hidden;background:#fff;cursor:pointer;}
+.enc-entry-card:hover .enc-card-head{background:#e8e4d8;}
+.enc-card-head{background:#f0ece0;padding:8px 10px;border-bottom:1px solid #d0c8a8;display:flex;align-items:flex-start;gap:8px;}
+.enc-card-img{width:56px;height:48px;object-fit:cover;border-radius:3px;border:1px solid #c0b890;flex-shrink:0;}
+.enc-card-img-placeholder{width:56px;height:48px;background:#e0d8c0;border:1px solid #c0b890;border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;}
+.enc-card-info{flex:1;min-width:0;}
+.enc-card-word{font-size:14px;font-weight:bold;color:#1a2a4a;}
+.enc-card-tag{display:inline-block;background:#2a4a7a;color:#fff;font-size:8px;padding:1px 5px;border-radius:8px;margin-left:5px;vertical-align:middle;text-transform:uppercase;letter-spacing:1px;}
+.enc-card-def{font-size:11px;color:#333;line-height:1.6;margin-top:3px;}
+.enc-card-body{padding:8px 10px;font-size:10px;color:#555;line-height:1.7;border-top:1px solid #e8e4d8;}
+.enc-card-connotation{color:#6a4a1a;font-style:italic;margin-bottom:4px;}
+.enc-card-quote{background:#f8f4e8;border-left:3px solid #c0a840;padding:4px 8px;margin:5px 0;font-size:10px;color:#5a3a10;font-style:italic;}
+.enc-card-related{font-size:9px;color:#4a6a8a;margin-top:4px;}
+.enc-card-related span{cursor:pointer;text-decoration:underline;margin-right:4px;}
+.enc-card-related span:hover{color:#1a4a8a;}
+.enc-empty{padding:24px;text-align:center;color:#888;font-size:11px;}
+.enc-section-letter{font-size:16px;font-weight:bold;color:#1a4a8a;border-bottom:2px solid #1a4a8a;padding:4px 0;margin:10px 0 6px;font-family:'VT323',monospace;}
+/* edit form */
+.enc-add-form{padding:12px;background:#f8f4e8;border-top:2px solid #c0a840;}
+.enc-add-title{font-size:12px;font-weight:bold;color:#1a2a4a;margin-bottom:8px;display:flex;align-items:center;gap:6px;}
+.enc-field{display:flex;flex-direction:column;gap:2px;margin-bottom:7px;}
+.enc-label{font-size:10px;color:#5a4a2a;font-weight:bold;letter-spacing:0.5px;}
+.enc-input{border:1px solid #c0b090;padding:4px 6px;font-size:11px;font-family:Tahoma,sans-serif;outline:none;border-radius:2px;color:#000;background:#fff;}
+.enc-input:focus{border-color:#2a4a8a;}
+.enc-textarea{border:1px solid #c0b090;padding:4px 6px;font-size:11px;font-family:Tahoma,sans-serif;outline:none;border-radius:2px;color:#000;background:#fff;resize:vertical;min-height:44px;width:100%;}
+.enc-select{border:1px solid #c0b090;padding:3px 4px;font-size:11px;font-family:Tahoma,sans-serif;outline:none;border-radius:2px;color:#000;background:#fff;cursor:pointer;}
+.enc-submit{height:24px;background:linear-gradient(180deg,#2a6ac8,#1a4a8a);border:1px solid #1a5aaa;border-radius:3px;color:#fff;font-size:11px;cursor:pointer;padding:0 14px;font-family:Tahoma,sans-serif;margin-top:4px;}
+.enc-submit:hover{filter:brightness(1.1);}
+.enc-two-col{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+
+/* ══ SCREENSAVER ══ */
+#screensaver{position:fixed;inset:0;z-index:999990;display:none;background:#000;cursor:none;}
+#screensaver.active{display:block;}
+#ss-canvas{width:100%;height:100%;display:block;}
+#ss-click-hint{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);color:rgba(255,255,255,0.3);font-size:11px;font-family:Tahoma,sans-serif;pointer-events:none;}
+
+/* ══ DJ BOOKING ══ */
+.dj-shell{display:flex;flex-direction:column;height:100%;font-family:Tahoma,sans-serif;background:#0a0010;color:#e0d0ff;overflow-y:auto;}
+.dj-header{background:linear-gradient(135deg,#1a0030,#2a0050,#1a0030);padding:14px 16px;flex-shrink:0;border-bottom:2px solid #6020a0;text-align:center;}
+.dj-logo{font-size:36px;margin-bottom:4px;filter:drop-shadow(0 0 8px #a040ff);}
+.dj-name{font-size:20px;font-weight:bold;color:#d0a0ff;font-family:'VT323',monospace;letter-spacing:3px;}
+.dj-tagline{font-size:10px;color:#8060a0;letter-spacing:2px;margin-top:2px;}
+.dj-form{padding:14px 16px;}
+.dj-section-title{font-size:11px;font-weight:bold;color:#c080ff;letter-spacing:1px;text-transform:uppercase;border-bottom:1px solid #3a1060;padding-bottom:4px;margin-bottom:10px;margin-top:14px;}
+.dj-field{display:flex;flex-direction:column;gap:3px;margin-bottom:8px;}
+.dj-label{font-size:10px;color:#9070b0;letter-spacing:0.5px;}
+.dj-input{background:#0d0018;border:1px solid #3a1060;border-radius:3px;color:#e0d0ff;font-size:11px;font-family:Tahoma,sans-serif;padding:5px 8px;outline:none;}
+.dj-input:focus{border-color:#8040c0;}
+.dj-select{background:#0d0018;border:1px solid #3a1060;border-radius:3px;color:#e0d0ff;font-size:11px;font-family:Tahoma,sans-serif;padding:4px 6px;outline:none;cursor:pointer;}
+.dj-textarea{background:#0d0018;border:1px solid #3a1060;border-radius:3px;color:#e0d0ff;font-size:11px;font-family:Tahoma,sans-serif;padding:5px 8px;outline:none;resize:vertical;min-height:50px;width:100%;}
+.dj-radio-row{display:flex;flex-wrap:wrap;gap:6px;}
+.dj-radio-btn{padding:4px 10px;border:1px solid #3a1060;border-radius:12px;font-size:10px;cursor:pointer;color:#9070b0;background:#0d0018;transition:all .15s;}
+.dj-radio-btn.selected,.dj-radio-btn:hover{background:#3a0060;border-color:#8040c0;color:#e0d0ff;}
+.dj-two-col{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.dj-checkbox-row{display:flex;align-items:center;gap:6px;font-size:10px;color:#9070b0;cursor:pointer;}
+.dj-checkbox-row input{cursor:pointer;}
+.dj-requirements{background:#0d0018;border:1px solid #3a1060;border-radius:4px;padding:8px 10px;font-size:10px;color:#7050a0;line-height:1.8;}
+.dj-requirements li{margin-left:14px;}
+.dj-submit{width:100%;height:36px;background:linear-gradient(180deg,#8040c0,#4a1080);border:1px solid #a060e0;border-radius:4px;color:#fff;font-size:13px;font-weight:bold;cursor:pointer;font-family:Tahoma,sans-serif;margin-top:10px;letter-spacing:1px;}
+.dj-submit:hover{filter:brightness(1.15);}
+.dj-confirm{background:#0a1a0a;border:1px solid #40c040;border-radius:6px;padding:14px 16px;margin:14px 16px;display:none;text-align:center;}
+.dj-confirm.show{display:block;}
+.dj-confirm-title{color:#80ff80;font-size:14px;font-weight:bold;font-family:'VT323',monospace;margin-bottom:6px;}
+.dj-confirm-text{font-size:10px;color:#60a060;line-height:1.8;}
+.dj-limewire-badge{display:inline-block;background:linear-gradient(135deg,#3a8a00,#60c000);color:#fff;font-size:10px;font-weight:bold;padding:2px 8px;border-radius:3px;margin-bottom:8px;letter-spacing:1px;}
+
 </style>
 </head>
 <body>
 
 <!-- ══════════ BIOS ══════════ -->
 <div id="bios-screen" class="screen">
-  <div id="bios-content"><div><span class="bios-hi">Award Modular BIOS v6.00PG</span></div><div>Copyright (C) 1984-2003, Award Software, Inc.</div><div>&nbsp;</div><div><span class="bios-bar"> MY-PC </span>  BIOS Date: 10/25/01  Ver: 08.00.10</div><div>&nbsp;</div><div>CPU : Intel Pentium 4  1800MHz</div><div>Memory Test : <span class="bios-hi">524288K</span> OK</div><div>&nbsp;</div><div>Detecting Primary Master ... WDC WD400BB  40GB</div><div>Detecting Primary Slave  ... None</div><div>&nbsp;</div><div>USB Device(s): 1 Keyboard, 1 Mouse</div><div>PnP Init Completed.</div><div>Verifying DMI Pool Data .......</div><div><span class="bios-hi">Press DEL to enter SETUP, F8 for Boot Menu</span></div><div>&nbsp;</div><div>Loading Windows XP <span class="bios-cursor"></span></div></div>
+  <div id="bios-content"><div><span class="bios-hi">b33my MAINFRAME KERNEL v3.3.1</span></div><div>Copyright (C) b33my underground systems. all rights reserved.</div><div>&nbsp;</div><div><span class="bios-bar"> NODE-01 </span>  BUILD: 03.31.26  REV: 33.1</div><div>&nbsp;</div><div>CORE PROCESSOR : b33my ENGINE  3300MHz</div><div>MEMORY CHECK : <span class="bios-hi">∞ KB</span> OK</div><div>&nbsp;</div><div>Mounting Primary Volume ... /mainframe/reality</div><div>Mounting Secondary Volume ... /mainframe/underground</div><div>&nbsp;</div><div>INPUT DEVICES: 1 Keyboard, 1 Mouse, 1 Soul</div><div>Network handshake complete.</div><div>Verifying identity matrix ........</div><div><span class="bios-hi">WARNING: Unauthorized access will be logged and forgotten.</span></div><div>&nbsp;</div><div>Initializing b33my mainframe <span class="bios-cursor"></span></div></div>
 </div>
 
 <!-- ══════════ BOOT ══════════ -->
 <div id="boot-screen" class="screen">
   <div class="xp-logo-wrap">
-    <div class="xp-flag"><div></div><div></div><div></div><div></div></div>
+    <div class="mf-logo-glyph">⬡</div>
     <div class="xp-wordmark">
-      <div class="xp-word1">Windows</div>
-      <div class="xp-word2">XP</div>
+      <div class="xp-word1" style="font-family:'VT323',monospace;font-size:38px;letter-spacing:3px;color:#7fff00;">b33my</div>
+      <div class="xp-word2" style="color:#4a9eff;letter-spacing:4px;font-size:11px;">MAINFRAME</div>
     </div>
   </div>
-  <div class="xp-tagline">Personal Edition</div>
-  <div class="xp-bar-wrap"><div id="boot-bar" style="width: 100%;"></div></div>
+  <div class="xp-tagline" style="color:#4a9eff;letter-spacing:3px;">accessing the mainframe...</div>
+  <div class="xp-bar-wrap"><div id="boot-bar"></div></div>
 </div>
 
 <!-- ══════════ WELCOME ══════════ -->
 <div id="welcome-screen" class="screen">
   <div class="welcome-top">
-    <div class="welcome-top-title">Windows XP</div>
-    <div class="welcome-top-sub">To begin, click your user name</div>
+    <div class="welcome-top-title" style="font-family:'VT323',monospace;font-size:22px;letter-spacing:3px;color:#7fff00;">b33my // mainframe access</div>
+    <div class="welcome-top-sub" style="color:rgba(74,158,255,0.8);letter-spacing:2px;">select your node to continue</div>
   </div>
   <div class="welcome-mid">
-    <!-- GUEST -->
+    <!-- REALITY -->
     <div class="user-card" onclick="selectUser('guest')">
-      <div class="user-avatar">🌐</div>
-      <div class="user-name">Guest</div>
-      <div class="user-hint">click to explore</div>
+      <div class="user-avatar" style="background:rgba(127,255,0,0.08);border-color:rgba(127,255,0,0.4);font-size:32px;">🌐</div>
+      <div class="user-name" style="color:#7fff00;letter-spacing:2px;font-family:'VT323',monospace;font-size:16px;">REALITY</div>
+      <div class="user-hint" style="color:rgba(127,255,0,0.5);letter-spacing:1px;">open access — no credentials needed</div>
       <div class="pw-prompt show" id="guest-pw">
         <div class="pw-row">
-          <input type="password" class="pw-input-xp" id="guest-pw-input" placeholder="no password needed" onkeydown="if(event.key==='Enter')loginUser('guest')">
-          <div class="pw-go" onclick="loginUser('guest')">→</div>
+          <input type="password" class="pw-input-xp" id="guest-pw-input" placeholder="no password needed" onkeydown="if(event.key==='Enter')loginUser('guest')" style="background:rgba(0,0,0,0.6);border-color:rgba(127,255,0,0.3);color:#7fff00;">
+          <div class="pw-go" onclick="loginUser('guest')" style="background:rgba(127,255,0,0.15);border-color:rgba(127,255,0,0.4);color:#7fff00;">→</div>
         </div>
         <div class="pw-error" id="guest-err"></div>
       </div>
     </div>
-    <!-- PERSONAL -->
+    <!-- UNDERGROUND -->
     <div class="user-card" onclick="selectUser('personal')">
-      <div class="user-avatar">🔮</div>
-      <div class="user-name">[ your name ]</div>
-      <div class="user-hint">friends only</div>
+      <div class="user-avatar" style="background:rgba(74,158,255,0.08);border-color:rgba(74,158,255,0.4);font-size:32px;">⬡</div>
+      <div class="user-name" style="color:#4a9eff;letter-spacing:2px;font-family:'VT323',monospace;font-size:16px;">UNDERGROUND</div>
+      <div class="user-hint" style="color:rgba(74,158,255,0.5);letter-spacing:1px;">zero degrees of separation only</div>
       <div class="pw-prompt" id="personal-pw">
         <div class="pw-row">
-          <input type="password" class="pw-input-xp" id="personal-pw-input" placeholder="password" onkeydown="if(event.key==='Enter')loginUser('personal')">
-          <div class="pw-go" onclick="loginUser('personal')">→</div>
+          <input type="password" class="pw-input-xp" id="personal-pw-input" placeholder="passphrase" onkeydown="if(event.key==='Enter')loginUser('personal')" style="background:rgba(0,0,0,0.6);border-color:rgba(74,158,255,0.3);color:#4a9eff;">
+          <div class="pw-go" onclick="loginUser('personal')" style="background:rgba(74,158,255,0.15);border-color:rgba(74,158,255,0.4);color:#4a9eff;">→</div>
         </div>
         <div class="pw-error" id="personal-err"></div>
       </div>
     </div>
   </div>
   <div class="welcome-bottom">
-    <div class="welcome-power" onclick="location.reload()">⏻ Turn off computer</div>
+    <div class="welcome-power" onclick="location.reload()">⏻ disconnect</div>
   </div>
 </div>
 
@@ -600,6 +767,7 @@ body::after {
       <div class="icon" ondblclick="openWin('g-yp','guest')" style="display: flex;"><div class="icon-img">📒</div><div class="icon-label">Yellow Pages</div></div>
       <div class="icon" ondblclick="openWin('g-mp','guest')" style="display: flex;"><div class="icon-img">🎵</div><div class="icon-label">Media Player</div></div>
       <div class="icon" ondblclick="openWin('g-trash','guest')" style="display: flex;"><div class="icon-img">🗑️</div><div class="icon-label">Recycle Bin</div></div>
+      <div class="icon" ondblclick="openWin('g-enc','guest')" style="display: flex;"><div class="icon-img">📚</div><div class="icon-label">Encyclopedia</div></div>
     </div>
 
     <!-- GUEST WINDOWS -->
@@ -625,7 +793,7 @@ body::after {
         <div class="xanga-shell"><div class="xanga-header xanga-hd-guest">
             <div class="xanga-title">[ your xanga title ]</div>
             <div class="xanga-sub">thoughts &amp; things — est. 2026</div>
-          </div><div class="xanga-entry"><div class="xanga-entry-title">first entry.</div><div class="xanga-entry-date">Tuesday, March 31, 2026</div><div class="xanga-entry-body">this is where i write. no algorithm, no likes, no performance. just words.<br><br>check back whenever — i'll be here.<br><br>— me</div></div><div class="xanga-entry"><div class="xanga-entry-title">more coming.</div><div class="xanga-entry-date">soon</div><div class="xanga-entry-body">this page grows as i do. you'll find your way back if it's for you.</div></div><div class="xanga-comments">💬 0 comments — leave one</div></div>
+          </div><div class="xanga-entry"><div class="xanga-entry-title">first entry.</div><div class="xanga-entry-date">Tuesday, March 31, 2026</div><div class="xanga-entry-body">this is where i write. no algorithm, no likes, no performance. just words.<br><br>check back whenever — i'll be here.<br><br>— me</div><div class="xanga-comment-section"><div class="xanga-comment-title">💬 Comments</div><div class="xanga-comment-list" id="comments-guest-0"></div><div class="xanga-comment-input-row"><input class="xanga-comment-name" placeholder="your name..." id="cname-guest-0"><textarea class="xanga-comment-text-input" rows="2" placeholder="leave a comment..." id="ctext-guest-0"></textarea><button class="xanga-comment-btn" onclick="submitComment('guest-0')">Post</button></div></div></div><div class="xanga-entry"><div class="xanga-entry-title">more coming.</div><div class="xanga-entry-date">soon</div><div class="xanga-entry-body">this page grows as i do. you'll find your way back if it's for you.</div><div class="xanga-comment-section"><div class="xanga-comment-title">💬 Comments</div><div class="xanga-comment-list" id="comments-guest-1"></div><div class="xanga-comment-input-row"><input class="xanga-comment-name" placeholder="your name..." id="cname-guest-1"><textarea class="xanga-comment-text-input" rows="2" placeholder="leave a comment..." id="ctext-guest-1"></textarea><button class="xanga-comment-btn" onclick="submitComment('guest-1')">Post</button></div></div></div></div>
       </div>
     </div>
 
@@ -698,30 +866,29 @@ body::after {
       </div>
     </div>
 
-    <div class="win-window" id="g-yp" style="top:80px;left:130px;width:390px;height:400px;">
+    <div class="win-window" id="g-yp" style="top:80px;left:80px;width:420px;height:440px;">
       <div class="title-bar tb-guest-color" onmousedown="startDrag(event,'g-yp')">
         <div class="title-bar-left"><span class="title-icon">📒</span><span>Yellow Pages — The Network Directory</span></div>
         <div class="tb-btns"><div class="tb-btn tb-min">─</div><div class="tb-btn tb-cls" onclick="closeWin('g-yp')">✕</div></div>
       </div>
-      <div class="win-content" style="padding:0;">
-        <div class="yp-shell">
+      <div class="win-content" style="padding:0;display:flex;flex-direction:column;">
+        <div class="yp-shell" style="display:flex;flex-direction:column;height:100%;">
           <div class="yp-header">
             <div class="yp-title">📒 The Network Directory</div>
             <div class="yp-sub">word of mouth. self-entered. community owned.</div>
           </div>
-          <div class="yp-body" id="yp-body">
-            <div class="yp-entry">
-              <div class="yp-entry-name">[ Your Name / Business ]</div>
-              <div class="yp-entry-info">💼 what you do · 🔗 yourlink.com · ✉️ <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="c1b8aeb4b381a4aca0a8adefa2aeac">[email&nbsp;protected]</a><br>A short line about who you are and what you offer.</div>
-            </div>
-            <div class="yp-add-form">
-              <div class="yp-add-title">➕ Add yourself to the directory</div>
-              <div class="yp-field"><span class="yp-label">Name / Business</span><input class="yp-input" id="yp-name" placeholder="your name or business"></div>
-              <div class="yp-field"><span class="yp-label">What you do</span><input class="yp-input" id="yp-what" placeholder="artist, coder, chef..."></div>
-              <div class="yp-field"><span class="yp-label">Contact / Link</span><input class="yp-input" id="yp-contact" placeholder="email, site, @handle"></div>
-              <button class="yp-submit" onclick="addYP()">Add to Directory</button>
-            </div>
+          <div class="yp-tabs">
+            <div class="yp-tab active" onclick="ypSwitchTab('g','directory',this)">📋 Directory</div>
+            <div class="yp-tab" onclick="ypSwitchTab('g','web',this)">🕸️ Connection Web</div>
           </div>
+          <div class="yp-tab-panel active" id="g-yp-directory" style="padding:8px;overflow-y:auto;">
+            <div id="g-yp-entries"><div class="yp-entry"><div class="yp-entry-name">[ Your Name ]</div><div class="yp-entry-info">Add yourself from the Friends desktop 🔒</div></div></div>
+          </div>
+          <div class="yp-tab-panel" id="g-yp-web" style="height:300px;position:relative;">
+            <div class="yp-web-wrap"><canvas id="yp-web-canvas-guest"></canvas></div>
+            <div class="yp-web-tooltip" id="yp-tooltip-guest"></div>
+          </div>
+          <div class="yp-friends-only">🔒 Want to add yourself? Log in to the <strong>Friends</strong> desktop.</div>
         </div>
       </div>
     </div>
@@ -771,6 +938,35 @@ body::after {
     </div>
   </div>
 
+
+    <!-- GUEST ENCYCLOPEDIA (read-only) -->
+    <div class="win-window" id="g-enc" style="top:50px;left:90px;width:520px;height:480px;">
+      <div class="title-bar tb-guest-color" onmousedown="startDrag(event,'g-enc')">
+        <div class="title-bar-left"><span class="title-icon">📚</span><span>Encyclopedia UBU — My Definitions</span></div>
+        <div class="tb-btns"><div class="tb-btn tb-min">─</div><div class="tb-btn tb-max">□</div><div class="tb-btn tb-cls" onclick="closeWin('g-enc')">✕</div></div>
+      </div>
+      <div class="win-content" style="padding:0;">
+        <div class="enc-shell">
+          <div class="enc-toolbar">
+            <div class="enc-title-row">
+              <div class="enc-logo">📚</div>
+              <div><div class="enc-title">Encyclopedia UBU</div><div class="enc-subtitle">personal definitions · living document · always evolving</div></div>
+            </div>
+            <div class="enc-search-row">
+              <input class="enc-search" id="enc-search-g" placeholder="Search words..." oninput="encSearch('g')">
+              <button class="enc-search-btn" onclick="encSearch('g')">Search</button>
+            </div>
+          </div>
+          <div class="enc-body">
+            <div class="enc-az" id="enc-az-g"></div>
+            <div class="enc-main" id="enc-main-g">
+              <div class="enc-entry-list" id="enc-list-g"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
   <!-- GUEST START MENU -->
   <div class="start-menu" id="guest-sm">
     <div class="sm-head sm-head-guest"><div class="sm-avatar">🌐</div><div class="sm-username">Guest</div></div>
@@ -782,6 +978,7 @@ body::after {
         <div class="sm-item" onclick="openWin('g-mp','guest');closeStart('guest')"><span>🎵</span><span>Media Player</span></div>
         <hr class="sm-divider">
         <div class="sm-item" onclick="openWin('g-trash','guest');closeStart('guest')"><span>🗑️</span><span>Recycle Bin</span></div>
+        <div class="sm-item" onclick="openWin('g-enc','guest');closeStart('guest')"><span>📚</span><span>Encyclopedia</span></div>
       </div>
       <div class="sm-right">
         <div class="sm-item" onclick="openWin('g-about','guest');closeStart('guest')"><span>🖥️</span><span>My PC</span></div>
@@ -818,6 +1015,10 @@ body::after {
       <div class="icon" ondblclick="openWin('p-ie','personal')" style="display: flex;"><div class="icon-img">🌐</div><div class="icon-label">My Xanga</div></div>
       <div class="icon" ondblclick="openWin('p-aim','personal')" style="display: flex;"><div class="icon-img">🟡</div><div class="icon-label">AIM</div></div>
       <div class="icon" ondblclick="openWin('p-paint','personal')" style="display: flex;"><div class="icon-img">🎨</div><div class="icon-label">Paint — My Art</div></div>
+      <div class="icon" ondblclick="openWin('p-word','personal')" style="display: flex;"><div class="icon-img">📝</div><div class="icon-label">WordPad XP</div></div>
+      <div class="icon" ondblclick="openWin('p-enc','personal')" style="display: flex;"><div class="icon-img">📚</div><div class="icon-label">Encyclopedia</div></div>
+      <div class="icon" ondblclick="openWin('p-dj','personal')" style="display: flex;"><div class="icon-img">🎧</div><div class="icon-label">Book DJ Gig</div></div>
+      <div class="icon" ondblclick="openWin('p-yp','personal')" style="display: flex;"><div class="icon-img">📒</div><div class="icon-label">Address Book</div></div>
       <div class="icon" ondblclick="openWin('p-mp','personal')" style="display: flex;"><div class="icon-img">🎵</div><div class="icon-label">Media Player</div></div>
       <div class="icon" ondblclick="openWin('p-discord','personal')" style="display: flex;"><div class="icon-img">💬</div><div class="icon-label">Discord</div></div>
       <div class="icon" ondblclick="openWin('p-vent','personal')" style="display: flex;"><div class="icon-img">🎙️</div><div class="icon-label">Ventrilo</div></div>
@@ -853,7 +1054,7 @@ body::after {
         <div class="xanga-shell"><div class="xanga-header xanga-hd-personal">
             <div class="xanga-title">[ private xanga ]</div>
             <div class="xanga-sub">the unfiltered version — for people who get it</div>
-          </div><div class="xanga-entry"><div class="xanga-entry-title">unsure</div><div class="xanga-entry-date">Tuesday, March 31, 2026</div><div class="xanga-entry-body">unsure what this all means. what this website is for, what I'm hoping would come out of "this". creating this website has been a year in the making and while busy trying to figure out what it is that I'm trying to do. the cool thing about learning is, once you do something, well you've already done it for the first time. isn't that the hardest part? I held on to the thought that someone, somewhere will tell me where/what I was meant to do. So I held onto job after job, thinking, "This is it", make the best of it, hoping to find the thing that makes everyone seasoned employee stay and do the job, and why maybe being grateful for it will get me through it. Suddenly those practice interview questions become the story I live by, a creed. "Where do I see myself in 5 years?" "Here" I say enthusiastically. Here's me investing in myself and working for myself. In five years, I see myself being more confident in making my dreams a reality and make even bigger dreams. I actually call ideas I want to try on experiments. Here's one of them. Thank you for being in my life and continue to encourage me. Whether or not you know, you're my support circle and I'm so lucky you're here. Welcome to the beginning of something new!</div></div><div class="xanga-entry"><div class="xanga-entry-title">the password thing.</div><div class="xanga-entry-date">if you're here, you found it.</div><div class="xanga-entry-body">this page is for the curious ones. the ones who went deeper. that means something.<br><br>more real entries coming. this is where i think out loud — no audience, just truth.</div></div><div class="xanga-entry"><div class="xanga-entry-title">on facts vs truth</div><div class="xanga-entry-date">a thought i keep returning to</div><div class="xanga-entry-body">a fact is a fact until it isn't. truth is something you live. i don't commit to facts — i commit to learning.</div></div><div class="xanga-comments" style="background:#2a1040;color:#9b59b6;">💬 leave a thought — i actually read these</div></div>
+          </div><div class="xanga-entry"><div class="xanga-entry-title">unsure</div><div class="xanga-entry-date">Tuesday, March 31, 2026</div><div class="xanga-entry-body">unsure what this all means. what this website is for, what I'm hoping would come out of "this". creating this website has been a year in the making and while busy trying to figure out what it is that I'm trying to do. the cool thing about learning is, once you do something, well you've already done it for the first time. isn't that the hardest part? I held on to the thought that someone, somewhere will tell me where/what I was meant to do. So I held onto job after job, thinking, "This is it", make the best of it, hoping to find the thing that makes everyone seasoned employee stay and do the job, and why maybe being grateful for it will get me through it. Suddenly those practice interview questions become the story I live by, a creed. "Where do I see myself in 5 years?" "Here" I say enthusiastically. Here's me investing in myself and working for myself. In five years, I see myself being more confident in making my dreams a reality and make even bigger dreams. I actually call ideas I want to try on experiments. Here's one of them. Thank you for being in my life and continue to encourage me. Whether or not you know, you're my support circle and I'm so lucky you're here. Welcome to the beginning of something new!</div></div><div class="xanga-entry"><div class="xanga-entry-title">the password thing.</div><div class="xanga-entry-date">if you're here, you found it.</div><div class="xanga-entry-body">this page is for the curious ones. the ones who went deeper. that means something.<br><br>more real entries coming. this is where i think out loud — no audience, just truth.</div></div><div class="xanga-entry"><div class="xanga-entry-title">on facts vs truth</div><div class="xanga-entry-date">a thought i keep returning to</div><div class="xanga-entry-body">a fact is a fact until it isn't. truth is something you live. i don't commit to facts — i commit to learning.</div></div><div class="xanga-comment-section" style="background:#2a0838;border-color:#4a1860;"><div class="xanga-comment-title" style="color:#b080ff;">💬 Comments (friends only)</div><div class="xanga-comment-list" id="comments-personal-0"></div><div class="xanga-comment-input-row"><input class="xanga-comment-name" placeholder="your name..." id="cname-personal-0" style="background:#1a0828;color:#c0a0e0;border-color:#4a1860;"><textarea class="xanga-comment-text-input" rows="2" placeholder="leave a thought..." id="ctext-personal-0" style="background:#1a0828;color:#c0a0e0;border-color:#4a1860;"></textarea><button class="xanga-comment-btn" onclick="submitComment('personal-0')" style="background:linear-gradient(180deg,#8040c0,#4a1880);">Post</button></div></div></div><div class="xanga-entry"><div class="xanga-entry-title">the password thing.</div><div class="xanga-entry-date">if you're here, you found it.</div><div class="xanga-entry-body">this page is for the curious ones. the ones who went deeper. that means something.<br><br>more real entries coming. this is where i think out loud — no audience, just truth.</div><div class="xanga-comment-section" style="background:#2a0838;border-color:#4a1860;"><div class="xanga-comment-title" style="color:#b080ff;">💬 Comments</div><div class="xanga-comment-list" id="comments-personal-1"></div><div class="xanga-comment-input-row"><input class="xanga-comment-name" placeholder="your name..." id="cname-personal-1" style="background:#1a0828;color:#c0a0e0;border-color:#4a1860;"><textarea class="xanga-comment-text-input" rows="2" placeholder="leave a thought..." id="ctext-personal-1" style="background:#1a0828;color:#c0a0e0;border-color:#4a1860;"></textarea><button class="xanga-comment-btn" onclick="submitComment('personal-1')" style="background:linear-gradient(180deg,#8040c0,#4a1880);">Post</button></div></div></div><div class="xanga-entry"><div class="xanga-entry-title">on facts vs truth</div><div class="xanga-entry-date">a thought i keep returning to</div><div class="xanga-entry-body">a fact is a fact until it isn't. truth is something you live. i don't commit to facts — i commit to learning.</div><div class="xanga-comment-section" style="background:#2a0838;border-color:#4a1860;"><div class="xanga-comment-title" style="color:#b080ff;">💬 Comments</div><div class="xanga-comment-list" id="comments-personal-2"></div><div class="xanga-comment-input-row"><input class="xanga-comment-name" placeholder="your name..." id="cname-personal-2" style="background:#1a0828;color:#c0a0e0;border-color:#4a1860;"><textarea class="xanga-comment-text-input" rows="2" placeholder="leave a thought..." id="ctext-personal-2" style="background:#1a0828;color:#c0a0e0;border-color:#4a1860;"></textarea><button class="xanga-comment-btn" onclick="submitComment('personal-2')" style="background:linear-gradient(180deg,#8040c0,#4a1880);">Post</button></div></div></div></div>
       </div>
     </div>
 
@@ -968,6 +1169,363 @@ body::after {
       </div>
     </div>
 
+    <!-- PERSONAL YELLOW PAGES (friends can add) -->
+    <div class="win-window" id="p-yp" style="top:60px;left:90px;width:460px;height:500px;z-index:10;">
+      <div class="title-bar tb-personal-color" onmousedown="startDrag(event,'p-yp')">
+        <div class="title-bar-left"><span class="title-icon">📒</span><span>Yellow Pages — Add Yourself</span></div>
+        <div class="tb-btns"><div class="tb-btn tb-min">─</div><div class="tb-btn tb-max">□</div><div class="tb-btn tb-cls" onclick="closeWin('p-yp')">✕</div></div>
+      </div>
+      <div class="win-content" style="padding:0;display:flex;flex-direction:column;">
+        <div class="yp-shell" style="height:100%;display:flex;flex-direction:column;">
+          <div class="yp-header" style="background:linear-gradient(90deg,#5a2080,#3a1060);">
+            <div class="yp-title">📒 The Network Directory</div>
+            <div class="yp-sub">add yourself — be findable — connect the dots</div>
+          </div>
+          <div class="yp-tabs">
+            <div class="yp-tab active" onclick="ypSwitchTab('p','directory',this)">📋 Directory</div>
+            <div class="yp-tab" onclick="ypSwitchTab('p','add',this)">➕ Add Me</div>
+            <div class="yp-tab" onclick="ypSwitchTab('p','web',this)">🕸️ Connection Web</div>
+          </div>
+          <div class="yp-tab-panel active" id="p-yp-directory" style="padding:8px;overflow-y:auto;"></div>
+          <div class="yp-tab-panel" id="p-yp-add" style="overflow-y:auto;">
+            <div class="yp-add-form" style="margin:8px;">
+              <div class="yp-add-title">➕ Add yourself to the directory</div>
+              <div class="yp-field"><span class="yp-label">Your Name</span><input class="yp-input" id="pyp-name" placeholder="your name or handle"></div>
+              <div class="yp-field"><span class="yp-label">How do you know me?</span>
+                <select class="yp-input" id="pyp-how" style="cursor:pointer;">
+                  <option value="">— select —</option>
+                  <option value="IRL friend">IRL friend</option>
+                  <option value="Online friend">Online friend</option>
+                  <option value="Work / collab">Work / collab</option>
+                  <option value="Family">Family</option>
+                  <option value="Met at event">Met at event</option>
+                  <option value="Mutual friend">Mutual friend</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+              <div class="yp-field"><span class="yp-label">Years known</span><input class="yp-input" id="pyp-years" placeholder="e.g. 5 years, since 2019..." type="text"></div>
+              <div class="yp-field"><span class="yp-label">What services / skills do you offer?</span><textarea class="yp-textarea" id="pyp-services" placeholder="e.g. graphic design, music production, cooking..."></textarea></div>
+              <div class="yp-field"><span class="yp-label">About you (short bio)</span><textarea class="yp-textarea" id="pyp-bio" placeholder="a line or two about who you are..."></textarea></div>
+              <div class="yp-field"><span class="yp-label">Social links (one per line, e.g. instagram.com/you)</span><textarea class="yp-textarea" id="pyp-socials" placeholder="instagram.com/yourhandle&#10;twitter.com/yourhandle&#10;yourwebsite.com"></textarea></div>
+              <button class="yp-submit" onclick="addYPFriend()" style="background:linear-gradient(180deg,#9040d0,#5a1890);border-color:#7020b0;color:#fff;margin-top:6px;height:26px;font-size:12px;">✅ Add to Directory</button>
+            </div>
+          </div>
+          <div class="yp-tab-panel" id="p-yp-web" style="height:340px;position:relative;">
+            <div class="yp-web-wrap"><canvas id="yp-web-canvas-personal"></canvas></div>
+            <div class="yp-web-tooltip" id="yp-tooltip-personal"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- WORD PROCESSOR -->
+    <div class="win-window" id="p-word" style="top:50px;left:80px;width:560px;height:500px;z-index:10;">
+      <div class="title-bar tb-personal-color" onmousedown="startDrag(event,'p-word')">
+        <div class="title-bar-left"><span class="title-icon">📝</span><span id="word-title-label">Document1 — WordPad XP</span></div>
+        <div class="tb-btns"><div class="tb-btn tb-min">─</div><div class="tb-btn tb-max">□</div><div class="tb-btn tb-cls" onclick="closeWin('p-word')">✕</div></div>
+      </div>
+      <div class="win-content" style="padding:0;">
+        <div class="word-shell">
+          <div class="word-menubar">
+            <div style="position:relative;">
+              <button class="word-menu-btn" onclick="toggleWordDocs()">📁 File</button>
+              <div class="word-docs-panel" id="word-docs-panel">
+                <div class="word-doc-new" onclick="wordNewDoc()">+ New Document</div>
+                <div id="word-saved-list"></div>
+              </div>
+            </div>
+            <button class="word-menu-btn" onclick="wordSave()">💾 Save</button>
+            <button class="word-menu-btn" onclick="wordDownload()">⬇️ Download</button>
+            <button class="word-menu-btn" onclick="wordDownloadPDF()">📄 Save as PDF</button>
+          </div>
+          <div class="word-toolbar">
+            <select class="word-font-sel" id="word-font" onchange="wordExec('fontName',this.value)">
+              <option value="Tahoma">Tahoma</option>
+              <option value="Times New Roman">Times New Roman</option>
+              <option value="Arial">Arial</option>
+              <option value="Courier New">Courier New</option>
+              <option value="Georgia">Georgia</option>
+              <option value="Verdana">Verdana</option>
+              <option value="Comic Sans MS">Comic Sans MS</option>
+              <option value="Impact">Impact</option>
+            </select>
+            <select class="word-font-sz" id="word-size" onchange="wordExec('fontSize',this.value)">
+              <option value="1">8</option><option value="2">10</option><option value="3" selected>12</option>
+              <option value="4">14</option><option value="5">18</option><option value="6">24</option><option value="7">36</option>
+            </select>
+            <div class="word-tb-sep"></div>
+            <button class="word-tb-btn" onclick="wordExec('bold')" title="Bold"><strong>B</strong></button>
+            <button class="word-tb-btn" onclick="wordExec('italic')" title="Italic"><em>I</em></button>
+            <button class="word-tb-btn" onclick="wordExec('underline')" title="Underline"><u>U</u></button>
+            <button class="word-tb-btn" onclick="wordExec('strikeThrough')" title="Strikethrough"><s>S</s></button>
+            <div class="word-tb-sep"></div>
+            <button class="word-tb-btn" onclick="wordExec('justifyLeft')" title="Align Left">⬅</button>
+            <button class="word-tb-btn" onclick="wordExec('justifyCenter')" title="Center">☰</button>
+            <button class="word-tb-btn" onclick="wordExec('justifyRight')" title="Align Right">➡</button>
+            <div class="word-tb-sep"></div>
+            <button class="word-tb-btn" onclick="wordExec('insertUnorderedList')" title="Bullets">•</button>
+            <button class="word-tb-btn" onclick="wordExec('insertOrderedList')" title="Numbered">1.</button>
+            <div class="word-tb-sep"></div>
+            <div class="word-color-btn" title="Text Color" onclick="document.getElementById('word-fg-color').click()">
+              <span style="font-size:11px;font-weight:bold;line-height:1;">A</span>
+              <div class="word-color-underline" id="word-fg-preview" style="background:#000;"></div>
+              <input type="color" id="word-fg-color" style="display:none;" value="#000000" onchange="wordExec('foreColor',this.value);document.getElementById('word-fg-preview').style.background=this.value;">
+            </div>
+            <div class="word-color-btn" title="Highlight" onclick="document.getElementById('word-bg-color').click()">
+              <span style="font-size:9px;line-height:1;">H</span>
+              <div class="word-color-underline" id="word-bg-preview" style="background:#ffff00;"></div>
+              <input type="color" id="word-bg-color" style="display:none;" value="#ffff00" onchange="wordExec('hiliteColor',this.value);document.getElementById('word-bg-preview').style.background=this.value;">
+            </div>
+            <div class="word-tb-sep"></div>
+            <button class="word-wordart-btn" onclick="openWordArt()" title="Insert WordArt">W</button>
+          </div>
+          <div class="word-page-area">
+            <div class="word-page" id="word-editor" contenteditable="true" spellcheck="false" onkeyup="wordTrackChanges()" onclick="closeWordDocs()">
+              <p>Start typing your document here...</p>
+            </div>
+          </div>
+          <div class="word-statusbar">
+            <span id="word-status">Ready</span>
+            <span id="word-wordcount">Words: 0</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- WORDART DIALOG -->
+    <div class="wordart-overlay" id="wordart-overlay">
+      <div class="wordart-dialog">
+        <div class="wordart-titlebar">
+          <span>Insert WordArt</span>
+          <button style="background:none;border:none;color:#fff;cursor:pointer;font-size:14px;" onclick="closeWordArt()">✕</button>
+        </div>
+        <div class="wordart-body">
+          <div style="font-size:11px;margin-bottom:4px;color:#000;">Select a WordArt style:</div>
+          <div class="wordart-styles" id="wordart-styles"></div>
+          <input class="wordart-input" id="wordart-text-input" placeholder="Your text here..." value="WordArt">
+        </div>
+        <div class="wordart-footer">
+          <button class="wordart-xp-btn" onclick="insertWordArt()">OK</button>
+          <button class="wordart-xp-btn" onclick="closeWordArt()">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- PERSONAL ENCYCLOPEDIA (read + edit) -->
+    <div class="win-window" id="p-enc" style="top:50px;left:80px;width:560px;height:520px;z-index:10;">
+      <div class="title-bar tb-personal-color" onmousedown="startDrag(event,'p-enc')">
+        <div class="title-bar-left"><span class="title-icon">📚</span><span>Encyclopedia UBU — Edit Mode</span></div>
+        <div class="tb-btns"><div class="tb-btn tb-min">─</div><div class="tb-btn tb-max">□</div><div class="tb-btn tb-cls" onclick="closeWin('p-enc')">✕</div></div>
+      </div>
+      <div class="win-content" style="padding:0;display:flex;flex-direction:column;">
+        <div class="enc-shell">
+          <div class="enc-toolbar" style="background:linear-gradient(180deg,#3a1060,#1a0840);">
+            <div class="enc-title-row">
+              <div class="enc-logo">📚</div>
+              <div><div class="enc-title" style="color:#d0a0ff;">Encyclopedia UBU</div><div class="enc-subtitle" style="color:#7050a0;">edit mode — add your definitions</div></div>
+            </div>
+            <div class="enc-search-row">
+              <input class="enc-search" id="enc-search-p" placeholder="Search words..." oninput="encSearch('p')" style="background:#0d0020;border-color:#4a1a7a;color:#c0a0e0;">
+              <button class="enc-search-btn" onclick="encSearch('p')" style="background:linear-gradient(180deg,#6030a0,#3a1060);">Search</button>
+            </div>
+          </div>
+          <div class="enc-body">
+            <div class="enc-az" id="enc-az-p" style="background:#1a0828;border-color:#3a1050;"></div>
+            <div class="enc-main" id="enc-main-p" style="background:#110020;">
+              <div class="enc-entry-list" id="enc-list-p"></div>
+            </div>
+          </div>
+          <!-- ADD FORM -->
+          <div class="enc-add-form" style="background:#0d0020;border-color:#4a1a7a;">
+            <div class="enc-add-title" style="color:#c080ff;">✏️ Add a new definition</div>
+            <div class="enc-two-col">
+              <div class="enc-field">
+                <span class="enc-label" style="color:#8060a0;">Word / Term</span>
+                <input class="enc-input" id="enc-word" placeholder="e.g. Sovereign" style="background:#0a0018;border-color:#3a1060;color:#e0d0ff;">
+              </div>
+              <div class="enc-field">
+                <span class="enc-label" style="color:#8060a0;">Category</span>
+                <select class="enc-select" id="enc-cat" style="background:#0a0018;border-color:#3a1060;color:#e0d0ff;">
+                  <option value="personal">🔮 Personal</option>
+                  <option value="philosophy">💭 Philosophy</option>
+                  <option value="culture">🌍 Culture</option>
+                  <option value="tech">💻 Tech</option>
+                  <option value="music">🎵 Music</option>
+                  <option value="community">👥 Community</option>
+                  <option value="other">📌 Other</option>
+                </select>
+              </div>
+            </div>
+            <div class="enc-field">
+              <span class="enc-label" style="color:#8060a0;">Your Definition</span>
+              <textarea class="enc-textarea" id="enc-def" placeholder="What does this word mean to you?" style="background:#0a0018;border-color:#3a1060;color:#e0d0ff;" rows="2"></textarea>
+            </div>
+            <div class="enc-field">
+              <span class="enc-label" style="color:#8060a0;">Connotation (what does it feel like / make you think of?)</span>
+              <textarea class="enc-textarea" id="enc-con" placeholder="The feeling, vibe, associations..." style="background:#0a0018;border-color:#3a1060;color:#e0d0ff;" rows="2"></textarea>
+            </div>
+            <div class="enc-field">
+              <span class="enc-label" style="color:#8060a0;">Quote or memory</span>
+              <input class="enc-input" id="enc-quote" placeholder="A quote, memory, or moment tied to this word..." style="background:#0a0018;border-color:#3a1060;color:#e0d0ff;">
+            </div>
+            <div class="enc-two-col">
+              <div class="enc-field">
+                <span class="enc-label" style="color:#8060a0;">Related words (comma separated)</span>
+                <input class="enc-input" id="enc-related" placeholder="e.g. freedom, identity, self" style="background:#0a0018;border-color:#3a1060;color:#e0d0ff;">
+              </div>
+              <div class="enc-field">
+                <span class="enc-label" style="color:#8060a0;">Image URL (optional)</span>
+                <input class="enc-input" id="enc-img" placeholder="https://..." style="background:#0a0018;border-color:#3a1060;color:#e0d0ff;">
+              </div>
+            </div>
+            <button class="enc-submit" onclick="encAddEntry()">📚 Add to Encyclopedia</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DJ BOOKING WINDOW -->
+    <div class="win-window" id="p-dj" style="top:60px;left:100px;width:480px;height:540px;z-index:10;">
+      <div class="title-bar tb-personal-color" onmousedown="startDrag(event,'p-dj')">
+        <div class="title-bar-left"><span class="title-icon">🎧</span><span>LimeWire DJ — Book a Gig</span></div>
+        <div class="tb-btns"><div class="tb-btn tb-min">─</div><div class="tb-btn tb-max">□</div><div class="tb-btn tb-cls" onclick="closeWin('p-dj')">✕</div></div>
+      </div>
+      <div class="win-content" style="padding:0;">
+        <div class="dj-shell">
+          <div class="dj-header">
+            <div class="dj-logo">🎧</div>
+            <div class="dj-name">BOOK A DJ GIG</div>
+            <div class="dj-tagline">let's make something happen</div>
+          </div>
+          <div id="dj-confirm" class="dj-confirm">
+            <div class="dj-limewire-badge">🟢 LimeWire DJ</div>
+            <div class="dj-confirm-title">🎉 Request Received!</div>
+            <div class="dj-confirm-text">Thank you — I'll be in touch soon to confirm your booking.<br>You should receive a confirmation copy at the email you provided.<br><br><em style="color:#40a040;">— wannabgangstafoo</em></div>
+          </div>
+          <div class="dj-form" id="dj-form">
+            <div class="dj-section-title">📋 Event Info</div>
+            <div class="dj-two-col">
+              <div class="dj-field">
+                <span class="dj-label">Event name / occasion</span>
+                <input class="dj-input" id="dj-event" placeholder="Birthday, wedding, block party...">
+              </div>
+              <div class="dj-field">
+                <span class="dj-label">Date requested</span>
+                <input class="dj-input" id="dj-date" type="date">
+              </div>
+            </div>
+            <div class="dj-two-col">
+              <div class="dj-field">
+                <span class="dj-label">Start time</span>
+                <input class="dj-input" id="dj-time" type="time">
+              </div>
+              <div class="dj-field">
+                <span class="dj-label">How many hours?</span>
+                <select class="dj-select" id="dj-hours">
+                  <option value="">— select —</option>
+                  <option>1 hour</option><option>2 hours</option><option>3 hours</option>
+                  <option>4 hours</option><option>5 hours</option><option>6+ hours</option>
+                </select>
+              </div>
+            </div>
+            <div class="dj-field">
+              <span class="dj-label">Venue / location</span>
+              <input class="dj-input" id="dj-venue" placeholder="Address or general area">
+            </div>
+            <div class="dj-two-col">
+              <div class="dj-field">
+                <span class="dj-label">Indoor or outdoor?</span>
+                <div class="dj-radio-row" id="dj-venue-type">
+                  <div class="dj-radio-btn" onclick="djRadio('dj-venue-type',this)">🏠 Indoor</div>
+                  <div class="dj-radio-btn" onclick="djRadio('dj-venue-type',this)">🌳 Outdoor</div>
+                  <div class="dj-radio-btn" onclick="djRadio('dj-venue-type',this)">🔀 Both</div>
+                </div>
+              </div>
+              <div class="dj-field">
+                <span class="dj-label">Expected attendance</span>
+                <select class="dj-select" id="dj-attendance">
+                  <option value="">— select —</option>
+                  <option>Under 50</option><option>50–100</option><option>100–200</option><option>200–500</option><option>500+</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="dj-section-title">💰 Rate / Access / Trade</div>
+            <div class="dj-field">
+              <span class="dj-label">How would you like to compensate?</span>
+              <div class="dj-radio-row" id="dj-pay-type">
+                <div class="dj-radio-btn" onclick="djRadio('dj-pay-type',this)">💵 Cash rate</div>
+                <div class="dj-radio-btn" onclick="djRadio('dj-pay-type',this)">🤝 Trade</div>
+                <div class="dj-radio-btn" onclick="djRadio('dj-pay-type',this)">🎟️ Access/tickets</div>
+                <div class="dj-radio-btn" onclick="djRadio('dj-pay-type',this)">🔀 Combo</div>
+              </div>
+            </div>
+            <div class="dj-field">
+              <span class="dj-label">Rate you're comfortable with / trade offer / access details</span>
+              <textarea class="dj-textarea" id="dj-rate" placeholder="e.g. $200 cash, or I can offer video editing in trade, or 4 VIP passes..."></textarea>
+            </div>
+
+            <div class="dj-section-title">🎛️ Equipment & Logistics</div>
+            <div class="dj-field">
+              <span class="dj-label">What will be provided at the venue?</span>
+              <div class="dj-radio-row" style="flex-wrap:wrap;" id="dj-equipment">
+                <label class="dj-checkbox-row"><input type="checkbox" value="PA system"> PA / speakers</label>
+                <label class="dj-checkbox-row"><input type="checkbox" value="Mixer"> Mixer</label>
+                <label class="dj-checkbox-row"><input type="checkbox" value="CDJs/decks"> CDJs / decks</label>
+                <label class="dj-checkbox-row"><input type="checkbox" value="Lighting"> Lighting</label>
+                <label class="dj-checkbox-row"><input type="checkbox" value="Stage/booth"> Stage / booth</label>
+                <label class="dj-checkbox-row"><input type="checkbox" value="Power access"> Power access</label>
+              </div>
+            </div>
+            <div class="dj-field">
+              <span class="dj-label">Genre / vibe / music style requested</span>
+              <input class="dj-input" id="dj-genre" placeholder="e.g. hip-hop, house, 90s R&B, whatever you vibe with...">
+            </div>
+
+            <div class="dj-section-title">📬 Your Contact</div>
+            <div class="dj-two-col">
+              <div class="dj-field">
+                <span class="dj-label">Your name</span>
+                <input class="dj-input" id="dj-name" placeholder="Name">
+              </div>
+              <div class="dj-field">
+                <span class="dj-label">Email</span>
+                <input class="dj-input" id="dj-email" type="email" placeholder="your@email.com">
+              </div>
+            </div>
+            <div class="dj-field">
+              <span class="dj-label">Phone (optional)</span>
+              <input class="dj-input" id="dj-phone" placeholder="(optional) for text confirmation">
+            </div>
+            <div class="dj-field">
+              <span class="dj-label">Preferred confirmation: </span>
+              <div class="dj-radio-row" id="dj-confirm-pref">
+                <div class="dj-radio-btn" onclick="djRadio('dj-confirm-pref',this)">📧 Email</div>
+                <div class="dj-radio-btn" onclick="djRadio('dj-confirm-pref',this)">📱 Text</div>
+                <div class="dj-radio-btn" onclick="djRadio('dj-confirm-pref',this)">Both</div>
+              </div>
+            </div>
+            <div class="dj-field">
+              <span class="dj-label">Anything else I should know?</span>
+              <textarea class="dj-textarea" id="dj-notes" placeholder="Theme, special requests, restrictions, vibe goals..."></textarea>
+            </div>
+
+            <div class="dj-requirements">
+              <strong style="color:#a060d0;">📋 Good to know:</strong>
+              <ul>
+                <li>I carry event insurance — just let me know if your venue requires a certificate</li>
+                <li>I'll confirm within 48 hours of your request</li>
+                <li>Outdoor events: please note weather contingency plan</li>
+                <li>All bookings confirmed via written agreement</li>
+              </ul>
+            </div>
+            <button class="dj-submit" onclick="djSubmit()">🎧 Send Booking Request</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="win-window" id="p-trash" style="top: 80px; left: 130px; width: 380px; height: 300px; z-index: 20;">
       <div class="title-bar tb-personal-color" onmousedown="startDrag(event,'p-trash')">
         <div class="title-bar-left"><span class="title-icon">🗑️</span><span>Recycle Bin — doubts &amp; old truths</span></div>
@@ -995,6 +1553,10 @@ body::after {
         <div class="sm-item" onclick="openWin('p-ie','personal');closeStart('personal')"><span>🌐</span><span>Private Xanga</span></div>
         <div class="sm-item" onclick="openWin('p-aim','personal');closeStart('personal')"><span>🟡</span><span>AIM</span></div>
         <div class="sm-item" onclick="openWin('p-paint','personal');closeStart('personal')"><span>🎨</span><span>My Art</span></div>
+        <div class="sm-item" onclick="openWin('p-word','personal');closeStart('personal')"><span>📝</span><span>WordPad XP</span></div>
+        <div class="sm-item" onclick="openWin('p-enc','personal');closeStart('personal')"><span>📚</span><span>Encyclopedia</span></div>
+        <div class="sm-item" onclick="openWin('p-dj','personal');closeStart('personal')"><span>🎧</span><span>Book DJ Gig</span></div>
+        <div class="sm-item" onclick="openWin('p-yp','personal');closeStart('personal')"><span>📒</span><span>Address Book</span></div>
         <div class="sm-item" onclick="openWin('p-mp','personal');closeStart('personal')"><span>🎵</span><span>My Mixes</span></div>
         <hr class="sm-divider">
         <div class="sm-item" onclick="openWin('p-trash','personal');closeStart('personal')"><span>🗑️</span><span>Recycle Bin</span></div>
@@ -1027,7 +1589,7 @@ body::after {
 </div>
 
 <!-- ══════════ OWNER PANEL ══════════ -->
-<div id="owner-panel" class="open">
+<div id="owner-panel">
   <div class="op-shell">
     <div class="op-titlebar">
       <div class="op-title">⚙️ Owner Panel — My PC Settings</div>
@@ -1381,6 +1943,13 @@ more real entries coming. this is wh...</div></div><div class="op-entry-card">
   </div>
 </div>
 
+
+<!-- SCREENSAVER -->
+<div id="screensaver">
+  <canvas id="ss-canvas"></canvas>
+  <div id="ss-click-hint">move mouse or press any key to return</div>
+</div>
+
 <input type="file" id="mp-file-input" accept="audio/*" multiple="">
 
 <script>
@@ -1389,7 +1958,7 @@ more real entries coming. this is wh...</div></div><div class="op-entry-card">
 // ══════════════════════════
 const PASSWORDS = {
   guest: '',
-  personal: '4083078889'
+  personal: 'ThePasswordIsASecret:)'
 };
 
 // ══════════════════════════
@@ -1527,23 +2096,23 @@ function sndBIOSBeep() {
 // BIOS
 // ══════════════════════════
 const biosLines = [
-  { html:'<span class="bios-hi">Award Modular BIOS v6.00PG</span>', t:0 },
-  { html:'Copyright (C) 1984-2003, Award Software, Inc.', t:200 },
+  { html:'<span class="bios-hi">b33my MAINFRAME KERNEL v3.3.1</span>', t:0 },
+  { html:'Copyright (C) b33my underground systems. all rights reserved.', t:200 },
   { html:'', t:300 },
-  { html:'<span class="bios-bar"> MY-PC </span>  BIOS Date: 10/25/01  Ver: 08.00.10', t:420 },
+  { html:'<span class="bios-bar"> NODE-01 </span>  BUILD: 03.31.26  REV: 33.1', t:420 },
   { html:'', t:520 },
-  { html:'CPU : Intel Pentium 4  1800MHz', t:650 },
-  { html:'Memory Test : <span class="bios-hi">524288K</span> OK', t:950, beep:true },
+  { html:'CORE PROCESSOR : b33my ENGINE  3300MHz', t:650 },
+  { html:'MEMORY CHECK : <span class="bios-hi">∞ KB</span> OK', t:950, beep:true },
   { html:'', t:1100 },
-  { html:'Detecting Primary Master ... WDC WD400BB  40GB', t:1200 },
-  { html:'Detecting Primary Slave  ... None', t:1450 },
+  { html:'Mounting Primary Volume ... /mainframe/reality', t:1200 },
+  { html:'Mounting Secondary Volume ... /mainframe/underground', t:1450 },
   { html:'', t:1560 },
-  { html:'USB Device(s): 1 Keyboard, 1 Mouse', t:1700 },
-  { html:'PnP Init Completed.', t:1900 },
-  { html:'Verifying DMI Pool Data .......', t:2100 },
-  { html:'<span class="bios-hi">Press DEL to enter SETUP, F8 for Boot Menu</span>', t:2400 },
+  { html:'INPUT DEVICES: 1 Keyboard, 1 Mouse, 1 Soul', t:1700 },
+  { html:'Network handshake complete.', t:1900 },
+  { html:'Verifying identity matrix ........', t:2100 },
+  { html:'<span class="bios-hi">WARNING: Unauthorized access will be logged and forgotten.</span>', t:2400 },
   { html:'', t:2600 },
-  { html:'Loading Windows XP <span class="bios-cursor"></span>', t:2800 },
+  { html:'Initializing b33my mainframe <span class="bios-cursor"></span>', t:2800 },
 ];
 
 function runBIOS() {
@@ -2398,6 +2967,807 @@ function opExport() {
   a.click();
   URL.revokeObjectURL(a.href);
   sndXPStartup();
+}
+
+// ══════════════════════════
+// YELLOW PAGES ENHANCED
+// ══════════════════════════
+let ypEntries = JSON.parse(localStorage.getItem('ubu-yp') || '[]');
+
+function ypSwitchTab(desktop, tab, el) {
+  const prefix = desktop === 'g' ? 'g-yp' : 'p-yp';
+  document.querySelectorAll('#' + (desktop==='g'?'g-yp':'p-yp') + ' .yp-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  document.querySelectorAll('#' + (desktop==='g'?'g-yp':'p-yp') + ' .yp-tab-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById(prefix + '-' + tab).classList.add('active');
+  if (tab === 'web') renderYPWeb(desktop);
+}
+
+function renderYPEntries() {
+  ['g','p'].forEach(d => {
+    const el = document.getElementById(d + '-yp-' + (d==='g'?'entries':'directory'));
+    if (!el) return;
+    el.innerHTML = '';
+    if (!ypEntries.length) {
+      el.innerHTML = '<div style="color:#888;font-size:10px;padding:8px;">No entries yet. Friends can add themselves from the Friends desktop.</div>';
+      return;
+    }
+    ypEntries.forEach(entry => {
+      const div = document.createElement('div');
+      div.className = 'yp-entry';
+      const socials = (entry.socials||[]).map(s => `<a class="yp-social-link" href="https://${s.replace(/^https?:\/\//,'')}" target="_blank">🔗 ${s}</a>`).join('');
+      div.innerHTML = `
+        <div class="yp-entry-name">${entry.name}</div>
+        <div class="yp-entry-meta">
+          ${entry.how ? `<span class="yp-badge">👥 ${entry.how}</span>` : ''}
+          ${entry.years ? `<span class="yp-badge">⏱️ ${entry.years}</span>` : ''}
+        </div>
+        ${entry.bio ? `<div class="yp-entry-info">${entry.bio}</div>` : ''}
+        ${entry.services ? `<div class="yp-entry-info">💼 <strong>Offers:</strong> ${entry.services}</div>` : ''}
+        ${socials ? `<div class="yp-socials">${socials}</div>` : ''}`;
+      el.appendChild(div);
+    });
+  });
+}
+
+function addYPFriend() {
+  const name = document.getElementById('pyp-name').value.trim();
+  if (!name) { alert('Please enter your name!'); return; }
+  const how = document.getElementById('pyp-how').value;
+  const years = document.getElementById('pyp-years').value.trim();
+  const services = document.getElementById('pyp-services').value.trim();
+  const bio = document.getElementById('pyp-bio').value.trim();
+  const socialsRaw = document.getElementById('pyp-socials').value.trim();
+  const socials = socialsRaw ? socialsRaw.split('\n').map(s=>s.trim()).filter(Boolean) : [];
+  ypEntries.push({ name, how, years, services, bio, socials, added: Date.now() });
+  localStorage.setItem('ubu-yp', JSON.stringify(ypEntries));
+  renderYPEntries();
+  // clear form
+  ['pyp-name','pyp-years','pyp-services','pyp-bio','pyp-socials'].forEach(id => document.getElementById(id).value='');
+  document.getElementById('pyp-how').value='';
+  sndAIMSignOn();
+  // switch to directory tab
+  const dirTab = document.querySelector('#p-yp .yp-tab');
+  ypSwitchTab('p','directory', dirTab);
+}
+
+// Connection Web canvas visualization
+function renderYPWeb(desktop) {
+  const canvasId = 'yp-web-canvas-' + (desktop==='g'?'guest':'personal');
+  const tooltipId = 'yp-tooltip-' + (desktop==='g'?'guest':'personal');
+  const canvas = document.getElementById(canvasId);
+  const tooltip = document.getElementById(tooltipId);
+  if (!canvas) return;
+  const wrap = canvas.parentElement;
+  canvas.width = wrap.clientWidth || 380;
+  canvas.height = wrap.clientHeight || 280;
+  const W = canvas.width, H = canvas.height;
+  const ctx = canvas.getContext('2d');
+
+  // Build nodes: center = "You", then each friend
+  const nodes = [{ name: 'You', x: W/2, y: H/2, color: '#f0c840', radius: 18, data: null }];
+  const angleStep = ypEntries.length ? (Math.PI * 2) / ypEntries.length : 0;
+  const r = Math.min(W, H) * 0.35;
+  ypEntries.forEach((e, i) => {
+    const angle = -Math.PI/2 + angleStep * i;
+    nodes.push({
+      name: e.name,
+      x: W/2 + Math.cos(angle)*r,
+      y: H/2 + Math.sin(angle)*r,
+      color: '#00bfff',
+      radius: 13,
+      data: e
+    });
+  });
+
+  // Draw connections
+  ctx.clearRect(0,0,W,H);
+  ctx.fillStyle = '#0a0800'; ctx.fillRect(0,0,W,H);
+
+  // Draw center connections
+  nodes.slice(1).forEach(n => {
+    ctx.beginPath();
+    ctx.moveTo(nodes[0].x, nodes[0].y);
+    ctx.lineTo(n.x, n.y);
+    ctx.strokeStyle = 'rgba(240,200,64,0.3)';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+  });
+
+  // Draw similarity edges between friends (same "how" = connection)
+  for (let i=1;i<nodes.length;i++) {
+    for (let j=i+1;j<nodes.length;j++) {
+      if (nodes[i].data && nodes[j].data && nodes[i].data.how === nodes[j].data.how && nodes[i].data.how) {
+        ctx.beginPath();
+        ctx.moveTo(nodes[i].x, nodes[i].y);
+        ctx.lineTo(nodes[j].x, nodes[j].y);
+        ctx.strokeStyle = 'rgba(0,191,255,0.2)';
+        ctx.lineWidth = 1;
+        ctx.setLineDash([3,4]);
+        ctx.stroke();
+        ctx.setLineDash([]);
+      }
+    }
+  }
+
+  // Draw nodes
+  nodes.forEach(n => {
+    // glow
+    const grd = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, n.radius*2);
+    grd.addColorStop(0, n.color + '44');
+    grd.addColorStop(1, 'transparent');
+    ctx.beginPath(); ctx.arc(n.x, n.y, n.radius*2, 0, Math.PI*2);
+    ctx.fillStyle = grd; ctx.fill();
+    // circle
+    ctx.beginPath(); ctx.arc(n.x, n.y, n.radius, 0, Math.PI*2);
+    ctx.fillStyle = n === nodes[0] ? '#f0c840' : '#1a2a40';
+    ctx.strokeStyle = n.color; ctx.lineWidth = 2; ctx.fill(); ctx.stroke();
+    // label
+    ctx.fillStyle = '#fff'; ctx.font = '9px Tahoma,sans-serif';
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillText(n.name.substring(0,10), n.x, n.y + n.radius + 8);
+  });
+
+  // Tooltip on hover
+  canvas.onmousemove = (e) => {
+    const rect = canvas.getBoundingClientRect();
+    const mx = e.clientX - rect.left, my = e.clientY - rect.top;
+    let hit = null;
+    nodes.forEach(n => { if (Math.hypot(mx-n.x, my-n.y) < n.radius + 4) hit = n; });
+    if (hit && hit.data) {
+      tooltip.style.display = 'block';
+      tooltip.style.left = (e.clientX - rect.left + 10) + 'px';
+      tooltip.style.top = (e.clientY - rect.top - 20) + 'px';
+      const d = hit.data;
+      tooltip.innerHTML = `<strong>${d.name}</strong>${d.how?'<br>👥 '+d.how:''}${d.years?'<br>⏱️ '+d.years:''}${d.services?'<br>💼 '+d.services:''}`;
+    } else {
+      tooltip.style.display = 'none';
+    }
+  };
+  canvas.onmouseleave = () => { tooltip.style.display = 'none'; };
+}
+
+// Init YP on load
+document.addEventListener('DOMContentLoaded', () => {
+  renderYPEntries();
+});
+
+// ══════════════════════════
+// XANGA COMMENTS
+// ══════════════════════════
+function getComments(entryId) {
+  return JSON.parse(localStorage.getItem('ubu-comments-' + entryId) || '[]');
+}
+function saveComments(entryId, comments) {
+  localStorage.setItem('ubu-comments-' + entryId, JSON.stringify(comments));
+}
+function renderComments(entryId) {
+  const el = document.getElementById('comments-' + entryId);
+  if (!el) return;
+  const comments = getComments(entryId);
+  el.innerHTML = '';
+  if (!comments.length) {
+    el.innerHTML = '<div style="color:#aaa;font-size:9px;font-style:italic;padding:3px 0;">No comments yet. Be the first!</div>';
+    return;
+  }
+  comments.forEach(c => {
+    const div = document.createElement('div');
+    div.className = 'xanga-comment';
+    div.innerHTML = `<span class="xanga-comment-author">${c.author}</span><span class="xanga-comment-date">${c.date}</span><div class="xanga-comment-text">${c.text}</div>`;
+    el.appendChild(div);
+  });
+}
+function submitComment(entryId) {
+  const nameEl = document.getElementById('cname-' + entryId);
+  const textEl = document.getElementById('ctext-' + entryId);
+  if (!nameEl || !textEl) return;
+  const author = nameEl.value.trim() || 'Anonymous';
+  const text = textEl.value.trim();
+  if (!text) return;
+  const comments = getComments(entryId);
+  const now = new Date();
+  const date = now.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+  comments.push({ author, text, date });
+  saveComments(entryId, comments);
+  renderComments(entryId);
+  textEl.value = '';
+  sndAIMSend();
+}
+// Load all comments on page ready
+document.addEventListener('DOMContentLoaded', () => {
+  ['guest-0','guest-1','personal-0','personal-1','personal-2'].forEach(renderComments);
+});
+
+// ══════════════════════════
+// WORD PROCESSOR
+// ══════════════════════════
+let wordCurrentDoc = null;
+let wordDocs = JSON.parse(localStorage.getItem('ubu-word-docs') || '[]');
+
+function wordExec(cmd, val) {
+  document.getElementById('word-editor').focus();
+  document.execCommand(cmd, false, val || null);
+  wordTrackChanges();
+}
+function wordTrackChanges() {
+  const ed = document.getElementById('word-editor');
+  const text = ed.innerText || '';
+  const words = text.trim() ? text.trim().split(/\s+/).length : 0;
+  document.getElementById('word-wordcount').textContent = 'Words: ' + words;
+  if (wordCurrentDoc !== null) {
+    document.getElementById('word-status').textContent = 'Editing: ' + (wordDocs[wordCurrentDoc]?.name || 'Document');
+  }
+}
+function wordSave() {
+  const ed = document.getElementById('word-editor');
+  const html = ed.innerHTML;
+  const now = new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric',hour:'2-digit',minute:'2-digit'});
+  if (wordCurrentDoc !== null && wordDocs[wordCurrentDoc]) {
+    wordDocs[wordCurrentDoc].html = html;
+    wordDocs[wordCurrentDoc].saved = now;
+  } else {
+    const name = prompt('Save as:', 'Document ' + (wordDocs.length+1)) || ('Document ' + (wordDocs.length+1));
+    wordDocs.push({ name, html, saved: now });
+    wordCurrentDoc = wordDocs.length - 1;
+    document.getElementById('word-title-label').textContent = name + ' — WordPad XP';
+  }
+  localStorage.setItem('ubu-word-docs', JSON.stringify(wordDocs));
+  document.getElementById('word-status').textContent = '✅ Saved!';
+  setTimeout(() => wordTrackChanges(), 2000);
+  renderWordSavedList();
+  sndAIMSend();
+}
+function wordNewDoc() {
+  wordCurrentDoc = null;
+  document.getElementById('word-editor').innerHTML = '<p>Start typing your document here...</p>';
+  document.getElementById('word-title-label').textContent = 'Document — WordPad XP';
+  document.getElementById('word-status').textContent = 'New document';
+  closeWordDocs();
+}
+function wordLoadDoc(i) {
+  wordCurrentDoc = i;
+  document.getElementById('word-editor').innerHTML = wordDocs[i].html;
+  document.getElementById('word-title-label').textContent = wordDocs[i].name + ' — WordPad XP';
+  closeWordDocs();
+  wordTrackChanges();
+}
+function renderWordSavedList() {
+  const el = document.getElementById('word-saved-list');
+  if (!el) return;
+  el.innerHTML = '';
+  if (!wordDocs.length) { el.innerHTML = '<div style="color:#888;font-size:10px;padding:5px 10px;">No saved documents</div>'; return; }
+  wordDocs.forEach((doc, i) => {
+    const div = document.createElement('div');
+    div.className = 'word-doc-item';
+    div.innerHTML = `📄 ${doc.name} <span style="color:#aaa;font-size:9px;">${doc.saved||''}</span>`;
+    div.onclick = () => wordLoadDoc(i);
+    el.appendChild(div);
+  });
+}
+function toggleWordDocs() {
+  renderWordSavedList();
+  document.getElementById('word-docs-panel').classList.toggle('open');
+}
+function closeWordDocs() {
+  const p = document.getElementById('word-docs-panel');
+  if (p) p.classList.remove('open');
+}
+function wordDownload() {
+  const ed = document.getElementById('word-editor');
+  const name = wordCurrentDoc !== null ? (wordDocs[wordCurrentDoc]?.name || 'document') : 'document';
+  const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>${name}</title><style>body{font-family:Tahoma,sans-serif;font-size:12px;max-width:700px;margin:40px auto;padding:20px;color:#000;line-height:1.6;}</style></head><body>${ed.innerHTML}</body></html>`;
+  const blob = new Blob([html], {type:'text/html'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = name + '.html';
+  a.click();
+  sndAIMSend();
+}
+function wordDownloadPDF() {
+  const ed = document.getElementById('word-editor');
+  const name = wordCurrentDoc !== null ? (wordDocs[wordCurrentDoc]?.name || 'document') : 'document';
+  const w = window.open('','_blank');
+  w.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>${name}</title><style>body{font-family:Tahoma,sans-serif;font-size:12px;max-width:700px;margin:40px auto;padding:20px;color:#000;line-height:1.6;} @media print{body{margin:0;}}</style></head><body>${ed.innerHTML}</body></html>`);
+  w.document.close();
+  setTimeout(() => { w.print(); }, 400);
+}
+
+// ── WORDART ──
+const wordartStyles = [
+  { label:'Rainbow',    render: (ctx,t,W,H) => { const g=ctx.createLinearGradient(0,0,W,0); g.addColorStop(0,'#f00');g.addColorStop(.2,'#f80');g.addColorStop(.4,'#ff0');g.addColorStop(.6,'#0a0');g.addColorStop(.8,'#00f');g.addColorStop(1,'#a0f'); ctx.fillStyle=g; ctx.font=`bold ${H*0.55}px Impact`; ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillText(t,W/2,H/2); } },
+  { label:'Shadow',     render: (ctx,t,W,H) => { ctx.font=`bold ${H*0.55}px Impact`; ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillStyle='rgba(0,0,0,0.4)'; ctx.fillText(t,W/2+4,H/2+4); ctx.fillStyle='#2060c0'; ctx.fillText(t,W/2,H/2); } },
+  { label:'Gold',       render: (ctx,t,W,H) => { ctx.font=`bold ${H*0.55}px Georgia`; ctx.textAlign='center'; ctx.textBaseline='middle'; const g=ctx.createLinearGradient(0,0,0,H); g.addColorStop(0,'#fff8c0');g.addColorStop(.5,'#f0a800');g.addColorStop(1,'#c06000'); ctx.fillStyle=g; ctx.fillText(t,W/2,H/2); ctx.strokeStyle='#804000'; ctx.lineWidth=1; ctx.strokeText(t,W/2,H/2); } },
+  { label:'Neon',       render: (ctx,t,W,H) => { ctx.font=`bold ${H*0.55}px Impact`; ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.shadowColor='#00ffcc'; ctx.shadowBlur=15; ctx.fillStyle='#00ffcc'; ctx.fillText(t,W/2,H/2); ctx.shadowBlur=0; } },
+  { label:'3D Blue',    render: (ctx,t,W,H) => { ctx.font=`bold ${H*0.55}px Impact`; ctx.textAlign='center'; ctx.textBaseline='middle'; for(let i=6;i>0;i--){ctx.fillStyle=`hsl(220,80%,${20+i*5}%)`; ctx.fillText(t,W/2+i,H/2+i);} ctx.fillStyle='#7ab8ff'; ctx.fillText(t,W/2,H/2); } },
+  { label:'Pink Pop',   render: (ctx,t,W,H) => { ctx.font=`bold ${H*0.55}px Comic Sans MS,cursive`; ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillStyle='#ff69b4'; ctx.strokeStyle='#fff'; ctx.lineWidth=3; ctx.strokeText(t,W/2,H/2); ctx.fillText(t,W/2,H/2); } },
+];
+
+let selectedWordArtStyle = 0;
+
+function openWordArt() {
+  const stylesEl = document.getElementById('wordart-styles');
+  stylesEl.innerHTML = '';
+  wordartStyles.forEach((s,i) => {
+    const canvas = document.createElement('canvas');
+    canvas.width = 72; canvas.height = 44;
+    const ctx2 = canvas.getContext('2d');
+    ctx2.fillStyle = '#f0f0f0'; ctx2.fillRect(0,0,72,44);
+    s.render(ctx2, 'Aa', 72, 44);
+    const btn = document.createElement('div');
+    btn.className = 'wordart-style-btn' + (i===selectedWordArtStyle?' selected':'');
+    btn.appendChild(canvas);
+    btn.onclick = () => {
+      selectedWordArtStyle = i;
+      document.querySelectorAll('.wordart-style-btn').forEach(b=>b.classList.remove('selected'));
+      btn.classList.add('selected');
+    };
+    stylesEl.appendChild(btn);
+  });
+  document.getElementById('wordart-overlay').classList.add('open');
+}
+function closeWordArt() {
+  document.getElementById('wordart-overlay').classList.remove('open');
+}
+function insertWordArt() {
+  const text = document.getElementById('wordart-text-input').value.trim() || 'WordArt';
+  const style = wordartStyles[selectedWordArtStyle];
+  const canvas = document.createElement('canvas');
+  canvas.width = 400; canvas.height = 80;
+  const ctx2 = canvas.getContext('2d');
+  style.render(ctx2, text, 400, 80);
+  const dataUrl = canvas.toDataURL();
+  const img = `<img src="${dataUrl}" alt="${text}" style="display:block;max-width:100%;margin:4px 0;">`;
+  document.getElementById('word-editor').focus();
+  document.execCommand('insertHTML', false, img);
+  closeWordArt();
+  wordTrackChanges();
+}
+
+// Init word processor
+document.addEventListener('DOMContentLoaded', () => {
+  renderWordSavedList();
+});
+
+
+// ══════════════════════════════════════
+// ENCYCLOPEDIA
+// ══════════════════════════════════════
+let encEntries = JSON.parse(localStorage.getItem('ubu-enc') || '[]');
+
+const encCatEmoji = {
+  personal:'🔮', philosophy:'💭', culture:'🌍', tech:'💻',
+  music:'🎵', community:'👥', other:'📌'
+};
+
+function encSave() {
+  localStorage.setItem('ubu-enc', JSON.stringify(encEntries));
+}
+
+function encAddEntry() {
+  const word = document.getElementById('enc-word').value.trim();
+  const def  = document.getElementById('enc-def').value.trim();
+  if (!word || !def) { alert('Word and definition are required!'); return; }
+  const entry = {
+    id: Date.now(),
+    word,
+    category: document.getElementById('enc-cat').value,
+    definition: def,
+    connotation: document.getElementById('enc-con').value.trim(),
+    quote: document.getElementById('enc-quote').value.trim(),
+    related: document.getElementById('enc-related').value.split(',').map(s=>s.trim()).filter(Boolean),
+    image: document.getElementById('enc-img').value.trim(),
+    added: new Date().toLocaleDateString('en-US',{year:'numeric',month:'short',day:'numeric'})
+  };
+  encEntries.push(entry);
+  encEntries.sort((a,b) => a.word.localeCompare(b.word));
+  encSave();
+  encRenderAll();
+  // clear form
+  ['enc-word','enc-def','enc-con','enc-quote','enc-related','enc-img'].forEach(id => document.getElementById(id).value='');
+  document.getElementById('enc-cat').value='personal';
+  sndAIMSignOn();
+}
+
+function encDeleteEntry(id) {
+  encEntries = encEntries.filter(e => e.id !== id);
+  encSave();
+  encRenderAll();
+}
+
+function encRenderList(panelId, entries, isEdit) {
+  const listEl = document.getElementById('enc-list-' + panelId);
+  const azEl   = document.getElementById('enc-az-' + panelId);
+  if (!listEl) return;
+
+  // Build A-Z index
+  const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+  if (azEl) {
+    azEl.innerHTML = '';
+    letters.forEach(l => {
+      const hasAny = entries.some(e => e.word[0].toUpperCase() === l);
+      const div = document.createElement('div');
+      div.className = 'enc-az-letter' + (hasAny ? ' has-entries' : '');
+      div.textContent = l;
+      div.onclick = () => {
+        const sec = document.getElementById('enc-sec-' + panelId + '-' + l);
+        if (sec) sec.scrollIntoView({behavior:'smooth'});
+      };
+      azEl.appendChild(div);
+    });
+  }
+
+  if (!entries.length) {
+    listEl.innerHTML = '<div class="enc-empty">📖 No entries yet.' + (isEdit ? ' Add your first word below!' : ' Check back soon.') + '</div>';
+    return;
+  }
+
+  // Group by first letter
+  const groups = {};
+  entries.forEach(e => {
+    const l = e.word[0].toUpperCase();
+    if (!groups[l]) groups[l] = [];
+    groups[l].push(e);
+  });
+
+  listEl.innerHTML = '';
+  Object.keys(groups).sort().forEach(letter => {
+    const secDiv = document.createElement('div');
+    secDiv.id = 'enc-sec-' + panelId + '-' + letter;
+    secDiv.className = 'enc-section-letter';
+    secDiv.textContent = letter;
+    listEl.appendChild(secDiv);
+
+    groups[letter].forEach(entry => {
+      const card = document.createElement('div');
+      card.className = 'enc-entry-card';
+      const catEmoji = encCatEmoji[entry.category] || '📌';
+      const imgHtml = entry.image
+        ? `<img class="enc-card-img" src="${entry.image}" alt="${entry.word}" onerror="this.style.display='none'">`
+        : `<div class="enc-card-img-placeholder">${catEmoji}</div>`;
+
+      let bodyHtml = '';
+      if (entry.connotation) bodyHtml += `<div class="enc-card-connotation">💭 ${entry.connotation}</div>`;
+      if (entry.quote)       bodyHtml += `<div class="enc-card-quote">"${entry.quote}"</div>`;
+      if (entry.related && entry.related.length) {
+        bodyHtml += `<div class="enc-card-related">🔗 See also: ${entry.related.map(r=>`<span onclick="encJumpTo('${panelId}','${r}')">${r}</span>`).join('')}</div>`;
+      }
+      bodyHtml += `<div style="font-size:9px;color:#aaa;margin-top:3px;">Added ${entry.added||''} · ${catEmoji} ${entry.category||''}</div>`;
+      if (isEdit) bodyHtml += `<div style="margin-top:4px;"><button onclick="encDeleteEntry(${entry.id})" style="font-size:9px;background:#f06040;border:none;color:#fff;padding:2px 6px;border-radius:2px;cursor:pointer;">Delete</button></div>`;
+
+      card.innerHTML = `
+        <div class="enc-card-head">
+          ${imgHtml}
+          <div class="enc-card-info">
+            <div class="enc-card-word">${entry.word}<span class="enc-card-tag">${entry.category||'other'}</span></div>
+            <div class="enc-card-def">${entry.definition}</div>
+          </div>
+        </div>
+        ${bodyHtml ? '<div class="enc-card-body">' + bodyHtml + '</div>' : ''}`;
+      listEl.appendChild(card);
+    });
+  });
+}
+
+function encRenderAll() {
+  encRenderList('g', encEntries, false);
+  encRenderList('p', encEntries, true);
+}
+
+function encSearch(panel) {
+  const q = document.getElementById('enc-search-' + panel).value.trim().toLowerCase();
+  const filtered = q ? encEntries.filter(e =>
+    e.word.toLowerCase().includes(q) ||
+    (e.definition||'').toLowerCase().includes(q) ||
+    (e.connotation||'').toLowerCase().includes(q) ||
+    (e.related||[]).some(r => r.toLowerCase().includes(q))
+  ) : encEntries;
+  encRenderList(panel, filtered, panel === 'p');
+}
+
+function encJumpTo(panel, word) {
+  document.getElementById('enc-search-' + panel).value = word;
+  encSearch(panel);
+}
+
+document.addEventListener('DOMContentLoaded', encRenderAll);
+
+// ══════════════════════════════════════
+// DJ BOOKING
+// ══════════════════════════════════════
+function djRadio(groupId, el) {
+  document.querySelectorAll('#' + groupId + ' .dj-radio-btn').forEach(b => b.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+function djSubmit() {
+  const name  = document.getElementById('dj-name').value.trim();
+  const email = document.getElementById('dj-email').value.trim();
+  const event = document.getElementById('dj-event').value.trim();
+  if (!name || !email || !event) {
+    sndError();
+    alert('Please fill in at least your name, email, and event type!');
+    return;
+  }
+  // Collect equipment checkboxes
+  const equipment = [];
+  document.querySelectorAll('#dj-equipment input:checked').forEach(cb => equipment.push(cb.value));
+
+  // Build mailto confirmation (opens user's email client as fallback)
+  const venueType = document.querySelector('#dj-venue-type .selected')?.textContent || '';
+  const payType   = document.querySelector('#dj-pay-type .selected')?.textContent || '';
+  const confPref  = document.querySelector('#dj-confirm-pref .selected')?.textContent || '';
+  const body = encodeURIComponent(
+    [
+      'New DJ Booking Request',
+      '─────────────────',
+      'Name: ' + name,
+      'Email: ' + email,
+      'Phone: ' + (document.getElementById('dj-phone').value||'—'),
+      '',
+      'Event: ' + event,
+      'Date: ' + (document.getElementById('dj-date').value||'TBD'),
+      'Time: ' + (document.getElementById('dj-time').value||'TBD'),
+      'Hours: ' + (document.getElementById('dj-hours').value||'TBD'),
+      'Venue: ' + (document.getElementById('dj-venue').value||'TBD'),
+      'Type: ' + venueType,
+      'Attendance: ' + (document.getElementById('dj-attendance').value||'TBD'),
+      '',
+      'Compensation: ' + payType,
+      'Rate/Trade: ' + (document.getElementById('dj-rate').value||'TBD'),
+      '',
+      'Equipment provided: ' + (equipment.join(', ')||'None listed'),
+      'Genre/vibe: ' + (document.getElementById('dj-genre').value||'TBD'),
+      '',
+      'Confirm via: ' + confPref,
+      'Notes: ' + (document.getElementById('dj-notes').value||'—'),
+    ].join('
+')
+  );
+
+  // Open mailto — replace with your actual email
+  const mailtoLink = 'mailto:your@email.com?subject=' + encodeURIComponent('DJ Booking Request — ' + event) + '&body=' + body;
+  window.open(mailtoLink);
+
+  // Show confirmation
+  document.getElementById('dj-form').style.display = 'none';
+  document.getElementById('dj-confirm').classList.add('show');
+  sndXPStartup();
+}
+
+// ══════════════════════════════════════
+// SCREENSAVER
+// ══════════════════════════════════════
+let ssTimer = null;
+let ssActive = false;
+let ssMode = 0; // 0=maze, 1=logo
+const SS_IDLE_MS = 5 * 60 * 1000; // 5 minutes
+
+function ssReset() {
+  clearTimeout(ssTimer);
+  if (ssActive) ssStop();
+  ssTimer = setTimeout(ssStart, SS_IDLE_MS);
+}
+
+function ssStart() {
+  ssActive = true;
+  ssMode = Math.random() < 0.5 ? 0 : 1;
+  document.getElementById('screensaver').classList.add('active');
+  if (ssMode === 0) ssMaze();
+  else ssLogos();
+}
+
+function ssStop() {
+  ssActive = false;
+  document.getElementById('screensaver').classList.remove('active');
+  clearTimeout(ssTimer);
+  ssTimer = setTimeout(ssStart, SS_IDLE_MS);
+}
+
+// Listen for activity
+['mousemove','keydown','mousedown','touchstart'].forEach(ev => {
+  document.addEventListener(ev, ssReset, { passive: true });
+});
+document.getElementById('screensaver').addEventListener('click', ssStop);
+document.getElementById('screensaver').addEventListener('keydown', ssStop);
+ssReset();
+
+// ── MAZE SCREENSAVER (Nuke Town style) ──
+function ssMaze() {
+  const canvas = document.getElementById('ss-canvas');
+  const ctx = canvas.getContext('2d');
+  let animId;
+
+  function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+  resize();
+  window.addEventListener('resize', resize);
+
+  const CELL = 28;
+  let cols, rows, maze, visited, stack, genDone, drawX, drawY;
+  const WALLS = { N:1, S:2, E:4, W:8 };
+  const DIR = [
+    { dx:0, dy:-1, bit:WALLS.N, opp:WALLS.S },
+    { dx:0, dy:1,  bit:WALLS.S, opp:WALLS.N },
+    { dx:1, dy:0,  bit:WALLS.E, opp:WALLS.W },
+    { dx:-1,dy:0,  bit:WALLS.W, opp:WALLS.E },
+  ];
+
+  function initMaze() {
+    cols = Math.floor(canvas.width / CELL);
+    rows = Math.floor(canvas.height / CELL);
+    maze = new Array(cols * rows).fill(15); // all walls
+    visited = new Array(cols * rows).fill(false);
+    stack = [];
+    const sx = Math.floor(cols/2), sy = Math.floor(rows/2);
+    visited[sy*cols+sx] = true;
+    stack.push({x:sx, y:sy});
+    genDone = false;
+    drawX = 0; drawY = 0;
+  }
+
+  function stepGen() {
+    if (!stack.length) { genDone = true; return; }
+    const cur = stack[stack.length-1];
+    const dirs = DIR.filter(d => {
+      const nx=cur.x+d.dx, ny=cur.y+d.dy;
+      return nx>=0&&nx<cols&&ny>=0&&ny<rows&&!visited[ny*cols+nx];
+    });
+    if (!dirs.length) { stack.pop(); return; }
+    const d = dirs[Math.floor(Math.random()*dirs.length)];
+    const nx=cur.x+d.dx, ny=cur.y+d.dy;
+    maze[cur.y*cols+cur.x] &= ~d.bit;
+    maze[ny*cols+nx] &= ~d.opp;
+    visited[ny*cols+nx] = true;
+    stack.push({x:nx, y:ny});
+  }
+
+  // Nuke Town color palette
+  const ntColors = ['#e8b84b','#c03020','#2060c0','#e0e0c0','#406040','#c8a060','#8090a0'];
+  let colorTick = 0;
+
+  function drawCell(x, y) {
+    const idx = y*cols+x;
+    const px = x*CELL, py = y*CELL;
+    const col = ntColors[(x+y*3) % ntColors.length];
+    ctx.fillStyle = col + '22';
+    ctx.fillRect(px+1, py+1, CELL-2, CELL-2);
+    ctx.strokeStyle = ntColors[(x*2+y) % ntColors.length];
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    if (maze[idx] & WALLS.N) { ctx.moveTo(px,py); ctx.lineTo(px+CELL,py); }
+    if (maze[idx] & WALLS.S) { ctx.moveTo(px,py+CELL); ctx.lineTo(px+CELL,py+CELL); }
+    if (maze[idx] & WALLS.E) { ctx.moveTo(px+CELL,py); ctx.lineTo(px+CELL,py+CELL); }
+    if (maze[idx] & WALLS.W) { ctx.moveTo(px,py); ctx.lineTo(px,py+CELL); }
+    ctx.stroke();
+  }
+
+  function drawTitle() {
+    ctx.fillStyle = 'rgba(0,0,0,0.5)';
+    ctx.fillRect(canvas.width/2-120, canvas.height/2-24, 240, 42);
+    ctx.font = 'bold 22px VT323, monospace';
+    ctx.textAlign = 'center';
+    const rainbow = ['#f00','#f80','#ff0','#0c0','#00f','#a0f'];
+    const txt = 'YOU • BE • YOU';
+    txt.split('').forEach((ch, i) => {
+      ctx.fillStyle = rainbow[i % rainbow.length];
+      ctx.fillText(ch, canvas.width/2 - 78 + i*12, canvas.height/2+4);
+    });
+    ctx.textAlign = 'left';
+  }
+
+  function frame() {
+    if (!ssActive) { cancelAnimationFrame(animId); return; }
+    for (let i=0; i<8; i++) stepGen();
+    ctx.fillStyle = '#0a0a0a';
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+    for (let y=0;y<rows;y++) for (let x=0;x<cols;x++) drawCell(x,y);
+    if (genDone) drawTitle();
+    colorTick++;
+    if (colorTick > 300 && genDone) initMaze();
+    animId = requestAnimationFrame(frame);
+  }
+
+  initMaze();
+  frame();
+}
+
+// ── LOGO / SPACE SCREENSAVER ──
+function ssLogos() {
+  const canvas = document.getElementById('ss-canvas');
+  const ctx = canvas.getContext('2d');
+  let animId;
+
+  function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+  resize();
+
+  const LOGO_TEXT = 'U•B•U';
+  const NUM = 18;
+  const hues = Array.from({length:NUM}, (_,i) => i*(360/NUM));
+  const logos = hues.map((h,i) => ({
+    x: Math.random()*canvas.width,
+    y: Math.random()*canvas.height,
+    vx: (Math.random()-0.5)*1.8,
+    vy: (Math.random()-0.5)*1.8,
+    sz: 16 + Math.random()*28,
+    rot: Math.random()*Math.PI*2,
+    vr: (Math.random()-0.5)*0.04,
+    hue: h,
+    alpha: 0.6 + Math.random()*0.4,
+    pulse: Math.random()*Math.PI*2
+  }));
+
+  // Stars background
+  const stars = Array.from({length:200}, () => ({
+    x: Math.random()*canvas.width,
+    y: Math.random()*canvas.height,
+    r: Math.random()*1.4,
+    alpha: Math.random()
+  }));
+
+  let tick = 0;
+  function frame() {
+    if (!ssActive) { cancelAnimationFrame(animId); return; }
+    tick++;
+    ctx.fillStyle = '#000010';
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+
+    // Stars
+    stars.forEach(s => {
+      s.alpha += (Math.random()-0.5)*0.05;
+      s.alpha = Math.max(0.1, Math.min(1, s.alpha));
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI*2);
+      ctx.fillStyle = `rgba(255,255,255,${s.alpha})`;
+      ctx.fill();
+    });
+
+    // Logos
+    logos.forEach(l => {
+      l.x += l.vx; l.y += l.vy; l.rot += l.vr;
+      l.pulse += 0.04;
+      if (l.x < -60) l.x = canvas.width+60;
+      if (l.x > canvas.width+60) l.x = -60;
+      if (l.y < -60) l.y = canvas.height+60;
+      if (l.y > canvas.height+60) l.y = -60;
+      l.hue = (l.hue + 0.5) % 360;
+
+      ctx.save();
+      ctx.translate(l.x, l.y);
+      ctx.rotate(l.rot);
+      const glow = Math.sin(l.pulse)*0.3 + 0.7;
+      ctx.shadowColor = `hsl(${l.hue},100%,60%)`;
+      ctx.shadowBlur = 18 * glow;
+      ctx.font = `bold ${l.sz}px VT323, monospace`;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillStyle = `hsla(${l.hue},100%,65%,${l.alpha * glow})`;
+      ctx.fillText(LOGO_TEXT, 0, 0);
+      ctx.restore();
+    });
+
+    // Central title
+    if (tick % 2 === 0) {
+      const pulse = Math.sin(tick*0.02)*0.15+0.85;
+      ctx.save();
+      ctx.globalAlpha = pulse * 0.7;
+      ctx.font = `bold 52px VT323, monospace`;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      const g = ctx.createLinearGradient(canvas.width/2-120, 0, canvas.width/2+120, 0);
+      g.addColorStop(0,'#f00'); g.addColorStop(.2,'#f80'); g.addColorStop(.4,'#ff0');
+      g.addColorStop(.6,'#0c0'); g.addColorStop(.8,'#00f'); g.addColorStop(1,'#a0f');
+      ctx.fillStyle = g;
+      ctx.shadowColor='#fff'; ctx.shadowBlur=20;
+      ctx.fillText('YOU • BE • YOU', canvas.width/2, canvas.height/2);
+      ctx.font = '14px Tahoma, sans-serif';
+      ctx.fillStyle = 'rgba(255,255,255,0.3)';
+      ctx.shadowBlur = 0;
+      ctx.fillText('move mouse to continue', canvas.width/2, canvas.height/2 + 40);
+      ctx.restore();
+    }
+
+    animId = requestAnimationFrame(frame);
+  }
+  frame();
 }
 
 // ══════════════════════════
