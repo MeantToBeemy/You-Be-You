@@ -215,7 +215,7 @@ body::after {
 }
 
 #guest-desktop .desktop-area {
-  background: url('https://tjkelly.com/blog/windows-xp-desktop-backgrounds/') center/cover no-repeat;
+  background: url('https://i.imgur.com/XZFSnDp.jpeg') center/cover no-repeat;
 }
 #personal-desktop .desktop-area {
   background: radial-gradient(ellipse at 25% 35%, rgba(160,80,255,0.22) 0%, transparent 60%), #1a0a30;
@@ -314,7 +314,7 @@ body::after {
 
 /* ══ MEDIA PLAYER ══ */
 .mp-shell { background:#0d0d1a; display:flex; flex-direction:column; height:100%; font-family:'Courier New',monospace; }
-.mp-vis { height:80px; background:#000; flex-shrink:0; overflow:hidden; position:relative; }
+.mp-vis { height:80px; background:#000; flex-shrink:0; overflow:hidden; position:relative; background-image:url('https://i.imgur.com/zXuFqOy.png'); background-size:contain; background-repeat:no-repeat; background-position:center; }
 .mp-vis canvas { width:100%; height:100%; display:block; }
 .mp-display { background:#060612; padding:8px 12px 6px; flex-shrink:0; }
 .mp-track { font-size:13px; color:#00bfff; overflow:hidden; white-space:nowrap; text-overflow:ellipsis; margin-bottom:4px; font-family:'VT323',monospace; letter-spacing:1px; }
@@ -760,7 +760,7 @@ body::after {
 
 <!-- ══════════ GUEST DESKTOP ══════════ -->
 <div id="guest-desktop" class="screen fade-in">
-  <div class="desktop-area" onclick="deselectAll('guest')" style="background: url(&quot;https://tjkelly.com/blog/windows-xp-desktop-backgrounds/&quot;) center center / cover no-repeat;">
+  <div class="desktop-area" onclick="deselectAll('guest')" style="background: url('https://i.imgur.com/XZFSnDp.jpeg') center center / cover no-repeat;">
     <div class="desktop-icons">
       <div class="icon" ondblclick="openWin('g-about','guest')" style="display: flex;"><div class="icon-img">🖥️</div><div class="icon-label">My Computer</div></div>
       <div class="icon" ondblclick="openWin('g-ie','guest')" style="display: flex;"><div class="icon-img">🌐</div><div class="icon-label">Internet Explorer</div></div>
@@ -2537,11 +2537,22 @@ function buildMP(wrapId) {
 // ══════════════════════════
 function doShutdown() {
   const s = document.querySelector('.screen.active');
+  if(s) s.style.transition='opacity 1s';
   if(s) s.style.opacity='0';
   setTimeout(()=>{
     document.body.style.background='#000';
-    document.body.innerHTML=`<div style="font-family:Tahoma,sans-serif;color:#ccc;position:fixed;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px;background:#000;"><div style="color:#fff;font-size:16px;">Windows is shutting down...</div><a href="#" onclick="location.reload()" style="color:#4a9de0;font-size:12px;">restart</a></div>`;
-  }, 500);
+    document.body.innerHTML=`
+      <div id="shutdown-screen" style="font-family:'VT323',monospace;position:fixed;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:24px;background:#000;">
+        <img src="https://i.imgur.com/mSVxBli.jpeg" style="max-width:340px;width:80%;opacity:0;transition:opacity 2s;" id="credits-logo">
+        <div style="color:rgba(255,255,255,0);font-size:13px;letter-spacing:3px;transition:color 2s;text-align:center;" id="credits-text">you be you</div>
+        <a href="#" onclick="location.reload()" style="color:rgba(74,158,255,0);font-size:12px;letter-spacing:2px;margin-top:20px;transition:color 2s;" id="credits-restart">↩ reconnect</a>
+      </div>`;
+    setTimeout(()=>{
+      document.getElementById('credits-logo').style.opacity='1';
+      document.getElementById('credits-text').style.color='rgba(255,255,255,0.5)';
+      document.getElementById('credits-restart').style.color='rgba(74,158,255,0.7)';
+    }, 300);
+  }, 1000);
 }
 
 // ══════════════════════════════════════
