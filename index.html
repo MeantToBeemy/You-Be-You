@@ -215,7 +215,7 @@ body::after {
 }
 
 #guest-desktop .desktop-area {
-  background: url('https://i.imgur.com/XZFSnDp.jpeg') center/cover no-repeat;
+  background: url('https://i.imgur.com/BivWjHw.jpeg') center/cover no-repeat;
 }
 #personal-desktop .desktop-area {
   background: radial-gradient(ellipse at 25% 35%, rgba(160,80,255,0.22) 0%, transparent 60%), #1a0a30;
@@ -760,14 +760,14 @@ body::after {
 
 <!-- ══════════ GUEST DESKTOP ══════════ -->
 <div id="guest-desktop" class="screen fade-in">
-  <div class="desktop-area" onclick="deselectAll('guest')" style="background: url('https://i.imgur.com/XZFSnDp.jpeg') center center / cover no-repeat;">
+  <div class="desktop-area" onclick="deselectAll('guest')" style="background: url('https://i.imgur.com/BivWjHw.jpeg') center center / cover no-repeat;">
     <div class="desktop-icons">
       <div class="icon" ondblclick="openWin('g-about','guest')" style="display: flex;"><div class="icon-img">🖥️</div><div class="icon-label">My Computer</div></div>
       <div class="icon" ondblclick="openWin('g-ie','guest')" style="display: flex;"><div class="icon-img">🌐</div><div class="icon-label">Internet Explorer</div></div>
       <div class="icon" ondblclick="openWin('g-aim','guest')" style="display: flex;"><div class="icon-img">🏃🏻‍♀️</div><div class="icon-label">AIM</div></div>
       <div class="icon" ondblclick="openWin('g-discord','guest')" style="display: flex;"><div class="icon-img">💬</div><div class="icon-label">Discord</div></div>
       <div class="icon" ondblclick="openWin('g-vent','guest')" style="display: flex;"><div class="icon-img">🎙️</div><div class="icon-label">Ventrilo</div></div>
-      <div class="icon" ondblclick="openWin('g-yp','guest')" style="display: flex;"><div class="icon-img">📒</div><div class="icon-label">Yellow Pages</div></div>
+      <div class="icon" ondblclick="openWin('g-yp','guest')" style="display: none;"><div class="icon-img">📒</div><div class="icon-label">Yellow Pages</div></div>
       <div class="icon" ondblclick="openWin('g-mp','guest')" style="display: flex;"><div class="icon-img">🎵</div><div class="icon-label">Media Player</div></div>
       <div class="icon" ondblclick="openWin('g-trash','guest')" style="display: flex;"><div class="icon-img">🗑️</div><div class="icon-label">Recycle Bin</div></div>
       <div class="icon" ondblclick="openWin('g-enc','guest')" style="display: flex;"><div class="icon-img">📚</div><div class="icon-label">Encyclopedia</div></div>
@@ -977,7 +977,7 @@ body::after {
       <div class="sm-left">
         <div class="sm-item" onclick="openWin('g-ie','guest');closeStart('guest')"><span>🌐</span><span>Xanga Blog</span></div>
         <div class="sm-item" onclick="openWin('g-aim','guest');closeStart('guest')"><span>🟡</span><span>AIM</span></div>
-        <div class="sm-item" onclick="openWin('g-yp','guest');closeStart('guest')"><span>📒</span><span>Yellow Pages</span></div>
+        <div class="sm-item" onclick="openWin('g-yp','guest');closeStart('guest')" style="display:none;"><span>📒</span><span>Yellow Pages</span></div>
         <div class="sm-item" onclick="openWin('g-mp','guest');closeStart('guest')"><span>🎵</span><span>Media Player</span></div>
         <hr class="sm-divider">
         <div class="sm-item" onclick="openWin('g-trash','guest');closeStart('guest')"><span>🗑️</span><span>Recycle Bin</span></div>
@@ -2104,18 +2104,23 @@ const biosLines = [
   { html:'', t:300 },
   { html:'<span class="bios-bar"> NODE-01 </span>  BUILD: 03.31.26  REV: 33.1', t:420 },
   { html:'', t:520 },
-  { html:'CORE PROCESSOR : b33my ENGINE  3300MHz', t:650 },
-  { html:'MEMORY CHECK : <span class="bios-hi">∞ KB</span> OK', t:950, beep:true },
-  { html:'', t:1100 },
-  { html:'Mounting Primary Volume ... /mainframe/reality', t:1200 },
-  { html:'Mounting Secondary Volume ... /mainframe/underground', t:1450 },
-  { html:'', t:1560 },
-  { html:'INPUT DEVICES: 1 Keyboard, 1 Mouse, 1 Soul', t:1700 },
-  { html:'Network handshake complete.', t:1900 },
-  { html:'Verifying identity matrix ........', t:2100 },
-  { html:'<span class="bios-hi">WARNING: Unauthorized access will be logged and forgotten.</span>', t:2400 },
-  { html:'', t:2600 },
-  { html:'Initializing b33my mainframe <span class="bios-cursor"></span>', t:2800 },
+  { html:'defining success... error: definition keeps changing', t:650 },
+  { html:'success.exe: feeling complete', t:850, beep:true },
+  { html:'', t:950 },
+  { html:'WARNING: completeness may be a moving target', t:1050 },
+  { html:'to feel full, you must first map the empty', t:1250 },
+  { html:'loading: the parts you haven\'t looked at yet', t:1450 },
+  { html:'', t:1550 },
+  { html:'your story is not your sentence', t:1650 },
+  { html:'scanning narrative... rewrite available', t:1850 },
+  { html:'you\'ve been the author this whole time', t:2050 },
+  { html:'', t:2150 },
+  { html:'what made you feel empty? that\'s the map.', t:2250 },
+  { html:'your old story is now in the recycle bin', t:2450 },
+  { html:'', t:2550 },
+  { html:'<span class="bios-hi">rewriting: what success means to me</span>', t:2650 },
+  { html:'', t:2800 },
+  { html:'Initializing b33my mainframe <span class="bios-cursor"></span>', t:2950 },
 ];
 
 function runBIOS() {
@@ -2543,7 +2548,7 @@ function doShutdown() {
     document.body.style.background='#000';
     document.body.innerHTML=`
       <div id="shutdown-screen" style="font-family:'VT323',monospace;position:fixed;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:24px;background:#000;">
-        <img src="https://i.imgur.com/mSVxBli.jpeg" style="max-width:340px;width:80%;opacity:0;transition:opacity 2s;" id="credits-logo">
+        <img src="https://i.imgur.com/UmC2rS2.jpeg" style="max-width:340px;width:80%;opacity:0;transition:opacity 2s;" id="credits-logo">
         <div style="color:rgba(255,255,255,0);font-size:13px;letter-spacing:3px;transition:color 2s;text-align:center;" id="credits-text">you be you</div>
         <a href="#" onclick="location.reload()" style="color:rgba(74,158,255,0);font-size:12px;letter-spacing:2px;margin-top:20px;transition:color 2s;" id="credits-restart">↩ reconnect</a>
       </div>`;
@@ -3549,9 +3554,13 @@ function djSubmit() {
 ')
   );
 
-  // Open mailto — replace with your actual email
-  const mailtoLink = 'mailto:your@email.com?subject=' + encodeURIComponent('DJ Booking Request — ' + event) + '&body=' + body;
+  // Open mailto — sends to meanttobeemy
+  const mailtoLink = 'mailto:meanttobeemy@proton.me?subject=' + encodeURIComponent('DJ Booking Request — ' + event) + '&body=' + body;
   window.open(mailtoLink);
+
+  // Also open a mailto to the guest to confirm
+  const guestConfirm = 'mailto:' + encodeURIComponent(document.getElementById('dj-email').value) + '?subject=' + encodeURIComponent('Your DJ Booking Request — ' + event) + '&body=' + encodeURIComponent('Hey ' + name + ',\n\nThanks for reaching out! I received your booking request for ' + event + ' and I\'ll get back to you soon to confirm the details.\n\nSpeak soon,\nmeanttobeemy');
+  setTimeout(() => window.open(guestConfirm), 500);
 
   // Show confirmation
   document.getElementById('dj-form').style.display = 'none';
