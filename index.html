@@ -215,7 +215,7 @@ body::after {
 }
 
 #guest-desktop .desktop-area {
-  background: url('https://i.imgur.com/BivWjHw.jpeg') center/cover no-repeat;
+  background: url('https://i.imgur.com/XZFSnDp.jpeg') center/cover no-repeat;
 }
 #personal-desktop .desktop-area {
   background: radial-gradient(ellipse at 25% 35%, rgba(160,80,255,0.22) 0%, transparent 60%), #1a0a30;
@@ -760,14 +760,14 @@ body::after {
 
 <!-- ══════════ GUEST DESKTOP ══════════ -->
 <div id="guest-desktop" class="screen fade-in">
-  <div class="desktop-area" onclick="deselectAll('guest')" style="background: url('https://i.imgur.com/BivWjHw.jpeg') center center / cover no-repeat;">
+  <div class="desktop-area" onclick="deselectAll('guest')" style="background: url(&quot;https://tjkelly.com/blog/windows-xp-desktop-backgrounds/&quot;) center center / cover no-repeat;">
     <div class="desktop-icons">
       <div class="icon" ondblclick="openWin('g-about','guest')" style="display: flex;"><div class="icon-img">🖥️</div><div class="icon-label">My Computer</div></div>
       <div class="icon" ondblclick="openWin('g-ie','guest')" style="display: flex;"><div class="icon-img">🌐</div><div class="icon-label">Internet Explorer</div></div>
       <div class="icon" ondblclick="openWin('g-aim','guest')" style="display: flex;"><div class="icon-img">🏃🏻‍♀️</div><div class="icon-label">AIM</div></div>
       <div class="icon" ondblclick="openWin('g-discord','guest')" style="display: flex;"><div class="icon-img">💬</div><div class="icon-label">Discord</div></div>
       <div class="icon" ondblclick="openWin('g-vent','guest')" style="display: flex;"><div class="icon-img">🎙️</div><div class="icon-label">Ventrilo</div></div>
-      <div class="icon" ondblclick="openWin('g-yp','guest')" style="display: none;"><div class="icon-img">📒</div><div class="icon-label">Yellow Pages</div></div>
+      <div class="icon" ondblclick="openWin('g-yp','guest')" style="display: flex;"><div class="icon-img">📒</div><div class="icon-label">Yellow Pages</div></div>
       <div class="icon" ondblclick="openWin('g-mp','guest')" style="display: flex;"><div class="icon-img">🎵</div><div class="icon-label">Media Player</div></div>
       <div class="icon" ondblclick="openWin('g-trash','guest')" style="display: flex;"><div class="icon-img">🗑️</div><div class="icon-label">Recycle Bin</div></div>
       <div class="icon" ondblclick="openWin('g-enc','guest')" style="display: flex;"><div class="icon-img">📚</div><div class="icon-label">Encyclopedia</div></div>
@@ -977,7 +977,7 @@ body::after {
       <div class="sm-left">
         <div class="sm-item" onclick="openWin('g-ie','guest');closeStart('guest')"><span>🌐</span><span>Xanga Blog</span></div>
         <div class="sm-item" onclick="openWin('g-aim','guest');closeStart('guest')"><span>🟡</span><span>AIM</span></div>
-        <div class="sm-item" onclick="openWin('g-yp','guest');closeStart('guest')" style="display:none;"><span>📒</span><span>Yellow Pages</span></div>
+        <div class="sm-item" onclick="openWin('g-yp','guest');closeStart('guest')"><span>📒</span><span>Yellow Pages</span></div>
         <div class="sm-item" onclick="openWin('g-mp','guest');closeStart('guest')"><span>🎵</span><span>Media Player</span></div>
         <hr class="sm-divider">
         <div class="sm-item" onclick="openWin('g-trash','guest');closeStart('guest')"><span>🗑️</span><span>Recycle Bin</span></div>
@@ -3554,13 +3554,9 @@ function djSubmit() {
 ')
   );
 
-  // Open mailto — sends to meanttobeemy
-  const mailtoLink = 'mailto:meanttobeemy@proton.me?subject=' + encodeURIComponent('DJ Booking Request — ' + event) + '&body=' + body;
+  // Open mailto — replace with your actual email
+  const mailtoLink = 'mailto:your@email.com?subject=' + encodeURIComponent('DJ Booking Request — ' + event) + '&body=' + body;
   window.open(mailtoLink);
-
-  // Also open a mailto to the guest to confirm
-  const guestConfirm = 'mailto:' + encodeURIComponent(document.getElementById('dj-email').value) + '?subject=' + encodeURIComponent('Your DJ Booking Request — ' + event) + '&body=' + encodeURIComponent('Hey ' + name + ',\n\nThanks for reaching out! I received your booking request for ' + event + ' and I\'ll get back to you soon to confirm the details.\n\nSpeak soon,\nmeanttobeemy');
-  setTimeout(() => window.open(guestConfirm), 500);
 
   // Show confirmation
   document.getElementById('dj-form').style.display = 'none';
